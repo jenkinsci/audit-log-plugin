@@ -1,0 +1,165 @@
+{
+  "products" : [ ],
+  "categories" : [ ],
+  "events" : [ {
+    "id" : 1,
+    "name" : "login",
+    "displayName" : "Login",
+    "description" : "User Login",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "timestamp",
+      "required" : true
+    }, {
+      "name" : "requestId",
+      "required" : false
+    }, {
+      "name" : "userId",
+      "required" : true
+    } ]
+  }, {
+    "id" : 2,
+    "name" : "updateKey",
+    "displayName" : "Update Key",
+    "description" : "User updates API key(s)",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "requestId",
+      "required" : true
+    }, {
+      "name" : "requestUri",
+      "required" : false
+    }, {
+      "name" : "userId",
+      "required" : true
+    }, {
+      "name" : "timestamp",
+      "required" : true
+    } ]
+  }, {
+    "id" : 3,
+    "name" : "updatePassword",
+    "displayName" : "Update Password",
+    "description" : "User updates password",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "requestUri",
+      "required" : false
+    }, {
+      "name" : "userId",
+      "required" : true
+    }, {
+      "name" : "requestId",
+      "required" : true
+    }, {
+      "name" : "timestamp",
+      "required" : true
+    } ]
+  }, {
+    "id" : 4,
+    "name" : "logout",
+    "displayName" : "Logout",
+    "description" : "User Logout",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "timestamp",
+      "required" : true
+    }, {
+      "name" : "userId",
+      "required" : true
+    }, {
+      "name" : "requestId",
+      "required" : true
+    } ]
+  }, {
+    "id" : 5,
+    "name" : "createUser",
+    "displayName" : "Create User",
+    "description" : "Create User",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "userId",
+      "required" : true
+    }, {
+      "name" : "requestId",
+      "required" : false
+    }, {
+      "name" : "timestamp",
+      "required" : true
+    }, {
+      "name" : "requestUri",
+      "required" : false
+    } ]
+  } ],
+  "attributes" : [ {
+    "id" : 1,
+    "name" : "userId",
+    "displayName" : "UserId",
+    "description" : "Id of the User",
+    "dataType" : "STRING",
+    "indexed" : true,
+    "sortable" : true,
+    "required" : true,
+    "requestContext" : true,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 2,
+    "name" : "requestId",
+    "displayName" : "RequestId",
+    "description" : "Used as a correlation id for logs. Preferably like an UUID",
+    "dataType" : "STRING",
+    "indexed" : true,
+    "sortable" : false,
+    "required" : true,
+    "requestContext" : true,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 3,
+    "name" : "requestUri",
+    "displayName" : "Request URI",
+    "description" : "Contains the original request URI used for action",
+    "dataType" : "STRING",
+    "indexed" : false,
+    "sortable" : true,
+    "required" : false,
+    "requestContext" : true,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 4,
+    "name" : "nodeName",
+    "displayName" : "Node Name",
+    "description" : "Name of the node where action took place",
+    "dataType" : "STRING",
+    "indexed" : false,
+    "sortable" : true,
+    "required" : true,
+    "requestContext" : true,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 5,
+    "name" : "timestamp",
+    "displayName" : "Timestamp",
+    "description" : "Time of action occurrence preferably in ISO-8601 datetime format, using UTC timezone",
+    "dataType" : "STRING",
+    "indexed" : true,
+    "sortable" : true,
+    "required" : true,
+    "requestContext" : true,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  } ]
+}
