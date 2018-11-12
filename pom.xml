@@ -4,32 +4,115 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>3.25</version>
-        <relativePath />
+        <version>3.28</version>
+        <relativePath/>
     </parent>
     <artifactId>audit-log-plugin</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>hpi</packaging>
-    <properties>
-        <jenkins.version>2.60.3</jenkins.version>
-	<java.level>8</java.level>
-    </properties>
+
+    <!-- jenkins project information -->
     <name>Audit Log Plugin</name>
     <description>Audit logging for Jenkins with predefined audit events</description>
-    <url>https://wiki.jenkins-ci.org/display/JENKINS/TODO+Plugin</url>
+    <url>https://github.com/jvz/audit-log-plugin</url>
     <licenses>
         <license>
             <name>MIT License</name>
             <url>http://opensource.org/licenses/MIT</url>
         </license>
     </licenses>
-    <!-- Assuming you want to host on @jenkinsci:
-    <scm>
-        <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
-        <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
-    </scm>
-    -->
+    <!-- jenkins project global properties -->
+    <properties>
+        <jenkins.version>2.60.3</jenkins.version>
+        <java.level>8</java.level>
+        <log4j.version>2.11.1</log4j.version>
+        <log4j-audit.version>1.0.0</log4j-audit.version>
+    </properties>
+
+    <!-- defines all project dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-audit-api</artifactId>
+            <version>${log4j-audit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-catalog-api</artifactId>
+            <version>${log4j-audit.version}</version>
+        </dependency>
+        <!-- fixes log4j-catalog-api commons-lang3 version mismatch issue -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.8.1</version>
+        </dependency>
+    </dependencies>
+
+    <!-- handle the maven build lifecycle phases -->
+    <build>
+        <plugins>
+            <!-- handles creation of jenkins plugin packages -->
+            <plugin>
+                <groupId>org.jenkins-ci.tools</groupId>
+                <artifactId>maven-hpi-plugin</artifactId>
+            </plugin>
+            <!-- log4j audit maven plugin -->
+            <plugin>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-audit-maven-plugin</artifactId>
+                <version>${log4j-audit.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <packageName>io.jenkins.plugins.audit</packageName>
+                            <enterpriseId>38143</enterpriseId>
+                            <maxKeyLength>32</maxKeyLength>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- versions-maven-plugin -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <generateBackupPoms>false</generateBackupPoms>
+                </configuration>
+            </plugin>
+            <!-- version 1.0-beta-9 fixes https://github.com/mojohaus/extra-enforcer-rules/issues/31 -->
+            <plugin>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>extra-enforcer-rules</artifactId>
+                        <version>1.0-beta-9</version>
+                        <scope>compile</scope>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- defines all repositories accessible to maven -->
     <repositories>
         <repository>
             <id>repo.jenkins-ci.org</id>
