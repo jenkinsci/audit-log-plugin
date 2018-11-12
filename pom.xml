@@ -80,7 +80,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <packageName>io.jenkins.plugins.audit</packageName>
+                            <packageName>io.jenkins.plugins.audit.event</packageName>
                             <enterpriseId>38143</enterpriseId>
                             <maxKeyLength>32</maxKeyLength>
                         </configuration>
