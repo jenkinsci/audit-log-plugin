@@ -11,9 +11,6 @@
       "name" : "timestamp",
       "required" : true
     }, {
-      "name" : "requestId",
-      "required" : false
-    }, {
       "name" : "userId",
       "required" : true
     } ]
@@ -24,12 +21,6 @@
     "description" : "User updates API key(s)",
     "aliases" : [ ],
     "attributes" : [ {
-      "name" : "requestId",
-      "required" : true
-    }, {
-      "name" : "requestUri",
-      "required" : false
-    }, {
       "name" : "userId",
       "required" : true
     }, {
@@ -43,13 +34,7 @@
     "description" : "User updates password",
     "aliases" : [ ],
     "attributes" : [ {
-      "name" : "requestUri",
-      "required" : false
-    }, {
       "name" : "userId",
-      "required" : true
-    }, {
-      "name" : "requestId",
       "required" : true
     }, {
       "name" : "timestamp",
@@ -67,9 +52,6 @@
     }, {
       "name" : "userId",
       "required" : true
-    }, {
-      "name" : "requestId",
-      "required" : true
     } ]
   }, {
     "id" : 5,
@@ -81,14 +63,8 @@
       "name" : "userId",
       "required" : true
     }, {
-      "name" : "requestId",
-      "required" : false
-    }, {
       "name" : "timestamp",
       "required" : true
-    }, {
-      "name" : "requestUri",
-      "required" : false
     } ]
   } ],
   "attributes" : [ {
@@ -100,7 +76,7 @@
     "indexed" : true,
     "sortable" : true,
     "required" : true,
-    "requestContext" : true,
+    "requestContext" : false,
     "examples" : null,
     "aliases" : [ ],
     "constraints" : [ ],
@@ -156,7 +132,7 @@
     "indexed" : true,
     "sortable" : true,
     "required" : true,
-    "requestContext" : true,
+    "requestContext" : false,
     "examples" : null,
     "aliases" : [ ],
     "constraints" : [ ],
