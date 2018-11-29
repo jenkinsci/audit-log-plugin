@@ -21,7 +21,7 @@
     </Properties>
     <Appenders>
         <RollingRandomAccessFile name="audit" fileName="${LOG_DIR}/audit.log" filePattern="${LOG_DIR}/archive/audit.log.%d{yyyyMMdd_HHmmss}-%i">
-            <JsonLayout properties="true" locationInfo="true" eventEol="true"></JsonLayout>
+            <JsonLayout properties="true" locationInfo="true"></JsonLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="20 MB"/>
             </Policies>
