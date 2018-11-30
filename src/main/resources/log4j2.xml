@@ -17,11 +17,11 @@
 -->
 <Configuration status="ERROR">
     <Properties>
-        <Property name="LOG_DIR">${env:JENKINS_HOME}/logs</Property>
+        <Property name="LOG_DIR">${env:JENKINS_HOME:-.}/logs</Property>
     </Properties>
     <Appenders>
         <RollingRandomAccessFile name="audit" fileName="${LOG_DIR}/audit.log" filePattern="${LOG_DIR}/archive/audit.log.%d{yyyyMMdd_HHmmss}-%i">
-            <JsonLayout properties="true" locationInfo="true"></JsonLayout>
+            <JsonLayout properties="true"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="20 MB"/>
             </Policies>
