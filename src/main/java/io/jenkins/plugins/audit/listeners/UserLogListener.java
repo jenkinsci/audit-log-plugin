@@ -80,6 +80,8 @@ public class UserLogListener extends SecurityListener {
         Login login = LogEventFactory.getEvent(Login.class);
 
         RequestContext.setIpAddress(Stapler.getCurrentRequest().getRemoteAddr());
+        RequestContext.setNodeName("master");
+        RequestContext.getRequestId();
         login.setUserId(username);
         login.setTimestamp(currentTime);
         login.logEvent();
@@ -96,6 +98,8 @@ public class UserLogListener extends SecurityListener {
          String currentTime = Instant.now().toString();
          Logout logout = LogEventFactory.getEvent(Logout.class);
 
+         RequestContext.setNodeName("master");
+         RequestContext.getRequestId();
          RequestContext.setIpAddress(Stapler.getCurrentRequest().getRemoteAddr());
          logout.setUserId(username);
          logout.setTimestamp(currentTime);
