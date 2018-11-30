@@ -8,9 +8,17 @@
         <relativePath/>
     </parent>
     <artifactId>audit-log</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${revision}${changelist}</version>
     <packaging>hpi</packaging>
 
+    <!-- scm information -->
+    <scm>
+      <connection>scm:git:git://github.com/jenkinsci/audit-log-plugin.git</connection>
+      <developerConnection>scm:git:git@github.com:jenkinsci/audit-log-plugin.git</developerConnection>
+      <url>https://github.com/jenkinsci/audit-log-plugin</url>
+      <tag>${scmTag}</tag>
+    </scm>
+    
     <!-- jenkins project information -->
     <name>Audit Log Plugin</name>
     <description>Audit logging for Jenkins with predefined audit events</description>
@@ -23,6 +31,8 @@
     </licenses>
     <!-- jenkins project global properties -->
     <properties>
+        <revision>1.0</revision>
+        <changelist>-SNAPSHOT</changelist>
         <jenkins.version>2.60.3</jenkins.version>
         <java.level>8</java.level>
         <log4j.version>2.11.1</log4j.version>
