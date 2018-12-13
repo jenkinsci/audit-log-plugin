@@ -166,9 +166,5 @@
             <id>repo.jenkins-ci.org</id>
             <url>https://repo.jenkins-ci.org/public/</url>
         </pluginRepository>
-        <pluginRepository>
-            <id>audit-log4j-1.0.1</id>
-            <url>https://repository.apache.org/content/repositories/orgapachelogging-1041/</url>
-        </pluginRepository>
     </pluginRepositories>
 </project>
