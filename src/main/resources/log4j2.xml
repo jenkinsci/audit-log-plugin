@@ -28,9 +28,9 @@
         </RollingRandomAccessFile>
     </Appenders>
     <Loggers>
-        <Logger name="AuditLogger" level="trace" additivity="false">
+        <Logger name="AuditLogger" level="debug" additivity="false">
             <AppenderRef ref="audit"/>
         </Logger>
     </Loggers>
 </Configuration>
-</Configuration>
+
