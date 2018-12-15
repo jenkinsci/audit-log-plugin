@@ -79,9 +79,12 @@ public class UserLogListener extends SecurityListener {
         String currentTime = Instant.now().toString();
         Login login = LogEventFactory.getEvent(Login.class);
 
-        RequestContext.setIpAddress(Stapler.getCurrentRequest().getRemoteAddr());
+        // stapler method raises NullPointerException when used during login events
+        //RequestContext.setIpAddress(Stapler.getCurrentRequest().getRemoteAddr());
+
         RequestContext.setNodeName("master");
         RequestContext.getRequestId();
+        RequestContext.setUserId(username);
         login.setUserId(username);
         login.setTimestamp(currentTime);
         login.logEvent();
@@ -93,19 +96,20 @@ public class UserLogListener extends SecurityListener {
      *
      * @param username name or ID of the user who logged out.
      */
-     @Override
-     protected void loggedOut(@Nonnull String username) {
-         String currentTime = Instant.now().toString();
-         Logout logout = LogEventFactory.getEvent(Logout.class);
+    @Override
+    protected void loggedOut(@Nonnull String username) {
+        String currentTime = Instant.now().toString();
+        Logout logout = LogEventFactory.getEvent(Logout.class);
 
-         RequestContext.setNodeName("master");
-         RequestContext.getRequestId();
-         RequestContext.setIpAddress(Stapler.getCurrentRequest().getRemoteAddr());
-         logout.setUserId(username);
-         logout.setTimestamp(currentTime);
-         logout.logEvent();
-         RequestContext.clear();
-     }
+        RequestContext.setNodeName("master");
+        RequestContext.getRequestId();
+        RequestContext.setIpAddress(Stapler.getCurrentRequest().getRemoteAddr());
+        RequestContext.setUserId(username);
+        logout.setUserId(username);
+        logout.setTimestamp(currentTime);
+        logout.logEvent();
+        RequestContext.clear();
+    }
 
      /**
       * Returns all the registered {@link UserLogListener}s.
