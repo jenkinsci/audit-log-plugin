@@ -24,10 +24,10 @@
 
 Project Status
 ---
-[![Build Status](https://travis-ci.org/jvz/audit-log-plugin.svg?branch=master)](https://travis-ci.org/jvz/audit-log-plugin)
+[![Build Status](https://travis-ci.org/jvz/audit-log-plugin.svg?branch=master)][project-build]
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)][license]
 
-#### Cover Coverage Status (https://todothis.com) | Maven Central Location (https://todothis.com)
+#### [Cover Coverage Status][code-coverage]  | [Maven Central Location][maven-central]
 
 ## Project Overview
 
@@ -35,17 +35,16 @@ In [Jenkins][jenkins-site], there are several categories of user-initiated actio
 - Starting and/or stopping a Jenkins build.
 - Creating, Modifying and/or Deleting a Jenkins Job.
 - Performing a change to the Jenkins configuration settings.
-- TODO: Add some other user-actions
+- **TODO:** Add some other user-actions
 
 During the operation of Jenkins other events and actions occur which are not initiated by the user, for example:
 - Jenkins system agent joins or leaves a Jenkins cluster.
 - Authentication and Authorization of a new user succeeds or fails.
 - Generation of system events due to a build succeeding or failing.
 - Build-specific Jenkins events occur
-- TODO: Add some others non-user or system actions
+- **TODO:** Add some others non-user or system actions
 
-The goal of this project is to utilize [Apache Log4j Audit](https://logging.apache.org/log4j-audit/latest/index.html),
-which is an audit logging framework, to implement the logging of audit events within the Jenkins server.
+The goal of this project is to utilize [Apache Log4j Audit][log4j-audit-site], which is an audit logging framework, to implement the logging of audit events within the Jenkins server.
 This requires the following tasks, among other project objectives:
 - Identification and definition of the audit events of importance.
 - Performing updates to the Jenkins Core system to support any additional event-listeners needed, for example, for acquiring audit information.
@@ -53,40 +52,40 @@ This requires the following tasks, among other project objectives:
     - Enable users to configure how audit logs are stored and used.
     - Provide admin settings to configure and add a relational database or local directory to write log files into.
     - Enable users to configure and add an external syslog server.
-    - TODO: Add some other use cases
-- TODO: Add more use cases and applications of the plugin
+    - **TODO:** Add some other use cases
+- **TODO:** Add more use cases and applications of the plugin
 
 Getting Started: Prerequisites
 ---------------
 
-+ Make sure you have a [JIRA account](https://issues.apache.org/jira/).
-+ Make sure you have a [GitHub account](https://github.com/signup/free).
++ Make sure you have a [JIRA account][jira-site].
++ Make sure you have a [GitHub account][github-site].
 + If you're planning to implement a new feature, it makes sense to discuss your changes
-  on [Gitter](https://gitter.im/jenkinsci/outreachy) first.
+  on [Gitter][project-gitter] first.
   This way you can make sure you're not wasting your time on something that isn't
   considered to be in the audit-logging project's scope.
 + Submit a ticket for your issue, assuming one does not already exist.
   + Clearly describe the issue, including steps to reproduce when it is a bug.
   + Make sure you fill in the earliest version that you know has the issue.
-+ Fork the [repository][project-repo] on GitHub, take a look at the [project's JIRA page][project-jira] and [Wiki][audit-log-wiki].
++ Fork the [repository][project-repo] on GitHub, take a look at the [project's JIRA page][project-jira] and [Wiki][project-wiki].
 
 Getting Started: Setup
 ----------------------
 
-#### TODO - how to setup/start the plugin with Jenkins, etc
+**TODO:** - how to setup/start the plugin with Jenkins, etc
 
 
 
 Usage
 ----------------------
 
-#### TODO - demo, screenshot, gifs of running audit logging, etc
+**TODO:** - demo, screenshot, gifs of running audit logging, etc
 
 
 Contributing to the Audit Log Project
 --------------------------
 
-We accept Pull Requests via GitHub. The [gitter](https://gitter.im/jenkinsci/outreachy) is the
+We accept Pull Requests via GitHub. The [gitter][project-gitter] is the
 main channel of communication for contributors.
 
 Before you dig right into the code, there are a few guidelines that we need
@@ -102,7 +101,7 @@ things and it makes applying PRs easier for us:
   + Check for unnecessary whitespace with `git diff --check` before committing.
 + Make sure your commit messages are in the proper format. Your commit message should contain the key of the JIRA issue.
 ```
-[MCOMPILER-XXX] - Subject of the JIRA Ticket
+[JENKINS-XXX] - Subject of the JIRA Ticket
 
  Optional supplemental description.
 ```
@@ -124,14 +123,22 @@ Additional Resources
 + [Jenkins Developer Documentation](https://jenkins.io/doc/developer)
 + [Jenkins Main site][jenkins-site]
 + [Jenkins Developer Mailing List](https://jenkins.io/mailing-lists/)
+- **TODO:** - Add more resources relevant to the plugin and its development.
 
 
-[license]: (https://opensource.org/licenses/MIT)
-[new-contributor-guide]: https://wiki.jenkins.io/display/JENKINS/Beginners+Guide+to+Contributing
-[jenkins-site]: http://jenkins.io/
+
+[code-coverage]: https://todothis.com
 [code-style]: https://logging.apache.org/log4j-audit/latest/javastyle.html
-[audit-log-wiki]: https://github.com/jenkinsci/audit-log-plugin/wiki
-[project-repo]: https://github.com/jenkinsci/audit-log-plugin
+[github-site]: https://github.com/signup/free
+[jenkins-site]: http://jenkins.io/
+[jira-site]: https://issues.apache.org/jira/
+[license]: https://opensource.org/licenses/MIT
+[log4j-audit-site]: https://logging.apache.org/log4j-audit/latest/index.html
+[maven-central]: https://todothis.com
+[new-contributor-guide]: https://wiki.jenkins.io/display/JENKINS/Beginners+Guide+to+Contributing
+[project-build]: https://travis-ci.org/jvz/audit-log-plugin
+[project-gitter]: https://gitter.im/jenkinsci/outreachy
 [project-jira]: https://issues.jenkins-ci.org/browse/JENKINS-54082
+[project-repo]: https://github.com/jenkinsci/audit-log-plugin
+[project-wiki]: https://github.com/jenkinsci/audit-log-plugin/wiki
 [test-results]: https://todothis.com
-[build]: https://needtodo.com
