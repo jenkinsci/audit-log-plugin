@@ -22,19 +22,16 @@
 
 package io.jenkins.plugins.audit.listeners;
 
-import hudson.ExtensionList;
-import hudson.Extension;
-import jenkins.security.SecurityListener;
-import io.jenkins.plugins.audit.RequestContext;
-
-import java.time.Instant;
 import javax.annotation.Nonnull;
 
-import io.jenkins.plugins.audit.event.Login;
-import io.jenkins.plugins.audit.event.Logout;
 import org.apache.logging.log4j.audit.LogEventFactory;
 import org.acegisecurity.userdetails.UserDetails;
-import org.kohsuke.stapler.Stapler;
+
+import hudson.ExtensionList;
+import hudson.Extension;
+import io.jenkins.plugins.audit.event.Login;
+import io.jenkins.plugins.audit.event.Logout;
+import jenkins.security.SecurityListener;
 
 /**
  * Listener notified of user login and logout events.
@@ -76,19 +73,8 @@ public class UserLogListener extends SecurityListener {
      */
     @Override
     protected void loggedIn(@Nonnull String username) {
-        String currentTime = Instant.now().toString();
         Login login = LogEventFactory.getEvent(Login.class);
-
-        // stapler method raises NullPointerException when used during login events
-        //RequestContext.setIpAddress(Stapler.getCurrentRequest().getRemoteAddr());
-
-        RequestContext.setNodeName("master");
-        RequestContext.getRequestId();
-        RequestContext.setUserId(username);
-        login.setUserId(username);
-        login.setTimestamp(currentTime);
         login.logEvent();
-        RequestContext.clear();
     }
 
     /**
@@ -98,17 +84,8 @@ public class UserLogListener extends SecurityListener {
      */
     @Override
     protected void loggedOut(@Nonnull String username) {
-        String currentTime = Instant.now().toString();
         Logout logout = LogEventFactory.getEvent(Logout.class);
-
-        RequestContext.setNodeName("master");
-        RequestContext.getRequestId();
-        RequestContext.setIpAddress(Stapler.getCurrentRequest().getRemoteAddr());
-        RequestContext.setUserId(username);
-        logout.setUserId(username);
-        logout.setTimestamp(currentTime);
         logout.logEvent();
-        RequestContext.clear();
     }
 
      /**
