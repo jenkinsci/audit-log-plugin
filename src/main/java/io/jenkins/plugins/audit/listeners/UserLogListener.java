@@ -22,19 +22,16 @@
 
 package io.jenkins.plugins.audit.listeners;
 
-import hudson.ExtensionList;
-import hudson.Extension;
-import jenkins.security.SecurityListener;
-import io.jenkins.plugins.audit.RequestContext;
-
-import java.time.Instant;
 import javax.annotation.Nonnull;
 
-import io.jenkins.plugins.audit.event.Login;
-import io.jenkins.plugins.audit.event.Logout;
 import org.apache.logging.log4j.audit.LogEventFactory;
 import org.acegisecurity.userdetails.UserDetails;
-import org.kohsuke.stapler.Stapler;
+
+import hudson.ExtensionList;
+import hudson.Extension;
+import io.jenkins.plugins.audit.event.Login;
+import io.jenkins.plugins.audit.event.Logout;
+import jenkins.security.SecurityListener;
 
 /**
  * Listener notified of user login and logout events.
@@ -76,16 +73,8 @@ public class UserLogListener extends SecurityListener {
      */
     @Override
     protected void loggedIn(@Nonnull String username) {
-        String currentTime = Instant.now().toString();
         Login login = LogEventFactory.getEvent(Login.class);
-
-        RequestContext.setIpAddress(Stapler.getCurrentRequest().getRemoteAddr());
-        RequestContext.setNodeName("master");
-        RequestContext.getRequestId();
-        login.setUserId(username);
-        login.setTimestamp(currentTime);
         login.logEvent();
-        RequestContext.clear();
     }
 
     /**
@@ -93,19 +82,11 @@ public class UserLogListener extends SecurityListener {
      *
      * @param username name or ID of the user who logged out.
      */
-     @Override
-     protected void loggedOut(@Nonnull String username) {
-         String currentTime = Instant.now().toString();
-         Logout logout = LogEventFactory.getEvent(Logout.class);
-
-         RequestContext.setNodeName("master");
-         RequestContext.getRequestId();
-         RequestContext.setIpAddress(Stapler.getCurrentRequest().getRemoteAddr());
-         logout.setUserId(username);
-         logout.setTimestamp(currentTime);
-         logout.logEvent();
-         RequestContext.clear();
-     }
+    @Override
+    protected void loggedOut(@Nonnull String username) {
+        Logout logout = LogEventFactory.getEvent(Logout.class);
+        logout.logEvent();
+    }
 
      /**
       * Returns all the registered {@link UserLogListener}s.
