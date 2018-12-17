@@ -13,8 +13,8 @@ public class AuditLogConfiguration extends GlobalConfiguration {
     private String logDestination;
 
     public AuditLogConfiguration() {
-        super();
         load();
+        reloadLogger();
     }
 
     public String getLogDestination() {
@@ -25,14 +25,17 @@ public class AuditLogConfiguration extends GlobalConfiguration {
     public void setLogDestination(String logDestination) {
         this.logDestination = logDestination;
         save();
-        System.setProperty("auditFileName", logDestination);
-        LoggerContext.getContext().reconfigure();
+//        reloadLogger();
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()){
+            return false;
+        }
         AuditLogConfiguration that = (AuditLogConfiguration) o;
         return Objects.equals(getLogDestination(), that.getLogDestination());
     }
@@ -40,5 +43,10 @@ public class AuditLogConfiguration extends GlobalConfiguration {
     @Override
     public int hashCode() {
         return Objects.hash(getLogDestination());
+    }
+
+    private void reloadLogger() {
+        System.setProperty("auditFileName", this.logDestination);
+        LoggerContext.getContext().reconfigure();
     }
 }
