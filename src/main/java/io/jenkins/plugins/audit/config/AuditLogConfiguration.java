@@ -14,7 +14,7 @@ public class AuditLogConfiguration extends GlobalConfiguration {
 
     public AuditLogConfiguration() {
         load();
-        reloadLogger();
+//        reloadLogger();
     }
 
     public String getLogDestination() {
@@ -25,7 +25,7 @@ public class AuditLogConfiguration extends GlobalConfiguration {
     public void setLogDestination(String logDestination) {
         this.logDestination = logDestination;
         save();
-//        reloadLogger();
+        reloadLogger();
     }
 
     @Override
