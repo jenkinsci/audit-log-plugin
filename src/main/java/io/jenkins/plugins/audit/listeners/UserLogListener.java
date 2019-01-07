@@ -74,6 +74,8 @@ public class UserLogListener extends SecurityListener {
     @Override
     protected void loggedIn(@Nonnull String username) {
         Login login = LogEventFactory.getEvent(Login.class);
+
+        login.setUserId(username);
         login.logEvent();
     }
 
@@ -85,6 +87,8 @@ public class UserLogListener extends SecurityListener {
     @Override
     protected void loggedOut(@Nonnull String username) {
         Logout logout = LogEventFactory.getEvent(Logout.class);
+
+        logout.setUserId(username);
         logout.logEvent();
     }
 
