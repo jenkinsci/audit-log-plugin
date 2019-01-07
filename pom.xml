@@ -13,12 +13,12 @@
 
     <!-- scm information -->
     <scm>
-      <connection>scm:git:git://github.com/jenkinsci/audit-log-plugin.git</connection>
-      <developerConnection>scm:git:git@github.com:jenkinsci/audit-log-plugin.git</developerConnection>
-      <url>https://github.com/jenkinsci/audit-log-plugin</url>
-      <tag>${scmTag}</tag>
+        <connection>scm:git:git://github.com/jenkinsci/audit-log-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:jenkinsci/audit-log-plugin.git</developerConnection>
+        <url>https://github.com/jenkinsci/audit-log-plugin</url>
+        <tag>${scmTag}</tag>
     </scm>
-    
+
     <!-- jenkins project information -->
     <name>Audit Log Plugin</name>
     <description>Audit logging for Jenkins with predefined audit events</description>
@@ -33,6 +33,7 @@
     <properties>
         <revision>1.0</revision>
         <changelist>-SNAPSHOT</changelist>
+        <!--<jenkins.version>2.60.3</jenkins.version>-->
         <jenkins.version>2.158-SNAPSHOT</jenkins.version>
         <java.level>8</java.level>
         <log4j.version>2.11.1</log4j.version>
@@ -63,13 +64,6 @@
             <artifactId>log4j-catalog-api</artifactId>
             <version>${log4j-audit.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
-            <classifier>tests</classifier>
-            <scope>test</scope>
-        </dependency>
         <!-- fixes log4j-catalog-api commons-lang3 version mismatch issue -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -92,6 +86,13 @@
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
             <version>${junit.vintage.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+            <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -159,6 +160,10 @@
         <repository>
             <id>repo.jenkins-ci.org</id>
             <url>https://repo.jenkins-ci.org/public/</url>
+        </repository>
+        <repository>
+            <id>audit-log4j-1.0.1</id>
+            <url>https://repository.apache.org/content/repositories/orgapachelogging-1041/</url>
         </repository>
     </repositories>
     <pluginRepositories>
