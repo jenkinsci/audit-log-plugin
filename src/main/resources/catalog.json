@@ -9,10 +9,10 @@
     "aliases" : [ ],
     "attributes" : [ {
       "name" : "timestamp",
-      "required" : true
+      "required" : false
     }, {
       "name" : "userId",
-      "required" : true
+      "required" : false
     } ]
   }, {
     "id" : 2,
@@ -48,10 +48,10 @@
     "aliases" : [ ],
     "attributes" : [ {
       "name" : "timestamp",
-      "required" : true
+      "required" : false
     }, {
       "name" : "userId",
-      "required" : true
+      "required" : false
     } ]
   }, {
     "id" : 5,
@@ -61,10 +61,10 @@
     "aliases" : [ ],
     "attributes" : [ {
       "name" : "userId",
-      "required" : true
+      "required" : false
     }, {
       "name" : "timestamp",
-      "required" : true
+      "required" : false
     } ]
   } ],
   "attributes" : [ {
@@ -75,8 +75,8 @@
     "dataType" : "STRING",
     "indexed" : true,
     "sortable" : true,
-    "required" : true,
-    "requestContext" : true,
+    "required" : false,
+    "requestContext" : false,
     "examples" : null,
     "aliases" : [ ],
     "constraints" : [ ],
@@ -89,8 +89,8 @@
     "dataType" : "STRING",
     "indexed" : true,
     "sortable" : false,
-    "required" : true,
-    "requestContext" : true,
+    "required" : false,
+    "requestContext" : false,
     "examples" : null,
     "aliases" : [ ],
     "constraints" : [ ],
@@ -104,7 +104,7 @@
     "indexed" : false,
     "sortable" : true,
     "required" : false,
-    "requestContext" : true,
+    "requestContext" : false,
     "examples" : null,
     "aliases" : [ ],
     "constraints" : [ ],
@@ -117,8 +117,8 @@
     "dataType" : "STRING",
     "indexed" : false,
     "sortable" : true,
-    "required" : true,
-    "requestContext" : true,
+    "required" : false,
+    "requestContext" : false,
     "examples" : null,
     "aliases" : [ ],
     "constraints" : [ ],
@@ -131,8 +131,8 @@
     "dataType" : "STRING",
     "indexed" : true,
     "sortable" : true,
-    "required" : true,
-    "requestContext" : true,
+    "required" : false,
+    "requestContext" : false,
     "examples" : null,
     "aliases" : [ ],
     "constraints" : [ ],
