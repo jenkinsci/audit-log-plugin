@@ -9,6 +9,7 @@
     </parent>
     <artifactId>audit-log</artifactId>
     <version>${revision}${changelist}</version>
+    <groupId>io.jenkins-ci.plugins</groupId>
     <packaging>hpi</packaging>
 
     <!-- scm information -->
