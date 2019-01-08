@@ -14,7 +14,7 @@ public class AuditLogConfiguration extends GlobalConfiguration {
 
     public AuditLogConfiguration() {
         load();
-//        reloadLogger();
+        reloadLogger();
     }
 
     public String getLogDestination() {
@@ -46,7 +46,9 @@ public class AuditLogConfiguration extends GlobalConfiguration {
     }
 
     private void reloadLogger() {
-        System.setProperty("auditFileName", this.logDestination);
+        if(this.logDestination != null){
+            System.setProperty("auditFileName", this.logDestination);
+        }
         LoggerContext.getContext().reconfigure();
     }
 }
