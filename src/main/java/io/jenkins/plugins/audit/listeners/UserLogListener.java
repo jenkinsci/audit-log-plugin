@@ -64,7 +64,7 @@ public class UserLogListener extends SecurityListener {
     }
 
      /**
-      * Returns all the registered {@link UserLogListener}s.
+      * Returns a registered {@link UserLogListener} instance.
       */
       public static ExtensionList<UserLogListener> getInstance() {
           return ExtensionList.lookup(UserLogListener.class);
