@@ -107,8 +107,7 @@ public class UserLogoutListenerTest {
 
         assertEventCount(events, 2);
         assertTrue(logMessage.toString().contains("logout"));
-        assertTrue(logMessage.toString().contains("userId"));
-        assertTrue(logMessage.toString().contains("debbie"));
+        assertEquals("debbie", logMessage.get("userId"));
     }
 
 
