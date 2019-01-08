@@ -105,8 +105,7 @@ public class UserLoginListenerTest {
 
         assertEventCount(events, 1);
         assertTrue(logMessage.toString().contains("login"));
-        assertTrue(logMessage.toString().contains("userId"));
-        assertTrue(logMessage.toString().contains("debbie"));
+        assertEquals("debbie", logMessage.get("userId"));
     }
 
     @Issue("JENKINS-54087")
