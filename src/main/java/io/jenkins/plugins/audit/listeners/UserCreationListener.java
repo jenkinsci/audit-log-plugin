@@ -28,7 +28,7 @@ public class UserCreationListener extends SecurityListener {
     }
 
     /**
-     * Returns all the registered {@link UserCreationListener}s.
+     * Returns a registered {@link UserCreationListener} instance.
      */
     public static ExtensionList<UserCreationListener> getInstance() {
         return ExtensionList.lookup(UserCreationListener.class);
