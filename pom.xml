@@ -22,7 +22,7 @@
     <!-- jenkins project information -->
     <name>Audit Log Plugin</name>
     <description>Audit logging for Jenkins with predefined audit events</description>
-    <url>https://github.com/jvz/audit-log-plugin</url>
+    <url>https://github.com/jenkinsci/audit-log-plugin</url>
     <licenses>
         <license>
             <name>MIT License</name>
@@ -160,10 +160,6 @@
         <repository>
             <id>repo.jenkins-ci.org</id>
             <url>https://repo.jenkins-ci.org/public/</url>
-        </repository>
-        <repository>
-            <id>audit-log4j-1.0.1</id>
-            <url>https://repository.apache.org/content/repositories/orgapachelogging-1041/</url>
         </repository>
     </repositories>
     <pluginRepositories>
