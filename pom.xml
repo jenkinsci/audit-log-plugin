@@ -33,7 +33,6 @@
     <properties>
         <revision>1.0</revision>
         <changelist>-SNAPSHOT</changelist>
-        <!--<jenkins.version>2.60.3</jenkins.version>-->
         <jenkins.version>2.158-SNAPSHOT</jenkins.version>
         <java.level>8</java.level>
         <log4j.version>2.11.1</log4j.version>
@@ -160,6 +159,10 @@
         <repository>
             <id>repo.jenkins-ci.org</id>
             <url>https://repo.jenkins-ci.org/public/</url>
+        </repository>
+        <repository>
+            <id>jenkins-2.158-snapshot</id>
+            <url>https://repo.jenkins-ci.org/snapshots/</url>
         </repository>
     </repositories>
     <pluginRepositories>
