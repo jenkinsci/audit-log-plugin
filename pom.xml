@@ -34,7 +34,8 @@
     <properties>
         <revision>1.0</revision>
         <changelist>-SNAPSHOT</changelist>
-        <jenkins.version>2.158-SNAPSHOT</jenkins.version>
+        <jenkins-core.version>2.158-20190107.194411-1</jenkins-core.version>
+        <jenkins-war.version>2.158-20190107.194455-1</jenkins-war.version>
         <java.level>8</java.level>
         <log4j.version>2.11.1</log4j.version>
         <log4j-audit.version>1.0.1</log4j-audit.version>
