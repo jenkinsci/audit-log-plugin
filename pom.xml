@@ -14,16 +14,16 @@
 
     <!-- scm information -->
     <scm>
-      <connection>scm:git:git://github.com/jenkinsci/audit-log-plugin.git</connection>
-      <developerConnection>scm:git:git@github.com:jenkinsci/audit-log-plugin.git</developerConnection>
-      <url>https://github.com/jenkinsci/audit-log-plugin</url>
-      <tag>${scmTag}</tag>
+        <connection>scm:git:git://github.com/jenkinsci/audit-log-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:jenkinsci/audit-log-plugin.git</developerConnection>
+        <url>https://github.com/jenkinsci/audit-log-plugin</url>
+        <tag>${scmTag}</tag>
     </scm>
-    
+
     <!-- jenkins project information -->
     <name>Audit Log Plugin</name>
     <description>Audit logging for Jenkins with predefined audit events</description>
-    <url>https://github.com/jvz/audit-log-plugin</url>
+    <url>https://github.com/jenkinsci/audit-log-plugin</url>
     <licenses>
         <license>
             <name>MIT License</name>
@@ -34,7 +34,8 @@
     <properties>
         <revision>1.0</revision>
         <changelist>-SNAPSHOT</changelist>
-        <jenkins.version>2.60.3</jenkins.version>
+        <jenkins-core.version>2.158-20190107.194411-1</jenkins-core.version>
+        <jenkins-war.version>2.158-20190107.194455-1</jenkins-war.version>
         <java.level>8</java.level>
         <log4j.version>2.11.1</log4j.version>
         <log4j-audit.version>1.0.1</log4j-audit.version>
@@ -94,6 +95,11 @@
             <version>${log4j.version}</version>
             <classifier>tests</classifier>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>mock-security-realm</artifactId>
+            <version>1.3</version>
         </dependency>
     </dependencies>
 
@@ -155,6 +161,10 @@
         <repository>
             <id>repo.jenkins-ci.org</id>
             <url>https://repo.jenkins-ci.org/public/</url>
+        </repository>
+        <repository>
+            <id>jenkins-2.158-snapshot</id>
+            <url>https://repo.jenkins-ci.org/snapshots/</url>
         </repository>
     </repositories>
     <pluginRepositories>

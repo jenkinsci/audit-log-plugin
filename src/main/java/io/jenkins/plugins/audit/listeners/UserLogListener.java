@@ -22,15 +22,13 @@
 
 package io.jenkins.plugins.audit.listeners;
 
-import javax.annotation.Nonnull;
-
 import org.apache.logging.log4j.audit.LogEventFactory;
-import org.acegisecurity.userdetails.UserDetails;
 
 import hudson.ExtensionList;
 import hudson.Extension;
 import io.jenkins.plugins.audit.event.Login;
 import io.jenkins.plugins.audit.event.Logout;
+import javax.annotation.Nonnull;
 import jenkins.security.SecurityListener;
 
 /**
@@ -40,33 +38,6 @@ import jenkins.security.SecurityListener;
 public class UserLogListener extends SecurityListener {
 
     /**
-     * Fired when a user was successfully authenticated using credentials. It could be password or any other credentials.
-     * This might be via the web UI, or via REST (using API token or Basic), or CLI (remoting, auth, ssh)
-     * or any other way plugins can propose.
-     *
-     * @param details details of the newly authenticated user, such as name and groups.
-     */
-    protected void authenticated(@Nonnull UserDetails details) {}
-
-    /**
-     * Fired when a user has failed to log in.
-     * Would be called after {@link #failedToAuthenticate}.
-     *
-     * @param username the user
-     */
-    protected void failedToLogIn(@Nonnull String username) {}
-
-    /**
-     * Fired when a user tried to authenticate but failed.
-     * UserLogListener does not use this abstract class method, however, rather than leaving
-     * its implementation empty it is made to throw an exception if the method is ever called.
-     *
-     * @param username the user
-     * @see #authenticated
-     */
-    protected void failedToAuthenticate(@Nonnull String username) {}
-
-    /**
      * Fired when a user has logged in, event logged via Log4j-audit.
      *
      * @param username name or ID of the user who logged in.
@@ -74,6 +45,8 @@ public class UserLogListener extends SecurityListener {
     @Override
     protected void loggedIn(@Nonnull String username) {
         Login login = LogEventFactory.getEvent(Login.class);
+
+        login.setUserId(username);
         login.logEvent();
     }
 
@@ -85,13 +58,17 @@ public class UserLogListener extends SecurityListener {
     @Override
     protected void loggedOut(@Nonnull String username) {
         Logout logout = LogEventFactory.getEvent(Logout.class);
+
+        logout.setUserId(username);
         logout.logEvent();
     }
 
      /**
-      * Returns all the registered {@link UserLogListener}s.
+      * Returns a registered {@link UserLogListener} instance.
       */
-      public static ExtensionList<UserLogListener> all() {
+      public static ExtensionList<UserLogListener> getInstance() {
           return ExtensionList.lookup(UserLogListener.class);
       }
+
+
 }
