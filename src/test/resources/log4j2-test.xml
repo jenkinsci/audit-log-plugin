@@ -16,12 +16,15 @@
 ~ limitations under the license.
 -->
 <Configuration>
-  <Appenders>
-    <List name="AuditList"/>
-  </Appenders>
-  <Loggers>
-    <Logger name="AuditLogger" level="debug">
-      <AppenderRef ref="AuditList"/>
-    </Logger>
-  </Loggers>
+    <Properties>
+        <Property name="AUDIT_LOG_DESTINATION_TEST">$${sys:auditFileName:-AuditList}</Property>
+    </Properties>
+    <Appenders>
+        <List name="${AUDIT_LOG_DESTINATION_TEST}"/>
+    </Appenders>
+    <Loggers>
+        <Logger name="AuditLogger" level="debug">
+            <AppenderRef ref="${AUDIT_LOG_DESTINATION_TEST}"/>
+        </Logger>
+    </Loggers>
 </Configuration>
