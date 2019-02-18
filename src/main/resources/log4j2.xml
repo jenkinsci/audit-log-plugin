@@ -17,12 +17,11 @@
 -->
 <Configuration status="ERROR">
     <Properties>
-        <Property name="JENKINS_HOME">$${env:JENKINS_HOME:-.}</Property>
-        <Property name="FALLBACK_LOG_DESTINATION">$${JENKINS_HOME}/logs/audit.log</Property>
-        <Property name="AUDIT_LOG_DESTINATION">$${sys:auditFileName:-${FALLBACK_LOG_DESTINATION}}</Property>
+        <Property name="AUDIT_LOG_DESTINATION">${env:JENKINS_HOME:-.}/logs</Property>
+        <Property name="filename">${sys:auditFileName:-audit}</Property>
     </Properties>
     <Appenders>
-        <RollingRandomAccessFile name="audit" fileName="${AUDIT_LOG_DESTINATION}" filePattern="${AUDIT_LOG_DESTINATION}.%d{yyyyMMdd_HHmmss}-%i.log">
+        <RollingRandomAccessFile name="audit" fileName="${AUDIT_LOG_DESTINATION}/${filename}.log" filePattern="${AUDIT_LOG_DESTINATION}/archive/{filename}.log.%d{yyyyMMdd_HHmmss}-%i">
             <JsonLayout properties="true"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="20 MB"/>
