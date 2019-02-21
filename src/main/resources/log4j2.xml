@@ -17,8 +17,8 @@
 -->
 <Configuration status="ERROR">
     <Properties>
-        <Property name="JENKINS_HOME">$${env:JENKINS_HOME:-.}</Property>
-        <Property name="FALLBACK_LOG_DESTINATION">$${JENKINS_HOME}/logs/audit.log</Property>
+        <Property name="DEFAULT_HOME">$${env:JENKINS_HOME:-.}</Property>
+        <Property name="FALLBACK_LOG_DESTINATION">${DEFAULT_HOME}/logs/audit.log</Property>
         <Property name="AUDIT_LOG_DESTINATION">$${sys:auditFileName:-${FALLBACK_LOG_DESTINATION}}</Property>
     </Properties>
     <Appenders>
