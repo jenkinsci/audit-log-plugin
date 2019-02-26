@@ -38,7 +38,11 @@ public class BuildStartListener extends RunListener<Run> {
         buildStart.setCause(causes);
         buildStart.setProjectName(run.getParent().getFullName());
         buildStart.setTimestamp(new Date(run.getStartTimeInMillis()).toString());
-        buildStart.setUserId(User.current().getId());
+        User user = User.current();
+        if(user != null)
+            buildStart.setUserId(user.getId());
+        else
+            buildStart.setUserId(null);
 
         buildStart.logEvent();
     }
