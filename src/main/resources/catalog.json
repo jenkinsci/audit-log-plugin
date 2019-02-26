@@ -164,7 +164,7 @@
     "name" : "cause",
     "displayName" : "Cause",
     "description" : "The cause for the occurance of an action",
-    "dataType" : "STRING",
+    "dataType" : "LIST",
     "indexed" : true,
     "sortable" : true,
     "required" : false,
