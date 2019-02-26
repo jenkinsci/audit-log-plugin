@@ -2,17 +2,21 @@ package io.jenkins.plugins.audit.listeners;
 
 import hudson.Extension;
 import hudson.ExtensionList;
+import hudson.model.Cause;
 import hudson.model.Run;
 import hudson.model.TaskListener;
+import hudson.model.User;
 import hudson.model.listeners.RunListener;
 import org.apache.logging.log4j.audit.LogEventFactory;
 import io.jenkins.plugins.audit.event.BuildStart;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Extension
-public class BuildStartListner extends RunListener<Run> {
+public class BuildStartListener extends RunListener<Run> {
     /**
      * Fired when a build is started, event logged via Log4j-audit.
      *
@@ -23,20 +27,26 @@ public class BuildStartListner extends RunListener<Run> {
     public void onStarted(Run run, TaskListener listener) {
         BuildStart buildStart = LogEventFactory.getEvent(BuildStart.class);
 
+        List causeObjects = run.getCauses();
+        List<String> causes = new ArrayList<>(causeObjects.size());
+        for (Object cause: causeObjects) {
+            Cause c = (Cause)cause;
+            causes.add(c.getShortDescription());
+        }
+
         buildStart.setBuildNumber(run.getNumber());
-        //run.getCause(<?>).getShortDescription(); Not sure how to get the cause.
-        //buildStart.setCause(run.getCauses()); Returns list of causes
-        buildStart.setCause("Manual");
+        buildStart.setCause(causes);
         buildStart.setProjectName(run.getParent().getFullName());
         buildStart.setTimestamp(new Date(run.getStartTimeInMillis()).toString());
+        buildStart.setUserId(User.current().getId());
 
         buildStart.logEvent();
     }
 
     /**
-     * Returns a registered {@link BuildStartListner} instance.
+     * Returns a registered {@link BuildStartListener} instance.
      */
-    public static ExtensionList<BuildStartListner> getInstance() {
-        return ExtensionList.lookup(BuildStartListner.class);
+    public static ExtensionList<BuildStartListener> getInstance() {
+        return ExtensionList.lookup(BuildStartListener.class);
     }
 }
