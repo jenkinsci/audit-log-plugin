@@ -66,6 +66,28 @@
       "name" : "timestamp",
       "required" : false
     } ]
+  }, {
+    "id" : 6,
+    "name" : "buildStart",
+    "displayName" : "Build Start",
+    "description" : "Start of the Build",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "userId",
+      "required" : true
+    }, {
+      "name" : "cause",
+      "required" : false
+    }, {
+      "name" : "projectName",
+      "required" : true
+    }, {
+      "name" : "buildNumber",
+      "required" : true
+    }, {
+      "name" : "timestamp",
+      "required" : false
+    } ]
   } ],
   "attributes" : [ {
     "id" : 1,
@@ -129,6 +151,48 @@
     "displayName" : "Timestamp",
     "description" : "Time of action occurrence preferably in ISO-8601 datetime format, using UTC timezone",
     "dataType" : "STRING",
+    "indexed" : true,
+    "sortable" : true,
+    "required" : false,
+    "requestContext" : false,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 6,
+    "name" : "cause",
+    "displayName" : "Cause",
+    "description" : "The cause for the occurance of an action",
+    "dataType" : "LIST",
+    "indexed" : true,
+    "sortable" : true,
+    "required" : false,
+    "requestContext" : false,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 7,
+    "name" : "projectName",
+    "displayName" : "Project Name",
+    "description" : "Name of the project",
+    "dataType" : "STRING",
+    "indexed" : true,
+    "sortable" : true,
+    "required" : false,
+    "requestContext" : false,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 8,
+    "name" : "buildNumber",
+    "displayName" : "Build Number",
+    "description" : "Build number",
+    "dataType" : "INT",
     "indexed" : true,
     "sortable" : true,
     "required" : false,
