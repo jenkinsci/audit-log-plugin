@@ -1,13 +1,5 @@
 package io.jenkins.plugins.audit.listeners;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.HashMap;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.net.URL;
-
 import com.gargoylesoftware.htmlunit.WebRequest;
 import com.gargoylesoftware.htmlunit.HttpMethod;
 import com.gargoylesoftware.htmlunit.Page;
@@ -18,19 +10,24 @@ import org.junit.After;
 import org.junit.Before;
 import org.jvnet.hudson.test.Issue;
 import org.xml.sax.SAXException;
-import org.acegisecurity.Authentication;
 import org.jvnet.hudson.test.JenkinsRule;
 import org.apache.logging.log4j.core.LogEvent;
 import org.jvnet.hudson.test.JenkinsRule.WebClient;
 import org.apache.logging.log4j.test.appender.ListAppender;
 import org.apache.logging.log4j.message.StructuredDataMessage;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.net.URL;
+
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 import static org.junit.Assert.*;
 
 import hudson.model.User;
-import jenkins.model.Jenkins;
 import hudson.security.pages.SignupPage;
 import hudson.security.HudsonPrivateSecurityRealm;
 
@@ -38,7 +35,6 @@ public class UserPasswordLogListenerTest {
 
     private ListAppender app;
     private WebClient client;
-    private final HashMap<String, String> USERS = new HashMap<String, String>();
 
     private static void assertEventCount(final List<LogEvent> events, final int expected) {
         assertEquals("Incorrect number of events.", expected, events.size());
@@ -85,14 +81,6 @@ public class UserPasswordLogListenerTest {
         signup.enterPassword("alice");
         signup.enterFullName(StringUtils.capitalize("alice user"));
         HtmlPage p = signup.submit(j);
-
-        // verify a login event occurred after account creation
-        client.executeOnServer(() -> {
-            Authentication a = Jenkins.getAuthentication();
-            assertEquals("alice", a.getName());
-
-            return null;
-        });
 
         // execute an http request to change a user's password from their config page
         User alice = User.getById("alice", false);

@@ -29,10 +29,8 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import hudson.model.User;
 import hudson.security.HudsonPrivateSecurityRealm;
 import hudson.security.pages.SignupPage;
-import jenkins.model.Jenkins;
 import jenkins.security.ApiTokenProperty;
 import net.sf.json.JSONObject;
-import org.acegisecurity.Authentication;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.message.StructuredDataMessage;
@@ -46,9 +44,6 @@ import org.xml.sax.SAXException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -57,7 +52,6 @@ public class ApiKeyDeletionListenerTest {
 
     private ListAppender app;
     private WebClient client;
-    private final HashMap<String, String> USERS = new HashMap<String, String>();
 
     private static void assertEventCount(final List<LogEvent> events, final int expected) {
         assertEquals("Incorrect number of events.", expected, events.size());
@@ -70,7 +64,6 @@ public class ApiKeyDeletionListenerTest {
 
     @Rule
     public JenkinsRule j = new JenkinsRule();
-    //{j.timeout = 0;} // disable timeouts
 
     @Before
     public void setup() throws Exception {
@@ -78,12 +71,6 @@ public class ApiKeyDeletionListenerTest {
         Field field = HudsonPrivateSecurityRealm.class.getDeclaredField("ID_REGEX");
         field.setAccessible(true);
         field.set(null, null);
-
-        // credentials of four Jenkins accounts
-        USERS.put("alice", "alicePassword");
-        USERS.put("bob", "bobPassword");
-        USERS.put("charlie", "charliePassword");
-        USERS.put("debbie", "debbiePassword");
 
         client = j.createWebClient();
         logout(client);

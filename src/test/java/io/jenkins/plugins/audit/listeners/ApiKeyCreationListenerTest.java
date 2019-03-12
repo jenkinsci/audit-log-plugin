@@ -24,14 +24,6 @@ package io.jenkins.plugins.audit.listeners;
 
 import hudson.security.HudsonPrivateSecurityRealm;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.HashMap;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.net.URL;
-
 import com.gargoylesoftware.htmlunit.WebRequest;
 import com.gargoylesoftware.htmlunit.HttpMethod;
 import com.gargoylesoftware.htmlunit.Page;
@@ -41,30 +33,30 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.jvnet.hudson.test.Issue;
 import org.xml.sax.SAXException;
-import org.acegisecurity.Authentication;
 import org.jvnet.hudson.test.JenkinsRule;
 import org.apache.logging.log4j.core.LogEvent;
 import org.jvnet.hudson.test.JenkinsRule.WebClient;
 import org.apache.logging.log4j.test.appender.ListAppender;
 import org.apache.logging.log4j.message.StructuredDataMessage;
 
+import java.util.List;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.net.URL;
+
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 import static org.junit.Assert.*;
 
 import hudson.model.User;
-import jenkins.model.Jenkins;
 import hudson.security.pages.SignupPage;
-import hudson.security.HudsonPrivateSecurityRealm;
 
 public class ApiKeyCreationListenerTest {
 
     private ListAppender app;
     private WebClient client;
-    private final HashMap<String, String> USERS = new HashMap<String, String>();
 
     private static void assertEventCount(final List<LogEvent> events, final int expected) {
         assertEquals("Incorrect number of events.", expected, events.size());
@@ -77,7 +69,6 @@ public class ApiKeyCreationListenerTest {
 
     @Rule
     public JenkinsRule j = new JenkinsRule();
-    //{j.timeout = 0;} // disable timeouts
 
     @Before
     public void setup() throws Exception {
