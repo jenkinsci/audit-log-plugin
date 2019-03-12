@@ -16,32 +16,45 @@
     } ]
   }, {
     "id" : 2,
-    "name" : "updateKey",
-    "displayName" : "Update Key",
-    "description" : "User updates API key(s)",
+    "name" : "createKey",
+    "displayName" : "Create Key",
+    "description" : "User creates a new API key",
     "aliases" : [ ],
     "attributes" : [ {
       "name" : "userId",
-      "required" : true
+      "required" : false
     }, {
       "name" : "timestamp",
-      "required" : true
+      "required" : false
     } ]
   }, {
     "id" : 3,
+    "name" : "deleteKey",
+    "displayName" : "Delete Key",
+    "description" : "User deletes or revokes an existing API key",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "userId",
+      "required" : false
+    }, {
+      "name" : "timestamp",
+      "required" : false
+    } ]
+  }, {
+    "id" : 4,
     "name" : "updatePassword",
     "displayName" : "Update Password",
     "description" : "User updates password",
     "aliases" : [ ],
     "attributes" : [ {
       "name" : "userId",
-      "required" : true
+      "required" : false
     }, {
       "name" : "timestamp",
-      "required" : true
+      "required" : false
     } ]
   }, {
-    "id" : 4,
+    "id" : 5,
     "name" : "logout",
     "displayName" : "Logout",
     "description" : "User Logout",
@@ -54,7 +67,7 @@
       "required" : false
     } ]
   }, {
-    "id" : 5,
+    "id" : 6,
     "name" : "createUser",
     "displayName" : "Create User",
     "description" : "Create User",
@@ -67,7 +80,7 @@
       "required" : false
     } ]
   }, {
-    "id" : 6,
+    "id" : 7,
     "name" : "buildStart",
     "displayName" : "Build Start",
     "description" : "Start of the Build",

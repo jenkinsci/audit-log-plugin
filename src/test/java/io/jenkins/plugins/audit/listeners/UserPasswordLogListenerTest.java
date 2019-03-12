@@ -51,7 +51,6 @@ public class UserPasswordLogListenerTest {
 
     @Rule
     public JenkinsRule j = new JenkinsRule();
-    //{j.timeout = 0;} // disable timeouts
 
     @Before
     public void setup() throws Exception {
@@ -59,12 +58,6 @@ public class UserPasswordLogListenerTest {
         Field field = HudsonPrivateSecurityRealm.class.getDeclaredField("ID_REGEX");
         field.setAccessible(true);
         field.set(null, null);
-
-        // credentials of four Jenkins accounts
-        USERS.put("alice", "alicePassword");
-        USERS.put("bob", "bobPassword");
-        USERS.put("charlie", "charliePassword");
-        USERS.put("debbie", "debbiePassword");
 
         client = j.createWebClient();
         logout(client);
@@ -117,50 +110,4 @@ public class UserPasswordLogListenerTest {
         assertEventCount(events, 3);
     }
 
-    @Issue("JENKINS-55694")
-    @Test
-    public void updateUserPasswordWithDummyRealm() throws Exception {
-        //HudsonPrivateSecurityRealm securityRealm = new HudsonPrivateSecurityRealm(true, false, null);
-        j.jenkins.setSecurityRealm(j.createDummySecurityRealm());
-
-        List<LogEvent> events = app.getEvents();
-        assertEventCount(events, 0);
-
-        // new user account creation
-//        SignupPage signup = new SignupPage(client.goTo("signup"));
-//        signup.enterUsername("alice");
-//        signup.enterPassword("alice");
-//        signup.enterFullName(StringUtils.capitalize("alice user"));
-//        HtmlPage p = signup.submit(j);
-
-        User bob = User.getById("bob", true);
-
-        client.login("bob", "bob");
-
-        //assertEquals("pin", u.getDisplayName());
-
-        // verify a login event occurred after account creation
-        client.executeOnServer(() -> {
-            Authentication a = Jenkins.getAuthentication();
-            assertEquals("bob", a.getName());
-
-            return null;
-        });
-
-        // execute an http request to change a user's password from their config page
-//        User alice = User.getById("alice", false);
-        URL configPage = client.createCrumbedUrl(bob.getUrl() + "/" + "configSubmit");
-        String formData = "{\"fullName\": \"bob\", \"description\": \"\", \"userProperty2\": {\"primaryViewName\": \"\"}, \"userProperty4\": {\"user.password\": \"admin\", \"$redact\": [\"user.password\", \"user.password2\"], \"user.password2\": \"admin\"}, \"userProperty5\": {\"authorizedKeys\": \"\"}, \"userProperty7\": {\"insensitiveSearch\": true}, \"core:apply\": \"true\"}";
-
-        WebRequest request = new WebRequest(configPage, HttpMethod.POST);
-        request.setAdditionalHeader("Content-Type", "application/x-www-form-urlencoded");
-        request.setRequestBody("json=" + URLEncoder.encode(formData, StandardCharsets.UTF_8.name()));
-        Page page = client.getPage(request);
-//        assertEquals("ok", page.getWebResponse().getContentAsString());
-//
-//        // ensure user whose password was changed was in fact logged
-//        StructuredDataMessage logMessage = (StructuredDataMessage) events.get(2).getMessage();
-//        assertTrue(logMessage.toString().contains("updatePassword"));
-//        assertEventCount(events, 3);
-    }
 }
