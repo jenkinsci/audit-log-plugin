@@ -33,7 +33,7 @@ public class RequestContextFilter extends PluginServletFilter {
         }
         RequestContext.setIpAddress(request.getRemoteAddr());
         RequestContext.setNodeName(request.getLocalName());
-        //RequestContext.setRequestUri();
+        RequestContext.setRequestUri(request.getRequestURI());
         chain.doFilter(request, response);
         RequestContext.clear();
     }
