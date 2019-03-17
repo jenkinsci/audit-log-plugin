@@ -88,6 +88,101 @@
       "name" : "timestamp",
       "required" : false
     } ]
+  }, {
+    "id" : 9,
+    "name" : "createItem",
+    "displayName" : "Create Item",
+    "description" : "Create Item",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "userId",
+      "required" : false
+    }, {
+      "name" : "timestamp",
+      "required" : false
+    }, {
+      "name" : "itemName",
+      "required" : false
+    }, {
+      "name" : "itemUri",
+      "required" : false
+    } ]
+  }, {
+    "id" : 10,
+    "name" : "copyItem",
+    "displayName" : "Copy Item",
+    "description" : "Copy Item",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "userId",
+      "required" : false
+    }, {
+      "name" : "timestamp",
+      "required" : false
+    }, {
+      "name" : "itemName",
+      "required" : false
+    }, {
+      "name" : "itemUri",
+      "required" : false
+    } ]
+  }, {
+    "id" : 11,
+    "name" : "renameItem",
+    "displayName" : "Rename Item",
+    "description" : "Rename Item",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "userId",
+      "required" : false
+    }, {
+      "name" : "timestamp",
+      "required" : false
+    }, {
+      "name" : "itemName",
+      "required" : false
+    }, {
+      "name" : "itemUri",
+      "required" : false
+    } ]
+  }, {
+    "id" : 12,
+    "name" : "updateItem",
+    "displayName" : "Update Item",
+    "description" : "Update Item",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "userId",
+      "required" : false
+    }, {
+      "name" : "timestamp",
+      "required" : false
+    }, {
+      "name" : "itemName",
+      "required" : false
+    }, {
+      "name" : "itemUri",
+      "required" : false
+    } ]
+  }, {
+    "id" : 13,
+    "name" : "deleteItem",
+    "displayName" : "Delete Item",
+    "description" : "Delete Item",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "userId",
+      "required" : false
+    }, {
+      "name" : "timestamp",
+      "required" : false
+    }, {
+      "name" : "itemName",
+      "required" : false
+    }, {
+      "name" : "itemUri",
+      "required" : false
+    } ]
   } ],
   "attributes" : [ {
     "id" : 1,
@@ -194,6 +289,34 @@
     "description" : "Build number",
     "dataType" : "INT",
     "indexed" : true,
+    "sortable" : true,
+    "required" : false,
+    "requestContext" : false,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 9,
+    "name" : "itemName",
+    "displayName" : "Item Name",
+    "description" : "Item Name",
+    "dataType" : "STRING",
+    "indexed" : true,
+    "sortable" : true,
+    "required" : false,
+    "requestContext" : false,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 10,
+    "name" : "itemUri",
+    "displayName" : "Item URI",
+    "description" : "Contains the original item URI",
+    "dataType" : "STRING",
+    "indexed" : false,
     "sortable" : true,
     "required" : false,
     "requestContext" : false,
