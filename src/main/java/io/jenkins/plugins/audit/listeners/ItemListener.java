@@ -1,6 +1,7 @@
 package io.jenkins.plugins.audit.listeners;
 
 import hudson.Extension;
+import hudson.ExtensionList;
 import hudson.model.Item;
 import hudson.model.User;
 import io.jenkins.plugins.audit.event.*;
@@ -125,4 +126,12 @@ public class ItemListener extends hudson.model.listeners.ItemListener{
 
         itemUpdateEvent.logEvent();
     }
+
+    /**
+     * Returns a registered {@link ItemListener} instance.
+     */
+    public static ExtensionList<ItemListener> getInstance() {
+        return ExtensionList.lookup(ItemListener.class);
+    }
+
 }
