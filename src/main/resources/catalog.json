@@ -88,6 +88,32 @@
       "name" : "timestamp",
       "required" : false
     } ]
+  }, {
+    "id" : 7,
+    "name" : "createNode",
+    "displayName" : "Create Node",
+    "description" : "Create Node",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "nodeName",
+      "required" : true
+    }, {
+      "name" : "timestamp",
+      "required" : true
+    } ]
+  }, {
+    "id" : 8,
+    "name" : "deleteNode",
+    "displayName" : "Delete Node",
+    "description" : "Delete Node",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "nodeName",
+      "required" : true
+    }, {
+      "name" : "timestamp",
+      "required" : true
+    } ]
   } ],
   "attributes" : [ {
     "id" : 1,
