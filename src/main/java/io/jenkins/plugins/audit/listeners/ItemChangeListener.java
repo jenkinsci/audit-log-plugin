@@ -14,7 +14,7 @@ import java.util.Date;
  * Listener notified of any CRUD operations on items.
  */
 @Extension
-public class ItemListener extends hudson.model.listeners.ItemListener{
+public class ItemChangeListener extends hudson.model.listeners.ItemListener{
 
     /**
      * Fired when a new job is created and added to Jenkins, before the initial configuration page is provided.
@@ -128,10 +128,10 @@ public class ItemListener extends hudson.model.listeners.ItemListener{
     }
 
     /**
-     * Returns a registered {@link ItemListener} instance.
+     * Returns a registered {@link ItemChangeListener} instance.
      */
-    public static ExtensionList<ItemListener> getInstance() {
-        return ExtensionList.lookup(ItemListener.class);
+    public static ExtensionList<ItemChangeListener> getInstance() {
+        return ExtensionList.lookup(ItemChangeListener.class);
     }
 
 }
