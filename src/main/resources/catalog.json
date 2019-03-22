@@ -100,9 +100,31 @@
     }, {
       "name" : "timestamp",
       "required" : true
+    }, {
+      "name" : "userId",
+      "required" : false
     } ]
   }, {
     "id" : 8,
+    "name" : "updateNode",
+    "displayName" : "Update Node",
+    "description" : "Update Node",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "nodeName",
+      "required" : true
+    }, {
+      "name" : "oldNodeName",
+      "required" : true
+    }, {
+      "name" : "timestamp",
+      "required" : true
+    }, {
+      "name" : "userId",
+      "required" : false
+    } ]
+  }, {
+    "id" : 9,
     "name" : "deleteNode",
     "displayName" : "Delete Node",
     "description" : "Delete Node",
@@ -113,6 +135,9 @@
     }, {
       "name" : "timestamp",
       "required" : true
+    }, {
+      "name" : "userId",
+      "required" : false
     } ]
   } ],
   "attributes" : [ {
@@ -220,6 +245,20 @@
     "description" : "Build number",
     "dataType" : "INT",
     "indexed" : true,
+    "sortable" : true,
+    "required" : false,
+    "requestContext" : false,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 9,
+    "name" : "oldNodeName",
+    "displayName" : "Old Node Name",
+    "description" : "Name of the old node which is updated recently",
+    "dataType" : "STRING",
+    "indexed" : false,
     "sortable" : true,
     "required" : false,
     "requestContext" : false,
