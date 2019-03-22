@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static io.jenkins.plugins.audit.helpers.Factory.FormatDateISO;
+import static io.jenkins.plugins.audit.helpers.Factory.formatDateISO;
 
 
 @Extension
@@ -39,7 +39,7 @@ public class BuildStartListener extends RunListener<Run> {
         buildStart.setBuildNumber(run.getNumber());
         buildStart.setCause(causes);
         buildStart.setProjectName(run.getParent().getFullName());
-        buildStart.setTimestamp(FormatDateISO(new Date(run.getStartTimeInMillis())));
+        buildStart.setTimestamp(formatDateISO(new Date(run.getStartTimeInMillis())));
         User user = User.current();
         if(user != null)
             buildStart.setUserId(user.getId());
