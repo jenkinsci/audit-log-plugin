@@ -9,6 +9,7 @@ import hudson.model.User;
 import hudson.model.listeners.RunListener;
 import org.apache.logging.log4j.audit.LogEventFactory;
 import io.jenkins.plugins.audit.event.BuildStart;
+import io.jenkins.plugins.audit.event.BuildFinish;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,7 +17,7 @@ import java.util.List;
 
 
 @Extension
-public class BuildStartListener extends RunListener<Run> {
+public class BuildListener extends RunListener<Run> {
     /**
      * Fired when a build is started, event logged via Log4j-audit.
      *
@@ -80,9 +81,9 @@ public class BuildStartListener extends RunListener<Run> {
 
 
     /**
-     * Returns a registered {@link BuildStartListener} instance.
+     * Returns a registered {@link BuildListener} instance.
      */
-    public static ExtensionList<BuildStartListener> getInstance() {
-        return ExtensionList.lookup(BuildStartListener.class);
+    public static ExtensionList<BuildListener> getInstance() {
+        return ExtensionList.lookup(BuildListener.class);
     }
 }
