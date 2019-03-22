@@ -48,6 +48,38 @@ public class BuildStartListener extends RunListener<Run> {
     }
 
     /**
+     * Fired when a build is completed, event logged via Log4j-audit.
+     *
+     * @param run of type Run having the build information
+     * @param listener of type TaskListener that the onCompleted method expects
+     */
+    @Override
+    public void onCompleted(Run run, TaskListener listener) {
+        BuildFinish buildFinish = LogEventFactory.getEvent(BuildFinish.class);
+
+        List causeObjects = run.getCauses();
+        List<String> causes = new ArrayList<>(causeObjects.size());
+        for (Object cause: causeObjects) {
+            Cause c = (Cause)cause;
+            causes.add(c.getShortDescription());
+        }
+
+        buildFinish.setBuildNumber(run.getNumber());
+        buildFinish.setCause(causes);
+        buildFinish.setProjectName(run.getParent().getFullName());
+        buildFinish.setTimestamp(new Date(run.getStartTimeInMillis()).toString());
+        User user = User.current();
+        if(user != null)
+            buildFinish.setUserId(user.getId());
+        else
+            buildFinish.setUserId(null);
+
+        buildFinish.logEvent();
+    }
+
+
+
+    /**
      * Returns a registered {@link BuildStartListener} instance.
      */
     public static ExtensionList<BuildStartListener> getInstance() {

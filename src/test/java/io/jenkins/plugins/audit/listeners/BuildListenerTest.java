@@ -43,6 +43,9 @@ public class BuildStartListenerTest {
 
         project.getBuildersList().add(new Shell("echo Test audit-log-plugin"));
         project.scheduleBuild2(0).get();
+        for(LogEvent e : events){
+            System.out.println(e.toString());
+        }
 
         assertEquals("Event on build start not triggered", 1, events.size());
     }
