@@ -9,6 +9,7 @@ import hudson.model.User;
 import hudson.model.listeners.RunListener;
 import org.apache.logging.log4j.audit.LogEventFactory;
 import io.jenkins.plugins.audit.event.BuildStart;
+import static io.jenkins.plugins.audit.helpers.Factory.dateTimeFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,7 +38,7 @@ public class BuildStartListener extends RunListener<Run> {
         buildStart.setBuildNumber(run.getNumber());
         buildStart.setCause(causes);
         buildStart.setProjectName(run.getParent().getFullName());
-        buildStart.setTimestamp(new Date(run.getStartTimeInMillis()).toString());
+        buildStart.setTimestamp(dateTimeFormat());
         User user = User.current();
         if(user != null)
             buildStart.setUserId(user.getId());
