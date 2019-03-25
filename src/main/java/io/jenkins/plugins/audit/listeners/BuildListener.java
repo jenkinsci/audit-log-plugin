@@ -9,11 +9,8 @@ import hudson.model.User;
 import hudson.model.listeners.RunListener;
 import org.apache.logging.log4j.audit.LogEventFactory;
 import io.jenkins.plugins.audit.event.BuildStart;
-// <<<<<<< HEAD:src/main/java/io/jenkins/plugins/audit/listeners/BuildStartListener.java
-// import static io.jenkins.plugins.audit.helpers.Factory.dateTimeFormat;
-// =======
+import static io.jenkins.plugins.audit.helpers.Factory.dateTimeFormat;
 import io.jenkins.plugins.audit.event.BuildFinish;
-// >>>>>>> upstream/master:src/main/java/io/jenkins/plugins/audit/listeners/BuildListener.java
 
 import java.util.ArrayList;
 import java.util.Date;
