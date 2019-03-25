@@ -11,10 +11,9 @@ import org.apache.logging.log4j.audit.LogEventFactory;
 import io.jenkins.plugins.audit.event.BuildStart;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import static io.jenkins.plugins.audit.helpers.Factory.formatDateISO;
+import static io.jenkins.plugins.audit.helpers.DateTimeHelper.formatDateISO;
 
 
 @Extension
