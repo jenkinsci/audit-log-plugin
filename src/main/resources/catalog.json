@@ -88,6 +88,28 @@
       "name" : "timestamp",
       "required" : false
     } ]
+  }, {
+    "id" : 7,
+    "name" : "buildFinish",
+    "displayName" : "Build Finish",
+    "description" : "Finish of the Build",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "userId",
+      "required" : true
+    }, {
+      "name" : "cause",
+      "required" : false
+    }, {
+      "name" : "projectName",
+      "required" : true
+    }, {
+      "name" : "buildNumber",
+      "required" : true
+    }, {
+      "name" : "timestamp",
+      "required" : false
+    } ]
   } ],
   "attributes" : [ {
     "id" : 1,
