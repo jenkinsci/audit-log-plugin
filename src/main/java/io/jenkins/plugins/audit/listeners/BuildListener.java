@@ -9,6 +9,7 @@ import hudson.model.User;
 import hudson.model.listeners.RunListener;
 import org.apache.logging.log4j.audit.LogEventFactory;
 import io.jenkins.plugins.audit.event.BuildStart;
+import io.jenkins.plugins.audit.event.BuildFinish;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import static io.jenkins.plugins.audit.helpers.DateTimeHelper.formatDateISO;
 
 
 @Extension
-public class BuildStartListener extends RunListener<Run> {
+public class BuildListener extends RunListener<Run> {
     /**
      * Fired when a build is started, event logged via Log4j-audit.
      *
@@ -49,9 +50,41 @@ public class BuildStartListener extends RunListener<Run> {
     }
 
     /**
-     * Returns a registered {@link BuildStartListener} instance.
+     * Fired when a build is completed, event logged via Log4j-audit.
+     *
+     * @param run of type Run having the build information
+     * @param listener of type TaskListener that the onCompleted method expects
      */
-    public static ExtensionList<BuildStartListener> getInstance() {
-        return ExtensionList.lookup(BuildStartListener.class);
+    @Override
+    public void onCompleted(Run run, TaskListener listener) {
+        BuildFinish buildFinish = LogEventFactory.getEvent(BuildFinish.class);
+
+        List causeObjects = run.getCauses();
+        List<String> causes = new ArrayList<>(causeObjects.size());
+        for (Object cause: causeObjects) {
+            Cause c = (Cause)cause;
+            causes.add(c.getShortDescription());
+        }
+
+        buildFinish.setBuildNumber(run.getNumber());
+        buildFinish.setCause(causes);
+        buildFinish.setProjectName(run.getParent().getFullName());
+        buildFinish.setTimestamp(new Date(run.getStartTimeInMillis() + run.getDuration()).toString());
+        User user = User.current();
+        if(user != null)
+            buildFinish.setUserId(user.getId());
+        else
+            buildFinish.setUserId(null);
+
+        buildFinish.logEvent();
+    }
+
+
+
+    /**
+     * Returns a registered {@link BuildListener} instance.
+     */
+    public static ExtensionList<BuildListener> getInstance() {
+        return ExtensionList.lookup(BuildListener.class);
     }
 }
