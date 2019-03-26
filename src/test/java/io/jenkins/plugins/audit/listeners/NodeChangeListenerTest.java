@@ -1,6 +1,8 @@
 package io.jenkins.plugins.audit.listeners;
 
+import hudson.model.Node;
 import hudson.slaves.DumbSlave;
+import jenkins.model.NodeListener;
 import junitparams.JUnitParamsRunner;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.test.appender.ListAppender;
@@ -47,27 +49,18 @@ public class NodeChangeListenerTest {
     public void testOnUpdated() throws Exception {
         List<LogEvent> events = app.getEvents();
         assertEventCount(events, 0);
+
+        // Creating the node
         DumbSlave slave = j.createSlave("TestSlave", "", null);
-        slave.setNodeName("UpdatedSlave");
-        slave.save();
-        /*
-        public void save() throws IOException {
-            Jenkins jenkins = Jenkins.getInstanceOrNull();
-            if (jenkins != null) {
-                jenkins.updateNode(this);
-            }
 
-        }
-         */
+        Node node = j.jenkins.getNode("TestSlave");
+        node.setNodeName("Updated the node");
+        node.save();
+        j.jenkins.updateNode(node);
 
-        /*
-        for(LogEvent e : events){
-            System.out.println(e.toString());
-        }
-         */
+        NodeListener.fireOnUpdated(slave, node);
 
-        //TODO: Remove the hardcoded +1
-        assertEquals("Event on updating node not triggered", 2, events.size() + 1);
+        assertEquals("Event on updating node not triggered", 2, events.size());
     }
 
     @Issue("JENKINS-56648")
@@ -75,15 +68,10 @@ public class NodeChangeListenerTest {
     public void testOnDeleted() throws Exception {
         List<LogEvent> events = app.getEvents();
         assertEventCount(events, 0);
-        DumbSlave slave = j.createSlave("TestSlave", "", null);
-        j.disconnectSlave(slave);
+        DumbSlave slave = j.createOnlineSlave();
+        j.jenkins.removeNode(slave);
 
-//        for(LogEvent e : events){
-//            System.out.println(e.toString());
-//        }
-
-        //TODO: Remove the hardcoded +1
-        assertEquals("Event on deleting node not triggered", 2, events.size() + 1);
+        assertEquals("Event on deleting node not triggered", 2, events.size());
     }
 
     private static void assertEventCount(final List<LogEvent> events, final int expected) {
