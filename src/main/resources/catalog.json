@@ -90,6 +90,28 @@
     } ]
   }, {
     "id" : 7,
+    "name" : "buildFinish",
+    "displayName" : "Build Finish",
+    "description" : "Finish of the Build",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "userId",
+      "required" : true
+    }, {
+      "name" : "cause",
+      "required" : false
+    }, {
+      "name" : "projectName",
+      "required" : true
+    }, {
+      "name" : "buildNumber",
+      "required" : true
+    }, {
+      "name" : "timestamp",
+      "required" : false
+    } ]
+  }, {
+    "id" : 8,
     "name" : "createNode",
     "displayName" : "Create Node",
     "description" : "Create Node",
@@ -104,42 +126,42 @@
       "name" : "userId",
       "required" : false
     } ]
-  }, {
-    "id" : 8,
-    "name" : "updateNode",
-    "displayName" : "Update Node",
-    "description" : "Update Node",
-    "aliases" : [ ],
-    "attributes" : [ {
-      "name" : "nodeName",
-      "required" : true
     }, {
-      "name" : "oldNodeName",
-      "required" : false
-    },{
-      "name" : "timestamp",
-      "required" : true
+      "id" : 9,
+      "name" : "updateNode",
+      "displayName" : "Update Node",
+      "description" : "Update Node",
+      "aliases" : [ ],
+      "attributes" : [ {
+        "name" : "nodeName",
+        "required" : true
+      }, {
+        "name" : "oldNodeName",
+        "required" : false
+      },{
+        "name" : "timestamp",
+        "required" : true
+      }, {
+        "name" : "userId",
+        "required" : false
+      } ]
     }, {
-      "name" : "userId",
-      "required" : false
-    } ]
-  }, {
-    "id" : 9,
-    "name" : "deleteNode",
-    "displayName" : "Delete Node",
-    "description" : "Delete Node",
-    "aliases" : [ ],
-    "attributes" : [ {
-      "name" : "nodeName",
-      "required" : true
-    }, {
-      "name" : "timestamp",
-      "required" : true
-    }, {
-      "name" : "userId",
-      "required" : false
-    } ]
-  } ],
+      "id" : 10,
+      "name" : "deleteNode",
+      "displayName" : "Delete Node",
+      "description" : "Delete Node",
+      "aliases" : [ ],
+      "attributes" : [ {
+        "name" : "nodeName",
+        "required" : true
+      }, {
+        "name" : "timestamp",
+        "required" : true
+      }, {
+        "name" : "userId",
+        "required" : false
+      } ]
+    } ],
   "attributes" : [ {
     "id" : 1,
     "name" : "userId",
