@@ -11,9 +11,11 @@ import org.apache.logging.log4j.audit.LogEventFactory;
 import io.jenkins.plugins.audit.event.BuildStart;
 import io.jenkins.plugins.audit.event.BuildFinish;
 
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import static io.jenkins.plugins.audit.helpers.DateTimeHelper.formatDateISO;
 
 
 @Extension
@@ -38,7 +40,7 @@ public class BuildListener extends RunListener<Run> {
         buildStart.setBuildNumber(run.getNumber());
         buildStart.setCause(causes);
         buildStart.setProjectName(run.getParent().getFullName());
-        buildStart.setTimestamp(new Date(run.getStartTimeInMillis()).toString());
+        buildStart.setTimestamp(formatDateISO(run.getStartTimeInMillis()));
         User user = User.current();
         if(user != null)
             buildStart.setUserId(user.getId());
@@ -68,7 +70,11 @@ public class BuildListener extends RunListener<Run> {
         buildFinish.setBuildNumber(run.getNumber());
         buildFinish.setCause(causes);
         buildFinish.setProjectName(run.getParent().getFullName());
-        buildFinish.setTimestamp(new Date(run.getStartTimeInMillis() + run.getDuration()).toString());
+
+        Instant start = Instant.ofEpochMilli(run.getStartTimeInMillis());
+        Instant finish = start.plusMillis(run.getDuration());
+        buildFinish.setTimestamp(formatDateISO(finish.toEpochMilli()));
+
         User user = User.current();
         if(user != null)
             buildFinish.setUserId(user.getId());
