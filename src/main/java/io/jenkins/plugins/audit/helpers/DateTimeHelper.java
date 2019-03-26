@@ -1,14 +1,14 @@
 package io.jenkins.plugins.audit.helpers;
 
-import java.text.SimpleDateFormat;
+import org.kohsuke.accmod.Restricted;
+import org.kohsuke.accmod.restrictions.NoExternalUse;
+
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
+@Restricted(NoExternalUse.class)
 public class DateTimeHelper {
     /**
      * Returns a date string in the ISO-8601 format
