@@ -3,14 +3,12 @@ package io.jenkins.plugins.audit.listeners;
 import hudson.Extension;
 import hudson.ExtensionList;
 import hudson.model.Item;
-import hudson.model.User;
 import io.jenkins.plugins.audit.event.*;
 import org.apache.logging.log4j.audit.LogEventFactory;
 import static io.jenkins.plugins.audit.helpers.DateTimeHelper.formatDateISO;
 
 import javax.annotation.Nonnull;
 import java.time.Instant;
-import java.util.Date;
 
 /**
  * Listener notified of any CRUD operations on items.
@@ -30,11 +28,6 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
         itemCreateEvent.setItemName(item.getName());
         itemCreateEvent.setItemUri(item.getUrl());
         itemCreateEvent.setTimestamp(formatDateISO(Instant.now().toEpochMilli()));
-        User user = User.current();
-        if(user != null)
-            itemCreateEvent.setUserId(user.getId());
-        else
-            itemCreateEvent.setUserId(null);
 
         itemCreateEvent.logEvent();
 
@@ -52,12 +45,8 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
 
         itemCopyEvent.setItemName(item.getName());
         itemCopyEvent.setItemUri(item.getUrl());
+        itemCopyEvent.setSourceItemUri(src.getUrl());
         itemCopyEvent.setTimestamp(formatDateISO(Instant.now().toEpochMilli()));
-        User user = User.current();
-        if(user != null)
-            itemCopyEvent.setUserId(user.getId());
-        else
-            itemCopyEvent.setUserId(null);
 
         itemCopyEvent.logEvent();
 
@@ -75,11 +64,6 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
         itemDeleteEvent.setItemName(item.getName());
         itemDeleteEvent.setItemUri(item.getUrl());
         itemDeleteEvent.setTimestamp(formatDateISO(Instant.now().toEpochMilli()));
-        User user = User.current();
-        if(user != null)
-            itemDeleteEvent.setUserId(user.getId());
-        else
-            itemDeleteEvent.setUserId(null);
 
         itemDeleteEvent.logEvent();
 
@@ -97,11 +81,6 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
         itemUpdateEvent.setItemName(item.getName());
         itemUpdateEvent.setItemUri(item.getUrl());
         itemUpdateEvent.setTimestamp(formatDateISO(Instant.now().toEpochMilli()));
-        User user = User.current();
-        if(user != null)
-            itemUpdateEvent.setUserId(user.getId());
-        else
-            itemUpdateEvent.setUserId(null);
 
         itemUpdateEvent.logEvent();
     }
