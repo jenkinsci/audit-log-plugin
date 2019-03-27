@@ -121,13 +121,13 @@
       "required" : false
     }, {
       "name" : "timestamp",
-      "required" : false
+      "required" : true
     }, {
       "name" : "itemName",
-      "required" : false
+      "required" : true
     }, {
       "name" : "itemUri",
-      "required" : false
+      "required" : true
     } ]
   }, {
     "id" : 9,
@@ -140,13 +140,16 @@
       "required" : false
     }, {
       "name" : "timestamp",
-      "required" : false
+      "required" : true
     }, {
       "name" : "itemName",
-      "required" : false
+      "required" : true
     }, {
       "name" : "itemUri",
-      "required" : false
+      "required" : true
+    }, {
+      "name" : "sourceItemUri",
+      "required" : true
     } ]
   }, {
     "id" : 10,
@@ -159,13 +162,13 @@
       "required" : false
     }, {
       "name" : "timestamp",
-      "required" : false
+      "required" : true
     }, {
       "name" : "itemName",
-      "required" : false
+      "required" : true
     }, {
       "name" : "itemUri",
-      "required" : false
+      "required" : true
     } ]
   }, {
     "id" : 11,
@@ -178,13 +181,13 @@
       "required" : false
     }, {
       "name" : "timestamp",
-      "required" : false
+      "required" : true
     }, {
       "name" : "itemName",
-      "required" : false
+      "required" : true
     }, {
       "name" : "itemUri",
-      "required" : false
+      "required" : true
       }]
   } ],
   "attributes" : [ {
@@ -318,6 +321,20 @@
     "name" : "itemUri",
     "displayName" : "Item URI",
     "description" : "Contains the original item URI",
+    "dataType" : "STRING",
+    "indexed" : false,
+    "sortable" : true,
+    "required" : false,
+    "requestContext" : false,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 11,
+    "name" : "sourceItemUri",
+    "displayName" : "Source Item URI",
+    "description" : "Contains the source item URI of the copied item",
     "dataType" : "STRING",
     "indexed" : false,
     "sortable" : true,
