@@ -16,9 +16,10 @@ import org.jvnet.hudson.test.JenkinsRule;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 @RunWith(JUnitParamsRunner.class)
-public class BuildStartListenerTest {
+public class BuildListenerTest {
     private ListAppender app;
     private FreeStyleProject project;
 
@@ -36,14 +37,20 @@ public class BuildStartListenerTest {
         app.clear();
     }
 
-    @Issue("JENKINS-55608")
+    @Issue("JENKINS-55608, JENKINS-56645")
     @Test
-    public void testAuditOnBuildStart() throws Exception{
+    public void testAuditOnBuildStartAndFinish() throws Exception{
         List<LogEvent> events = app.getEvents();
 
         project.getBuildersList().add(new Shell("echo Test audit-log-plugin"));
         project.scheduleBuild2(0).get();
 
-        assertEquals("Event on build start not triggered", 2, events.size());
+        /*
+        Order of expected events
+        1) Start of the Build
+        2) Finish of the Build
+         */
+
+        assertEquals("Events on build start and complete not triggered", 2, events.size());
     }
 }

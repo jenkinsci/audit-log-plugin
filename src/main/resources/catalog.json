@@ -89,7 +89,29 @@
       "required" : false
     } ]
   }, {
-    "id" : 9,
+    "id" : 7,
+    "name" : "buildFinish",
+    "displayName" : "Build Finish",
+    "description" : "Finish of the Build",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "userId",
+      "required" : true
+    }, {
+      "name" : "cause",
+      "required" : false
+    }, {
+      "name" : "projectName",
+      "required" : true
+    }, {
+      "name" : "buildNumber",
+      "required" : true
+    }, {
+      "name" : "timestamp",
+      "required" : false
+    } ]
+  }, {
+    "id" : 8,
     "name" : "createItem",
     "displayName" : "Create Item",
     "description" : "Create Item",
@@ -108,7 +130,7 @@
       "required" : false
     } ]
   }, {
-    "id" : 10,
+    "id" : 9,
     "name" : "copyItem",
     "displayName" : "Copy Item",
     "description" : "Copy Item",
@@ -127,7 +149,7 @@
       "required" : false
     } ]
   }, {
-    "id" : 11,
+    "id" : 10,
     "name" : "renameItem",
     "displayName" : "Rename Item",
     "description" : "Rename Item",
@@ -146,7 +168,7 @@
       "required" : false
     } ]
   }, {
-    "id" : 12,
+    "id" : 11,
     "name" : "updateItem",
     "displayName" : "Update Item",
     "description" : "Update Item",
@@ -165,7 +187,7 @@
       "required" : false
     } ]
   }, {
-    "id" : 13,
+    "id" : 12,
     "name" : "deleteItem",
     "displayName" : "Delete Item",
     "description" : "Delete Item",
@@ -182,7 +204,7 @@
     }, {
       "name" : "itemUri",
       "required" : false
-    } ]
+      }]
   } ],
   "attributes" : [ {
     "id" : 1,
