@@ -150,25 +150,6 @@
     } ]
   }, {
     "id" : 10,
-    "name" : "renameItem",
-    "displayName" : "Rename Item",
-    "description" : "Rename Item",
-    "aliases" : [ ],
-    "attributes" : [ {
-      "name" : "userId",
-      "required" : false
-    }, {
-      "name" : "timestamp",
-      "required" : false
-    }, {
-      "name" : "itemName",
-      "required" : false
-    }, {
-      "name" : "itemUri",
-      "required" : false
-    } ]
-  }, {
-    "id" : 11,
     "name" : "updateItem",
     "displayName" : "Update Item",
     "description" : "Update Item",
@@ -187,7 +168,7 @@
       "required" : false
     } ]
   }, {
-    "id" : 12,
+    "id" : 11,
     "name" : "deleteItem",
     "displayName" : "Delete Item",
     "description" : "Delete Item",
