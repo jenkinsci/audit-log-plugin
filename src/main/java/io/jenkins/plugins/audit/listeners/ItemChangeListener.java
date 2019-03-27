@@ -6,8 +6,10 @@ import hudson.model.Item;
 import hudson.model.User;
 import io.jenkins.plugins.audit.event.*;
 import org.apache.logging.log4j.audit.LogEventFactory;
+import static io.jenkins.plugins.audit.helpers.DateTimeHelper.formatDateISO;
 
 import javax.annotation.Nonnull;
+import java.time.Instant;
 import java.util.Date;
 
 /**
@@ -27,7 +29,7 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
 
         itemCreateEvent.setItemName(item.getName());
         itemCreateEvent.setItemUri(item.getUrl());
-        itemCreateEvent.setTimestamp(new Date().toString());
+        itemCreateEvent.setTimestamp(formatDateISO(Instant.now().toEpochMilli()));
         User user = User.current();
         if(user != null)
             itemCreateEvent.setUserId(user.getId());
@@ -50,7 +52,7 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
 
         itemCopyEvent.setItemName(item.getName());
         itemCopyEvent.setItemUri(item.getUrl());
-        itemCopyEvent.setTimestamp(new Date().toString());
+        itemCopyEvent.setTimestamp(formatDateISO(Instant.now().toEpochMilli()));
         User user = User.current();
         if(user != null)
             itemCopyEvent.setUserId(user.getId());
@@ -72,7 +74,7 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
 
         itemDeleteEvent.setItemName(item.getName());
         itemDeleteEvent.setItemUri(item.getUrl());
-        itemDeleteEvent.setTimestamp(new Date().toString());
+        itemDeleteEvent.setTimestamp(formatDateISO(Instant.now().toEpochMilli()));
         User user = User.current();
         if(user != null)
             itemDeleteEvent.setUserId(user.getId());
@@ -81,29 +83,6 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
 
         itemDeleteEvent.logEvent();
 
-    }
-
-    /**
-     * Fired after a job is renamed
-     *
-     * @param item is job being renamed.
-     * @param oldName is old name of the job.
-     * @param newName is new name of the job.
-     */
-    @Override
-    public void onRenamed(Item item, String oldName, String newName) {
-        RenameItem itemRenameEvent = LogEventFactory.getEvent(RenameItem.class);
-
-        itemRenameEvent.setItemName(newName);
-        itemRenameEvent.setItemUri(item.getUrl());
-        itemRenameEvent.setTimestamp(new Date().toString());
-        User user = User.current();
-        if(user != null)
-            itemRenameEvent.setUserId(user.getId());
-        else
-            itemRenameEvent.setUserId(null);
-
-        itemRenameEvent.logEvent();
     }
 
     /**
@@ -117,7 +96,7 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
 
         itemUpdateEvent.setItemName(item.getName());
         itemUpdateEvent.setItemUri(item.getUrl());
-        itemUpdateEvent.setTimestamp(new Date().toString());
+        itemUpdateEvent.setTimestamp(formatDateISO(Instant.now().toEpochMilli()));
         User user = User.current();
         if(user != null)
             itemUpdateEvent.setUserId(user.getId());
