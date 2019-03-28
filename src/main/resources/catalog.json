@@ -110,6 +110,85 @@
       "name" : "timestamp",
       "required" : false
     } ]
+  }, {
+    "id" : 8,
+    "name" : "createItem",
+    "displayName" : "Create Item",
+    "description" : "Create Item",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "userId",
+      "required" : false
+    }, {
+      "name" : "timestamp",
+      "required" : true
+    }, {
+      "name" : "itemName",
+      "required" : true
+    }, {
+      "name" : "itemUri",
+      "required" : true
+    } ]
+  }, {
+    "id" : 9,
+    "name" : "copyItem",
+    "displayName" : "Copy Item",
+    "description" : "Copy Item",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "userId",
+      "required" : false
+    }, {
+      "name" : "timestamp",
+      "required" : true
+    }, {
+      "name" : "itemName",
+      "required" : true
+    }, {
+      "name" : "itemUri",
+      "required" : true
+    }, {
+      "name" : "sourceItemUri",
+      "required" : true
+    } ]
+  }, {
+    "id" : 10,
+    "name" : "updateItem",
+    "displayName" : "Update Item",
+    "description" : "Update Item",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "userId",
+      "required" : false
+    }, {
+      "name" : "timestamp",
+      "required" : true
+    }, {
+      "name" : "itemName",
+      "required" : true
+    }, {
+      "name" : "itemUri",
+      "required" : true
+    } ]
+  }, {
+    "id" : 11,
+    "name" : "deleteItem",
+    "displayName" : "Delete Item",
+    "description" : "Delete Item",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "userId",
+      "required" : false
+    }, {
+      "name" : "timestamp",
+      "required" : true
+    }, {
+      "name" : "itemName",
+      "required" : true
+    }, {
+      "name" : "itemUri",
+      "required" : true
+      }]
   } ],
   "attributes" : [ {
     "id" : 1,
@@ -216,6 +295,48 @@
     "description" : "Build number",
     "dataType" : "INT",
     "indexed" : true,
+    "sortable" : true,
+    "required" : false,
+    "requestContext" : false,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 9,
+    "name" : "itemName",
+    "displayName" : "Item Name",
+    "description" : "Item Name",
+    "dataType" : "STRING",
+    "indexed" : true,
+    "sortable" : true,
+    "required" : false,
+    "requestContext" : false,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 10,
+    "name" : "itemUri",
+    "displayName" : "Item URI",
+    "description" : "Contains the original item URI",
+    "dataType" : "STRING",
+    "indexed" : false,
+    "sortable" : true,
+    "required" : false,
+    "requestContext" : false,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 11,
+    "name" : "sourceItemUri",
+    "displayName" : "Source Item URI",
+    "description" : "Contains the source item URI of the copied item",
+    "dataType" : "STRING",
+    "indexed" : false,
     "sortable" : true,
     "required" : false,
     "requestContext" : false,

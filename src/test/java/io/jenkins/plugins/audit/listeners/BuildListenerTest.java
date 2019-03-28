@@ -51,6 +51,6 @@ public class BuildListenerTest {
         2) Finish of the Build
          */
 
-        assertEquals("Events on build start and complete not triggered", 2, events.size());
+        assertEquals("Events on build start and complete not triggered", 3, events.size());
     }
 }
