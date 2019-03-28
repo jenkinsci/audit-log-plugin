@@ -27,7 +27,7 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
 
         itemCreateEvent.setItemName(item.getName());
         itemCreateEvent.setItemUri(item.getUrl());
-        itemCreateEvent.setTimestamp(formatDateISO(Instant.now().toEpochMilli()));
+        itemCreateEvent.setTimestamp(formatDateISO(System.currentTimeMillis()));
 
         itemCreateEvent.logEvent();
 
@@ -46,7 +46,7 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
         itemCopyEvent.setItemName(item.getName());
         itemCopyEvent.setItemUri(item.getUrl());
         itemCopyEvent.setSourceItemUri(src.getUrl());
-        itemCopyEvent.setTimestamp(formatDateISO(Instant.now().toEpochMilli()));
+        itemCopyEvent.setTimestamp(formatDateISO(System.currentTimeMillis()));
 
         itemCopyEvent.logEvent();
 
@@ -63,7 +63,7 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
 
         itemDeleteEvent.setItemName(item.getName());
         itemDeleteEvent.setItemUri(item.getUrl());
-        itemDeleteEvent.setTimestamp(formatDateISO(Instant.now().toEpochMilli()));
+        itemDeleteEvent.setTimestamp(formatDateISO(System.currentTimeMillis()));
 
         itemDeleteEvent.logEvent();
 
@@ -80,7 +80,7 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
 
         itemUpdateEvent.setItemName(item.getName());
         itemUpdateEvent.setItemUri(item.getUrl());
-        itemUpdateEvent.setTimestamp(formatDateISO(Instant.now().toEpochMilli()));
+        itemUpdateEvent.setTimestamp(formatDateISO(System.currentTimeMillis()));
 
         itemUpdateEvent.logEvent();
     }
