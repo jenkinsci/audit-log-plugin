@@ -188,7 +188,58 @@
     }, {
       "name" : "itemUri",
       "required" : true
-      }]
+    } ]
+  }, {
+    "id" : 12,
+    "name" : "createNode",
+    "displayName" : "Create Node",
+    "description" : "Create Node",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "nodeName",
+      "required" : true
+    }, {
+      "name" : "timestamp",
+      "required" : true
+    }, {
+      "name" : "userId",
+      "required" : false
+    } ]
+  }, {
+      "id" : 13,
+      "name" : "updateNode",
+      "displayName" : "Update Node",
+      "description" : "Update Node",
+      "aliases" : [ ],
+      "attributes" : [ {
+        "name" : "nodeName",
+        "required" : true
+      }, {
+        "name" : "oldNodeName",
+        "required" : false
+      },{
+        "name" : "timestamp",
+        "required" : true
+      }, {
+        "name" : "userId",
+        "required" : false
+      } ]
+  }, {
+      "id" : 14,
+      "name" : "deleteNode",
+      "displayName" : "Delete Node",
+      "description" : "Delete Node",
+      "aliases" : [ ],
+      "attributes" : [ {
+        "name" : "nodeName",
+        "required" : true
+      }, {
+        "name" : "timestamp",
+        "required" : true
+      }, {
+        "name" : "userId",
+        "required" : false
+      } ]
   } ],
   "attributes" : [ {
     "id" : 1,
@@ -335,6 +386,20 @@
     "name" : "sourceItemUri",
     "displayName" : "Source Item URI",
     "description" : "Contains the source item URI of the copied item",
+    "dataType" : "STRING",
+    "indexed" : false,
+    "sortable" : true,
+    "required" : false,
+    "requestContext" : false,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 12,
+    "name" : "oldNodeName",
+    "displayName" : "Old Node Name",
+    "description" : "Name of the old node which is updated recently",
     "dataType" : "STRING",
     "indexed" : false,
     "sortable" : true,
