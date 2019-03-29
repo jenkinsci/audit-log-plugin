@@ -188,7 +188,7 @@
     }, {
       "name" : "itemUri",
       "required" : true
-      }]
+    } ]
   }, {
     "id" : 12,
     "name" : "createNode",

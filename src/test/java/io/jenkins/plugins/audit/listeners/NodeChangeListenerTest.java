@@ -1,6 +1,9 @@
 package io.jenkins.plugins.audit.listeners;
 
+import com.gargoylesoftware.htmlunit.html.HtmlForm;
+import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import hudson.model.Node;
+import hudson.model.Slave;
 import hudson.slaves.DumbSlave;
 import jenkins.model.NodeListener;
 import junitparams.JUnitParamsRunner;
@@ -50,15 +53,11 @@ public class NodeChangeListenerTest {
         List<LogEvent> events = app.getEvents();
         assertEventCount(events, 0);
 
-        // Creating the node
-        DumbSlave slave = j.createSlave("TestSlave", "", null);
-
-        Node node = j.jenkins.getNode("TestSlave");
-        node.setNodeName("Updated the node");
-        node.save();
-        j.jenkins.updateNode(node);
-
-        NodeListener.fireOnUpdated(slave, node);
+        Slave slave = j.createOnlineSlave();
+        HtmlForm form = j.createWebClient().getPage(slave, "configure").getFormByName("config");
+        HtmlInput element = form.getInputByName("_.name");
+        element.setValueAttribute("newSlaveName");
+        j.submit(form);
 
         assertEquals("Event on updating node not triggered", 2, events.size());
     }
