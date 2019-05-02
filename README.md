@@ -58,7 +58,6 @@ This requires the following tasks, among other project objectives:
 Getting Started: Prerequisites
 ---------------
 
-+ Make sure you have a [JIRA account][jira-site].
 + Make sure you have a [GitHub account][github-site].
 + If you're planning to implement a new feature, it makes sense to discuss your changes
   on [Gitter][project-gitter] first.
@@ -67,7 +66,7 @@ Getting Started: Prerequisites
 + Submit a ticket for your issue, assuming one does not already exist.
   + Clearly describe the issue, including steps to reproduce when it is a bug.
   + Make sure you fill in the earliest version that you know has the issue.
-+ Fork the [repository][project-repo] on GitHub, take a look at the [project's JIRA page][project-jira] and [Wiki][project-wiki].
++ Fork the [repository][project-repo] on GitHub, take a look at the [project's issues page][project-issues] and [Wiki][project-wiki].
 
 Getting Started: Setup
 ----------------------
@@ -131,14 +130,13 @@ Additional Resources
 [code-style]: https://logging.apache.org/log4j-audit/latest/javastyle.html
 [github-site]: https://github.com/signup/free
 [jenkins-site]: http://jenkins.io/
-[jira-site]: https://issues.apache.org/jira/
 [license]: https://opensource.org/licenses/MIT
 [log4j-audit-site]: https://logging.apache.org/log4j-audit/latest/index.html
 [maven-central]: https://todothis.com
 [new-contributor-guide]: https://wiki.jenkins.io/display/JENKINS/Beginners+Guide+to+Contributing
 [project-build]: https://travis-ci.org/jvz/audit-log-plugin
 [project-gitter]: https://gitter.im/jenkinsci/outreachy
-[project-jira]: https://issues.jenkins-ci.org/browse/JENKINS-54082
+[project-issues]: https://github.com/jenkinsci/audit-log-plugin/issues
 [project-repo]: https://github.com/jenkinsci/audit-log-plugin
 [project-wiki]: https://github.com/jenkinsci/audit-log-plugin/wiki
 [test-results]: https://todothis.com
