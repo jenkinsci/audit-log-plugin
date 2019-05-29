@@ -3,15 +3,9 @@ package io.jenkins.plugins.audit.listeners;
 import hudson.model.AbstractItem;
 import hudson.model.AbstractProject;
 import hudson.model.FreeStyleProject;
-import hudson.model.Item;
-import hudson.model.listeners.ItemListener;
-import hudson.tasks.Shell;
 import junitparams.JUnitParamsRunner;
 import org.apache.logging.log4j.audit.AuditMessage;
 import org.apache.logging.log4j.core.LogEvent;
-import org.apache.logging.log4j.core.impl.Log4jLogEvent;
-import org.apache.logging.log4j.message.Message;
-import org.apache.logging.log4j.message.StructuredDataMessage;
 import org.apache.logging.log4j.test.appender.ListAppender;
 import org.junit.After;
 import org.junit.Before;
@@ -92,7 +86,7 @@ public class ItemChangeListenerTest {
 
         FreeStyleProject project = j.createFreeStyleProject("Test build");
         project.delete();
-        // This also triggers the fireOnUpdate method.a
+        // This also triggers the fireOnUpdate method
 
         assertEquals("Events on item creation not triggered", 3, events.size());
     }
