@@ -7,7 +7,11 @@ import hudson.model.Item;
 import hudson.model.listeners.ItemListener;
 import hudson.tasks.Shell;
 import junitparams.JUnitParamsRunner;
+import org.apache.logging.log4j.audit.AuditMessage;
 import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.impl.Log4jLogEvent;
+import org.apache.logging.log4j.message.Message;
+import org.apache.logging.log4j.message.StructuredDataMessage;
 import org.apache.logging.log4j.test.appender.ListAppender;
 import org.junit.After;
 import org.junit.Before;
@@ -69,10 +73,16 @@ public class ItemChangeListenerTest {
     public void testAuditOnItemCopy() throws Exception {
         List<LogEvent> events = app.getEvents();
 
-        FreeStyleProject project = j.createFreeStyleProject("Test build");
-        AbstractProject copiedProject = j.jenkins.copy((AbstractProject)project , "Copied Project");
+        String projectName = "Test build";
+        String copiedProjectName = "Copied Project";
+        FreeStyleProject project = j.createFreeStyleProject(projectName);
+        AbstractProject copiedProject = j.jenkins.copy((AbstractProject)project , copiedProjectName);
 
-        assertEquals("Events on item creation not triggered", 2, events.size());
+        assertEquals("Expected event not created", "createItem", ((AuditMessage)events.get(0).getMessage()).getId().toString());
+        assertEquals("Expected project not created", projectName, ((AuditMessage)events.get(0).getMessage()).get("itemName"));
+
+        assertEquals("Expected event not created", "copyItem", ((AuditMessage)events.get(1).getMessage()).getId().toString());
+        assertEquals("Expected project not copied", copiedProjectName, ((AuditMessage)events.get(1).getMessage()).get("itemName"));
     }
 
     @Issue("JENKINS-56644")
@@ -82,7 +92,7 @@ public class ItemChangeListenerTest {
 
         FreeStyleProject project = j.createFreeStyleProject("Test build");
         project.delete();
-        // This also triggers the fireOnUpdate method.
+        // This also triggers the fireOnUpdate method.a
 
         assertEquals("Events on item creation not triggered", 3, events.size());
     }
