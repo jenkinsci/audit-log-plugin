@@ -18,6 +18,7 @@ import org.jvnet.hudson.test.JenkinsRule;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.*;
 
 @RunWith(JUnitParamsRunner.class)
 
@@ -46,7 +47,7 @@ public class ItemChangeListenerTest {
         FreeStyleProject project = j.createFreeStyleProject("Test build");
 //        project.getBuildersList().add(new Shell("echo Test audit-log-plugin"));
 
-        assertEquals("Events on item creation not triggered", 1, events.size());
+        assertThat(((AuditMessage)events.get(0).getMessage()).getId().toString()).isEqualTo("createItem");
     }
 
     @Issue("JENKINS-56641")
@@ -59,7 +60,8 @@ public class ItemChangeListenerTest {
         item.setDescription("Item created for testing the updates");
         item.save();
 
-        assertEquals("Events on item creation not triggered", 2, events.size());
+        assertThat(((AuditMessage)events.get(0).getMessage()).getId().toString()).isEqualTo("createItem");
+        assertThat(((AuditMessage)events.get(1).getMessage()).getId().toString()).isEqualTo("updateItem");
     }
 
     @Issue("JENKINS-56642")
@@ -67,16 +69,11 @@ public class ItemChangeListenerTest {
     public void testAuditOnItemCopy() throws Exception {
         List<LogEvent> events = app.getEvents();
 
-        String projectName = "Test build";
-        String copiedProjectName = "Copied Project";
-        FreeStyleProject project = j.createFreeStyleProject(projectName);
-        AbstractProject copiedProject = j.jenkins.copy((AbstractProject)project , copiedProjectName);
+        FreeStyleProject project = j.createFreeStyleProject("Test build");
+        AbstractProject copiedProject = j.jenkins.copy((AbstractProject)project , "Copied Project");
 
-        assertEquals("Expected event not created", "createItem", ((AuditMessage)events.get(0).getMessage()).getId().toString());
-        assertEquals("Expected project not created", projectName, ((AuditMessage)events.get(0).getMessage()).get("itemName"));
-
-        assertEquals("Expected event not created", "copyItem", ((AuditMessage)events.get(1).getMessage()).getId().toString());
-        assertEquals("Expected project not copied", copiedProjectName, ((AuditMessage)events.get(1).getMessage()).get("itemName"));
+        assertThat(((AuditMessage)events.get(0).getMessage()).getId().toString()).isEqualTo("createItem");
+        assertThat(((AuditMessage)events.get(1).getMessage()).getId().toString()).isEqualTo("copyItem");
     }
 
     @Issue("JENKINS-56644")
@@ -86,8 +83,10 @@ public class ItemChangeListenerTest {
 
         FreeStyleProject project = j.createFreeStyleProject("Test build");
         project.delete();
-        // This also triggers the fireOnUpdate method
+        // This also triggers the fireOnUpdate method.
 
-        assertEquals("Events on item creation not triggered", 3, events.size());
+        assertThat(((AuditMessage)events.get(0).getMessage()).getId().toString()).isEqualTo("createItem");
+        assertThat(((AuditMessage)events.get(1).getMessage()).getId().toString()).isEqualTo("updateItem");
+        assertThat(((AuditMessage)events.get(2).getMessage()).getId().toString()).isEqualTo("deleteItem");
     }
 }
