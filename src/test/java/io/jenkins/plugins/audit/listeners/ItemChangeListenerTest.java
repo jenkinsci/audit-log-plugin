@@ -47,7 +47,8 @@ public class ItemChangeListenerTest {
         FreeStyleProject project = j.createFreeStyleProject("Test build");
 //        project.getBuildersList().add(new Shell("echo Test audit-log-plugin"));
 
-        assertThat(((AuditMessage)events.get(0).getMessage()).getId().toString()).isEqualTo("createItem");
+        assertThat(events).hasSize(1);
+        assertThat(events).extracting(event -> ((AuditMessage) event.getMessage()).getId().toString()).contains("createItem");
     }
 
     @Issue("JENKINS-56641")
@@ -60,8 +61,8 @@ public class ItemChangeListenerTest {
         item.setDescription("Item created for testing the updates");
         item.save();
 
-        assertThat(((AuditMessage)events.get(0).getMessage()).getId().toString()).isEqualTo("createItem");
-        assertThat(((AuditMessage)events.get(1).getMessage()).getId().toString()).isEqualTo("updateItem");
+        assertThat(events).hasSize(2);
+        assertThat(events).extracting(event -> ((AuditMessage) event.getMessage()).getId().toString()).containsSequence("createItem", "updateItem");
     }
 
     @Issue("JENKINS-56642")
@@ -72,8 +73,8 @@ public class ItemChangeListenerTest {
         FreeStyleProject project = j.createFreeStyleProject("Test build");
         AbstractProject copiedProject = j.jenkins.copy((AbstractProject)project , "Copied Project");
 
-        assertThat(((AuditMessage)events.get(0).getMessage()).getId().toString()).isEqualTo("createItem");
-        assertThat(((AuditMessage)events.get(1).getMessage()).getId().toString()).isEqualTo("copyItem");
+        assertThat(events).hasSize(2);
+        assertThat(events).extracting(event -> ((AuditMessage) event.getMessage()).getId().toString()).containsSequence("createItem", "copyItem");
     }
 
     @Issue("JENKINS-56644")
@@ -85,8 +86,7 @@ public class ItemChangeListenerTest {
         project.delete();
         // This also triggers the fireOnUpdate method.
 
-        assertThat(((AuditMessage)events.get(0).getMessage()).getId().toString()).isEqualTo("createItem");
-        assertThat(((AuditMessage)events.get(1).getMessage()).getId().toString()).isEqualTo("updateItem");
-        assertThat(((AuditMessage)events.get(2).getMessage()).getId().toString()).isEqualTo("deleteItem");
+        assertThat(events).hasSize(3);
+        assertThat(events).extracting(event -> ((AuditMessage) event.getMessage()).getId().toString()).containsSequence("createItem", "updateItem", "deleteItem");
     }
 }

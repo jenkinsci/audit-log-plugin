@@ -7,6 +7,7 @@ import hudson.model.Slave;
 import hudson.slaves.DumbSlave;
 import jenkins.model.NodeListener;
 import junitparams.JUnitParamsRunner;
+import org.apache.logging.log4j.audit.AuditMessage;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.test.appender.ListAppender;
 import org.junit.After;
@@ -19,6 +20,7 @@ import org.jvnet.hudson.test.JenkinsRule;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(JUnitParamsRunner.class)
@@ -44,14 +46,14 @@ public class NodeChangeListenerTest {
         List<LogEvent> events = app.getEvents();
         DumbSlave slave = j.createSlave("TestSlave", "", null);
 
-        assertEquals("Event on creating node not triggered", 1, events.size());
+        assertThat(events).hasSize(1);
+        assertThat(events).extracting(event -> ((AuditMessage) event.getMessage()).getId().toString()).contains("createNode");
     }
 
     @Issue("JENKINS-56647")
     @Test
     public void testOnUpdated() throws Exception {
         List<LogEvent> events = app.getEvents();
-        assertEventCount(events, 0);
 
         Slave slave = j.createOnlineSlave();
         HtmlForm form = j.createWebClient().getPage(slave, "configure").getFormByName("config");
@@ -59,21 +61,19 @@ public class NodeChangeListenerTest {
         element.setValueAttribute("newSlaveName");
         j.submit(form);
 
-        assertEquals("Event on updating node not triggered", 2, events.size());
+        assertThat(events).hasSize(2);
+        assertThat(events).extracting(event -> ((AuditMessage) event.getMessage()).getId().toString()).contains("createNode", "updateNode");
     }
 
     @Issue("JENKINS-56648")
     @Test
     public void testOnDeleted() throws Exception {
         List<LogEvent> events = app.getEvents();
-        assertEventCount(events, 0);
         DumbSlave slave = j.createOnlineSlave();
         j.jenkins.removeNode(slave);
 
-        assertEquals("Event on deleting node not triggered", 2, events.size());
-    }
+        assertThat(events).hasSize(2);
+        assertThat(events).extracting(event -> ((AuditMessage) event.getMessage()).getId().toString()).contains("createNode", "deleteNode");
 
-    private static void assertEventCount(final List<LogEvent> events, final int expected) {
-        assertEquals("Incorrect number of events.", expected, events.size());
     }
 }
