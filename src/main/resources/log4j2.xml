@@ -20,6 +20,7 @@
         <Property name="DEFAULT_HOME">$${env:JENKINS_HOME:-$${sys:JENKINS_HOME:-.}}</Property>
         <Property name="FALLBACK_LOG_DESTINATION">${DEFAULT_HOME}/logs/audit.log</Property>
         <Property name="AUDIT_LOG_DESTINATION">$${sys:auditFileName:-${FALLBACK_LOG_DESTINATION}}</Property>
+        <Property name="IANA_ENTERPRISE_NUMBER">$${sys:enterpriseNumber:-.}</Property>
     </Properties>
     <Appenders>
         <RollingRandomAccessFile name="audit" fileName="${AUDIT_LOG_DESTINATION}" filePattern="${AUDIT_LOG_DESTINATION}.%d{yyyyMMdd_HHmmss}-%i.log">
