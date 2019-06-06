@@ -5,6 +5,9 @@
     <f:entry title="${%Log destination}" field="logDestination">
         <f:textbox name="logDestination" value="${it.logDestination}"/>
     </f:entry>
+    <f:entry title="${%IANA Enterprise Number}" field="enterpriseNumber">
+        <f:textbox name="enterpriseNumber" value="${it.enterpriseNumber}"/>
+    </f:entry>
 
     </f:section>
 
