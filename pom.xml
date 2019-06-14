@@ -40,6 +40,7 @@
         <log4j-audit.version>1.0.1</log4j-audit.version>
         <junit.version>4.12</junit.version>
         <junit.vintage.version>5.4.2</junit.vintage.version>
+        <credentials.version>1.16.1</credentials.version>
     </properties>
 
     <!-- defines all project dependencies -->
@@ -144,6 +145,11 @@
             <artifactId>mock-security-realm</artifactId>
             <version>1.3</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>credentials</artifactId>
+            <version>${credentials.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
         <dependency>
