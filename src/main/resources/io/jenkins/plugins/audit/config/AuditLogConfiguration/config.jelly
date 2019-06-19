@@ -8,7 +8,7 @@
     <f:entry title="${%IANA Enterprise Number}" field="enterpriseNumber">
         <f:textbox name="enterpriseNumber" value="${it.enterpriseNumber}"/>
     </f:entry>
-    <f:entry name="appenderType" title="Choose the Log Layout" field="appenderType">
+    <f:entry name="appenderType" title="${%Log Appender Type}" field="appenderType">
         <select name="appenderType">
             <option value="jsonLayout">JSON Layout</option>
             <option value="syslogLayout">SysLog Layout</option>

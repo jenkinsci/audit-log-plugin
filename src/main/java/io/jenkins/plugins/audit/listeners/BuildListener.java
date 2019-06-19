@@ -66,6 +66,7 @@ public class BuildListener extends RunListener<Run> {
             Cause c = (Cause)cause;
             causes.add(c.getShortDescription());
         }
+        String hi = System.getProperty("appenderType").trim() == "something" ? "something" : "otherthing";
 
         buildFinish.setBuildNumber(run.getNumber());
         buildFinish.setCause(causes);
