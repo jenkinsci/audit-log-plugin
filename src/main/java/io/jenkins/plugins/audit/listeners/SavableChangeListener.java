@@ -3,8 +3,12 @@ package io.jenkins.plugins.audit.listeners;
 import hudson.Extension;
 import hudson.XmlFile;
 import hudson.model.Fingerprint;
+import hudson.model.FingerprintCleanupThread;
+import hudson.model.FingerprintMap;
 import hudson.model.Saveable;
 import hudson.model.listeners.SaveableListener;
+import hudson.tasks.Fingerprinter;
+import io.jenkins.plugins.audit.event.CredentialsUsage;
 import jenkins.model.FingerprintFacet;
 import org.apache.logging.log4j.audit.LogEventFactory;
 
@@ -16,14 +20,18 @@ import java.util.List;
 public class SavableChangeListener extends SaveableListener {
     @Override
     public void onChange(Saveable o, XmlFile file) {
-        System.out.println("Inside onChange");
-        System.out.println(o);
-
+        CredentialsUsage credentialsUsage = LogEventFactory.getEvent(CredentialsUsage.class);
         if(o instanceof Fingerprint){
             Fingerprint fp = (Fingerprint) o;
-            Collection<FingerprintFacet> fbc =  fp.getFacets();
-            System.out.println(fbc);
+            credentialsUsage.setFileName(fp.getFileName());
+            credentialsUsage.setName(fp.getDisplayName());
+            credentialsUsage.setTimestamp(fp.getTimestampString());
+            credentialsUsage.setUsages(fp.getUsages().toString());
+
+            credentialsUsage.logEvent();
         }
+
+
     }
 
 }
