@@ -40,7 +40,7 @@
         <log4j-audit.version>1.0.1</log4j-audit.version>
         <junit.version>4.12</junit.version>
         <junit.vintage.version>5.4.2</junit.vintage.version>
-        <credentials.version>1.16.1</credentials.version>
+        <credentials.version>2.1.1</credentials.version>
     </properties>
 
     <!-- defines all project dependencies -->
