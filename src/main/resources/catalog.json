@@ -445,8 +445,8 @@
   }, {
     "id" : 14,
     "name" : "usages",
-    "displayName" : "Id",
-    "description" : "Id",
+    "displayName" : "Usages",
+    "description" : "Usage of the entity",
     "dataType" : "STRING",
     "indexed" : false,
     "sortable" : true,
