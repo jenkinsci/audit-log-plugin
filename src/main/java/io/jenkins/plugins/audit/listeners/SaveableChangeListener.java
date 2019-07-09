@@ -8,6 +8,8 @@ import hudson.model.listeners.SaveableListener;
 import io.jenkins.plugins.audit.event.CredentialsUsage;
 import org.apache.logging.log4j.audit.LogEventFactory;
 
+import java.util.Hashtable;
+
 
 @Extension
 public class SaveableChangeListener extends SaveableListener {
@@ -27,10 +29,14 @@ public class SaveableChangeListener extends SaveableListener {
             credentialsUsage.setFileName(fp.getFileName());
             credentialsUsage.setName(fp.getDisplayName());
             credentialsUsage.setTimestamp(fp.getTimestampString());
-            fp.getUsages().forEach((k, v) ->{
-                credentialsUsage.setUsage(v.toString());
-                credentialsUsage.logEvent();
-            });
+            try{
+                fp.getUsages().forEach((k, v) ->{
+                    credentialsUsage.setUsage(v.toString());
+                    credentialsUsage.logEvent();
+                });
+            } catch (NullPointerException npe) {
+                // Impossilbe case;
+            }
         }
 
 
