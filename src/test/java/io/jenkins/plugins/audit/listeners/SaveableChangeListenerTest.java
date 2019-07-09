@@ -25,7 +25,6 @@ import java.util.concurrent.Future;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(JUnitParamsRunner.class)
 public class SavableChangeListenerTest {
     private ListAppender app;
     private CredentialsStore store = null;
