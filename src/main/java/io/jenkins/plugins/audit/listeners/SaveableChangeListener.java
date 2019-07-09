@@ -22,6 +22,7 @@ public class SavableChangeListener extends SaveableListener {
     public void onChange(Saveable o, XmlFile file) {
         CredentialsUsage credentialsUsage = LogEventFactory.getEvent(CredentialsUsage.class);
         if(o instanceof Fingerprint){
+
             Fingerprint fp = (Fingerprint) o;
             credentialsUsage.setFileName(fp.getFileName());
             credentialsUsage.setName(fp.getDisplayName());
