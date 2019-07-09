@@ -3,21 +3,21 @@ package io.jenkins.plugins.audit.listeners;
 import hudson.Extension;
 import hudson.XmlFile;
 import hudson.model.Fingerprint;
-import hudson.model.FingerprintCleanupThread;
-import hudson.model.FingerprintMap;
 import hudson.model.Saveable;
 import hudson.model.listeners.SaveableListener;
-import hudson.tasks.Fingerprinter;
 import io.jenkins.plugins.audit.event.CredentialsUsage;
-import jenkins.model.FingerprintFacet;
 import org.apache.logging.log4j.audit.LogEventFactory;
 
-import javax.annotation.Nonnull;
-import java.util.Collection;
-import java.util.List;
 
 @Extension
-public class SavableChangeListener extends SaveableListener {
+public class SaveableChangeListener extends SaveableListener {
+    /**
+     * Fired when a saveable object is created. But for now this is customized to only log
+     * the saveable fingerprint instances.
+     *
+     * @param o the saveable object.
+     * @param file the XmlFile for this saveable object.
+     */
     @Override
     public void onChange(Saveable o, XmlFile file) {
         CredentialsUsage credentialsUsage = LogEventFactory.getEvent(CredentialsUsage.class);
@@ -27,9 +27,10 @@ public class SavableChangeListener extends SaveableListener {
             credentialsUsage.setFileName(fp.getFileName());
             credentialsUsage.setName(fp.getDisplayName());
             credentialsUsage.setTimestamp(fp.getTimestampString());
-            credentialsUsage.setUsages(fp.getUsages().toString());
-
-            credentialsUsage.logEvent();
+            fp.getUsages().forEach((k, v) ->{
+                credentialsUsage.setUsage(v.toString());
+                credentialsUsage.logEvent();
+            });
         }
 
 

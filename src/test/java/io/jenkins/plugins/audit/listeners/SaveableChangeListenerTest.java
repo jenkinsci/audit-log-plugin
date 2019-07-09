@@ -25,7 +25,7 @@ import java.util.concurrent.Future;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SavableChangeListenerTest {
+public class SaveableChangeListenerTest {
     private ListAppender app;
     private CredentialsStore store = null;
 
@@ -62,7 +62,7 @@ public class SavableChangeListenerTest {
         job.getBuildersList().add(new CaptureEnvironmentBuilder());
         job.scheduleBuild2(0, new ParametersAction(new CredentialsParameterValue("SECRET", "secret-id", "The secret", true))).get();
 
-        assertThat(events).hasSize(5);
-        assertThat(events).extracting(event -> ((AuditMessage) event.getMessage()).getId().toString()).containsSequence("createItem", "buildStart", "credentialsUsage", "credentialsUsage", "buildFinish");
+        assertThat(events).hasSize(4);
+        assertThat(events).extracting(event -> ((AuditMessage) event.getMessage()).getId().toString()).containsSequence("createItem", "buildStart", "credentialsUsage", "buildFinish");
     }
 }
