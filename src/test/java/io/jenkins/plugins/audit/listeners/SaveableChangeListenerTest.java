@@ -63,6 +63,6 @@ public class SaveableChangeListenerTest {
         job.scheduleBuild2(0, new ParametersAction(new CredentialsParameterValue("SECRET", "secret-id", "The secret", true))).get();
 
         assertThat(events).hasSize(4);
-        assertThat(events).extracting(event -> ((AuditMessage) event.getMessage()).getId().toString()).containsSequence("createItem", "buildStart", "credentialsUsage", "buildFinish");
+        assertThat(events).extracting(event -> ((AuditMessage) event.getMessage()).getId().toString()).containsSequence("createItem", "buildStart", "useCredentials", "buildFinish");
     }
 }
