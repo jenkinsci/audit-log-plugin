@@ -250,7 +250,7 @@
       "name" : "fileName",
       "required" : true
     }, {
-      "name" : "usages",
+      "name" : "usage",
       "required" : true
     }, {
       "name" : "name",
@@ -444,8 +444,8 @@
     "catalogId" : "DEFAULT"
   }, {
     "id" : 14,
-    "name" : "usages",
-    "displayName" : "Usages",
+    "name" : "usage",
+    "displayName" : "Usage",
     "description" : "Usage of the entity",
     "dataType" : "STRING",
     "indexed" : false,
