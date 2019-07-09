@@ -242,8 +242,8 @@
       } ]
   }, {
     "id" : 15,
-    "name" : "credentialsUsage",
-    "displayName" : "Credentials Usage",
+    "name" : "useCredentials",
+    "displayName" : "Usage of Credentials",
     "description" : "Usage of Credentials",
     "aliases" : [ ],
     "attributes" : [ {

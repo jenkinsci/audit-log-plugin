@@ -5,10 +5,12 @@ import hudson.XmlFile;
 import hudson.model.Fingerprint;
 import hudson.model.Saveable;
 import hudson.model.listeners.SaveableListener;
-import io.jenkins.plugins.audit.event.CredentialsUsage;
+import io.jenkins.plugins.audit.event.UseCredentials;
 import org.apache.logging.log4j.audit.LogEventFactory;
 
 import java.util.Hashtable;
+
+import static io.jenkins.plugins.audit.helpers.DateTimeHelper.formatDateISO;
 
 
 @Extension
@@ -22,20 +24,18 @@ public class SaveableChangeListener extends SaveableListener {
      */
     @Override
     public void onChange(Saveable o, XmlFile file) {
-        CredentialsUsage credentialsUsage = LogEventFactory.getEvent(CredentialsUsage.class);
-        if(o instanceof Fingerprint){
 
+        if(o instanceof Fingerprint){
+            UseCredentials useCredentials = LogEventFactory.getEvent(UseCredentials.class);
             Fingerprint fp = (Fingerprint) o;
-            credentialsUsage.setFileName(fp.getFileName());
-            credentialsUsage.setName(fp.getDisplayName());
-            credentialsUsage.setTimestamp(fp.getTimestampString());
-            try{
-                fp.getUsages().forEach((k, v) ->{
-                    credentialsUsage.setUsage(v.toString());
-                    credentialsUsage.logEvent();
+            useCredentials.setFileName(fp.getFileName());
+            useCredentials.setName(fp.getDisplayName());
+            useCredentials.setTimestamp(formatDateISO(fp.getTimestamp().getTime()));
+            if(fp.getUsages() != null) {
+                fp.getUsages().values().forEach(value ->{
+                    useCredentials.setUsage(value.toString());
+                    useCredentials.logEvent();
                 });
-            } catch (NullPointerException npe) {
-                // Impossilbe case;
             }
         }
 
