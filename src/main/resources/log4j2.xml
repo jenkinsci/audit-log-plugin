@@ -28,10 +28,17 @@
                 <SizeBasedTriggeringPolicy size="20 MB"/>
             </Policies>
         </RollingRandomAccessFile>
+
+        <File name="HTMLAppender"
+              fileName="${DEFAULT_HOME}/userContent/Log-${date:MM-dd-k-m}.html"
+              append="false" >
+            <HTMLLayout charset="UTF-8" title="Audit Log" locationInfo="false" ></HTMLLayout>
+        </File>
     </Appenders>
     <Loggers>
-        <Logger name="AuditLogger" level="trace" additivity="false">
-            <AppenderRef ref="audit"/>
-        </Logger>
+        <Root level="trace" >
+            <AppenderRef ref="audit" />
+            <AppenderRef ref="HTMLAppender" />
+        </Root>
     </Loggers>
 </Configuration>
