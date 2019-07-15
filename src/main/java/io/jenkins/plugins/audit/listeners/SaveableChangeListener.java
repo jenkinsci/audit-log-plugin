@@ -31,7 +31,7 @@ public class SaveableChangeListener extends SaveableListener {
             useCredentials.setFileName(fp.getFileName());
             useCredentials.setName(fp.getDisplayName());
             useCredentials.setTimestamp(formatDateISO(fp.getTimestamp().getTime()));
-            if (fp.getUsages() != null && fp.getUsages().values() != null) {
+            if (fp != null && fp.getUsages() != null && fp.getUsages().values() != null) {
                 fp.getUsages().values().forEach(value -> {
                     useCredentials.setUsage(value.toString());
                     useCredentials.logEvent();
