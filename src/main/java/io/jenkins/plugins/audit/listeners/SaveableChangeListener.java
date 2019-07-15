@@ -1,5 +1,6 @@
 package io.jenkins.plugins.audit.listeners;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.Extension;
 import hudson.XmlFile;
 import hudson.model.Fingerprint;
@@ -23,6 +24,7 @@ public class SaveableChangeListener extends SaveableListener {
      * @param file the XmlFile for this saveable object.
      */
     @Override
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Spotbugs is broken. Cannot get it to detect correctly here.")
     public void onChange(Saveable o, XmlFile file) {
 
         if(o instanceof Fingerprint){
@@ -31,12 +33,10 @@ public class SaveableChangeListener extends SaveableListener {
             useCredentials.setFileName(fp.getFileName());
             useCredentials.setName(fp.getDisplayName());
             useCredentials.setTimestamp(formatDateISO(fp.getTimestamp().getTime()));
-            if (fp != null && fp.getUsages() != null && fp.getUsages().values() != null) {
-                fp.getUsages().values().forEach(value -> {
-                    useCredentials.setUsage(value.toString());
-                    useCredentials.logEvent();
-                });
-            }
+            fp.getUsages().values().forEach(value -> {
+                useCredentials.setUsage(value.toString());
+                useCredentials.logEvent();
+            });
         }
 
 
