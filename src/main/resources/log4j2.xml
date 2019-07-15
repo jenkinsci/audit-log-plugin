@@ -30,15 +30,15 @@
         </RollingRandomAccessFile>
 
         <File name="HTMLAppender"
-              fileName="${DEFAULT_HOME}/userContent/Log-${date:MM-dd-k-m}.html"
+              fileName="${DEFAULT_HOME}/userContent/audit-log-plugin/auditLog-${date:MM-dd-k-m}.html"
               append="false" >
             <HTMLLayout charset="UTF-8" title="Audit Log" locationInfo="false" ></HTMLLayout>
         </File>
     </Appenders>
     <Loggers>
-        <Root level="trace" >
+        <Logger name="AuditLogger" level="trace" additivity="false">
             <AppenderRef ref="audit" />
             <AppenderRef ref="HTMLAppender" />
-        </Root>
+        </Logger>
     </Loggers>
 </Configuration>
