@@ -19,21 +19,22 @@
     <Properties>
         <Property name="DEFAULT_HOME">$${env:JENKINS_HOME:-$${sys:JENKINS_HOME:-.}}</Property>
         <Property name="FALLBACK_LOG_DESTINATION">${DEFAULT_HOME}/logs/audit.log</Property>
-        <Property name="AUDIT_LOG_DESTINATION">./logs/audit.log</Property>
-        <Property name="IANA_ENTERPRISE_NUMBER">$${sys:enterpriseNumber:-10860}</Property>
+        <Property name="AUDIT_LOG_DESTINATION">$${sys:auditFileName:-${FALLBACK_LOG_DESTINATION}}</Property>
+        <Property name="IANA_ENTERPRISE_NUMBER">$${sys:enterpriseNumber:-.}</Property>
         <Property name="APPENDER_LAYOUT_TYPE">$${sys:appenderType:-jsonLayout}</Property>
         <Property name="PORT">1854</Property>
         <Property name="HOST">localhost</Property>
     </Properties>
 
     <Appenders>
-        <ScriptAppenderSelector name="Routing">
+        <Routing name="Routing">
             <Script name="RoutingInit" language="Groovy"><![CDATA[
             (System.properties['appenderType'] == "syslogLayout") ? "syslogLayout" : "jsonLayout";]]>
             </Script>
-                <AppenderSet>
+            <Routes>
+                <Route key="syslogLayout">
                     <!--This has to be configurable-->
-                    <Syslog name="syslogLayout"
+                    <Syslog name="Audit Sys Logger"
                             format="RFC5424"
                             host="${HOST}"
                             port="${PORT}"
@@ -46,8 +47,11 @@
                             newLine="true"
                             messageId="Server"
                             id="App"/>
+                </Route>
+
+                <Route key="jsonLayout">
                     <RollingRandomAccessFile
-                            name="jsonLayout"
+                            name="audit"
                             fileName="${AUDIT_LOG_DESTINATION}"
                             filePattern="${AUDIT_LOG_DESTINATION}.%d{yyyyMMdd_HHmmss}-%i.log">
 
@@ -58,12 +62,11 @@
                         </Policies>
 
                     </RollingRandomAccessFile>
-                </AppenderSet>
+                </Route>
 
 
-
-
-        </ScriptAppenderSelector>
+            </Routes>
+        </Routing>
     </Appenders>
     <Loggers>
         <Root level="debug">
