@@ -15,23 +15,19 @@
 ~ See the license for the specific language governing permissions and
 ~ limitations under the license.
 -->
-<Configuration status="DEBUG">
+<Configuration status="ERROR">
     <Properties>
-        <Property name="DEFAULT_HOME">$${env:JENKINS_HOME:-$${sys:JENKINS_HOME:-.}}</Property>
-        <Property name="FALLBACK_LOG_DESTINATION">${DEFAULT_HOME}/logs/audit.log</Property>
-        <Property name="AUDIT_LOG_DESTINATION">$${sys:auditFileName:-${FALLBACK_LOG_DESTINATION}}</Property>
-        <Property name="IANA_ENTERPRISE_NUMBER">$${sys:enterpriseNumber:-.}</Property>
         <Property name="APPENDER_LAYOUT_TYPE">$${sys:appenderType:-jsonLayout}</Property>
-        <Property name="PORT">1854</Property>
-        <Property name="HOST">localhost</Property>
+        <Property name="AUDIT_LOG_DESTINATION">$${sys:auditFileName:-./logs/audit.log}</Property>
+        <!-- Syslog appender properties-->
+        <Property name="IANA_ENTERPRISE_NUMBER">$${sys:enterpriseNumber:-18060}</Property>
+        <Property name="PORT">$${sys:syslogPort:-1854}</Property>
+        <Property name="HOST">$${sys:syslogHost:-localhost}</Property>
     </Properties>
 
     <Appenders>
         <Routing name="Routing">
-            <Script name="RoutingInit" language="Groovy"><![CDATA[
-            (System.properties['appenderType'] == "syslogLayout") ? "syslogLayout" : "jsonLayout";]]>
-            </Script>
-            <Routes>
+            <Routes pattern="${APPENDER_LAYOUT_TYPE}">
                 <Route key="syslogLayout">
                     <!--This has to be configurable-->
                     <Syslog name="Audit Sys Logger"
@@ -48,7 +44,6 @@
                             messageId="Server"
                             id="App"/>
                 </Route>
-
                 <Route key="jsonLayout">
                     <RollingRandomAccessFile
                             name="audit"
@@ -63,8 +58,6 @@
 
                     </RollingRandomAccessFile>
                 </Route>
-
-
             </Routes>
         </Routing>
     </Appenders>
