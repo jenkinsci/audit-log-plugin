@@ -28,10 +28,20 @@
                 <SizeBasedTriggeringPolicy size="20 MB"/>
             </Policies>
         </RollingRandomAccessFile>
+        <JDBC name="Db_appender" tableName="jenkins_log">
+            <ConnectionFactory
+                    class="io.jenkins.plugins.audit.db.ConnectionFactory" method="getDatabaseConnection" />
+            <Column name="LOG_ID" pattern="%u" isUnicode="false"/>
+            <Column name="ENTRY_DATE" isEventTimestamp="true" />
+            <Column name="LOGGER" pattern="%logger" isUnicode="false"/>
+            <Column name="LOG_LEVEL" pattern="%level" isUnicode="false"/>
+            <Column name="MESSAGE" pattern="%m" isUnicode="false" />
+         </JDBC>
     </Appenders>
     <Loggers>
         <Logger name="AuditLogger" level="trace" additivity="false">
             <AppenderRef ref="audit"/>
+            <AppenderRef ref="Db_appender"/>
         </Logger>
     </Loggers>
 </Configuration>
