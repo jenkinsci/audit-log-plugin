@@ -17,8 +17,6 @@ import org.jvnet.hudson.test.JenkinsRule;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 @RunWith(JUnitParamsRunner.class)
 public class BuildListenerTest {
@@ -42,10 +40,10 @@ public class BuildListenerTest {
     @Issue("JENKINS-55608, JENKINS-56645")
     @Test
     public void testAuditOnBuildStartAndFinish() throws Exception{
-        List<LogEvent> events = app.getEvents();
-
         project.getBuildersList().add(new Shell("echo Test audit-log-plugin"));
         project.scheduleBuild2(0).get();
+
+        List<LogEvent> events = app.getEvents();
 
         assertThat(events).hasSize(3);
         assertThat(events).extracting(event -> ((AuditMessage) event.getMessage()).getId().toString()).containsSequence("createItem", "buildStart", "buildFinish");

@@ -1,35 +1,35 @@
 package io.jenkins.plugins.audit.listeners;
 
-import java.util.List;
-import java.util.HashMap;
-import java.io.IOException;
-import java.lang.reflect.Field;
-
-import org.junit.Rule;
-import org.junit.Test;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import hudson.model.User;
+import hudson.security.HudsonPrivateSecurityRealm;
+import hudson.security.pages.SignupPage;
+import jenkins.model.Jenkins;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import org.acegisecurity.Authentication;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.message.StructuredDataMessage;
+import org.apache.logging.log4j.test.appender.ListAppender;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.jvnet.hudson.test.Issue;
-import org.xml.sax.SAXException;
-import org.acegisecurity.Authentication;
 import org.jvnet.hudson.test.JenkinsRule;
-import org.apache.logging.log4j.core.LogEvent;
 import org.jvnet.hudson.test.JenkinsRule.WebClient;
-import org.apache.logging.log4j.test.appender.ListAppender;
-import org.apache.logging.log4j.message.StructuredDataMessage;
+import org.xml.sax.SAXException;
 
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.containsString;
-
-import hudson.model.User;
-import jenkins.model.Jenkins;
-import junitparams.Parameters;
-import junitparams.JUnitParamsRunner;
-import hudson.security.pages.SignupPage;
-import hudson.security.HudsonPrivateSecurityRealm;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 
 @RunWith(JUnitParamsRunner.class)
@@ -84,8 +84,7 @@ public class UserCreationListenerTest {
             "1, debbie, debbiePassword"
     })
     public void testUserCreationFromRealm(int expectedCount, String username, String password) throws Exception {
-        List<LogEvent> events = app.getEvents();
-        assertEventCount(events, 0);
+        assertEventCount(app.getEvents(), 0);
 
         HudsonPrivateSecurityRealm realm = new HudsonPrivateSecurityRealm(false, false, null);
         j.jenkins.setSecurityRealm(realm);
@@ -93,14 +92,13 @@ public class UserCreationListenerTest {
         User user = realm.createAccount(username, password);
         user.save();
 
-        assertEventCount(events, expectedCount);
+        assertEventCount(app.getEvents(), expectedCount);
     }
 
     @Issue("JENKINS-54088")
     @Test
     public void testUserCreationFromSignUp() throws Exception {
-        List<LogEvent> events = app.getEvents();
-        assertEventCount(events, 0);
+        assertEventCount(app.getEvents(), 0);
 
         HudsonPrivateSecurityRealm realm = new HudsonPrivateSecurityRealm(true, false, null);
         j.jenkins.setSecurityRealm(realm);
@@ -112,7 +110,7 @@ public class UserCreationListenerTest {
         HtmlPage success = signup.submit(j);
 
         // user creation via a jenkins signup also automatically logs the user in
-        assertEventCount(events, 2);
+        assertEventCount(app.getEvents(), 2);
 
         // verify a login event occurred
         client.executeOnServer(() -> {
@@ -129,8 +127,7 @@ public class UserCreationListenerTest {
     @Issue("JENKINS-54088")
     @Test
     public void testUserCreationAndLoginFromRealm() throws Exception {
-        List<LogEvent> events = app.getEvents();
-        assertEventCount(events, 0);
+        assertEventCount(app.getEvents(), 0);
 
         HudsonPrivateSecurityRealm realm = new HudsonPrivateSecurityRealm(false, false, null);
         j.jenkins.setSecurityRealm(realm);
@@ -140,8 +137,8 @@ public class UserCreationListenerTest {
         client.login("charlie", USERS.get("charlie"));
 
         // verify the audit event log messages as user creation and user login events
-        StructuredDataMessage logMessageOne = (StructuredDataMessage) events.get(0).getMessage();
-        StructuredDataMessage logMessageTwo = (StructuredDataMessage) events.get(1).getMessage();
+        StructuredDataMessage logMessageOne = (StructuredDataMessage) app.getEvents().get(0).getMessage();
+        StructuredDataMessage logMessageTwo = (StructuredDataMessage) app.getEvents().get(1).getMessage();
 
         assertTrue(logMessageOne.toString().contains("createUser"));
         assertTrue(logMessageTwo.toString().contains("login"));
@@ -154,7 +151,7 @@ public class UserCreationListenerTest {
             return null;
         });
 
-        assertEventCount(events, 2);
+        assertEventCount(app.getEvents(), 2);
     }
 
 
