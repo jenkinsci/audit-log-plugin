@@ -31,10 +31,13 @@ public class SaveableChangeListener extends SaveableListener {
             useCredentials.setFileName(fp.getFileName());
             useCredentials.setName(fp.getDisplayName());
             useCredentials.setTimestamp(formatDateISO(fp.getTimestamp().getTime()));
-            fp.getUsages().values().forEach(value -> {
-                useCredentials.setUsage(value.toString());
-                useCredentials.logEvent();
-            });
+            Hashtable<String, Fingerprint.RangeSet> usages = fp.getUsages();
+            if (usages != null) {
+                usages.values().forEach(value -> {
+                    useCredentials.setUsage(value.toString());
+                    useCredentials.logEvent();
+                });
+            }
         }
 
 
