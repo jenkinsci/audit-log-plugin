@@ -3,6 +3,7 @@ package io.jenkins.plugins.audit.listeners;
 import hudson.model.FreeStyleProject;
 import hudson.tasks.Shell;
 import junitparams.JUnitParamsRunner;
+import org.apache.logging.log4j.audit.AuditMessage;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.test.appender.ListAppender;
 import org.junit.After;
@@ -15,8 +16,7 @@ import org.jvnet.hudson.test.JenkinsRule;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(JUnitParamsRunner.class)
 public class BuildListenerTest {
@@ -40,17 +40,12 @@ public class BuildListenerTest {
     @Issue("JENKINS-55608, JENKINS-56645")
     @Test
     public void testAuditOnBuildStartAndFinish() throws Exception{
-        List<LogEvent> events = app.getEvents();
-
         project.getBuildersList().add(new Shell("echo Test audit-log-plugin"));
         project.scheduleBuild2(0).get();
 
-        /*
-        Order of expected events
-        1) Start of the Build
-        2) Finish of the Build
-         */
+        List<LogEvent> events = app.getEvents();
 
-        assertEquals("Events on build start and complete not triggered", 3, events.size());
+        assertThat(events).hasSize(3);
+        assertThat(events).extracting(event -> ((AuditMessage) event.getMessage()).getId().toString()).containsSequence("createItem", "buildStart", "buildFinish");
     }
 }

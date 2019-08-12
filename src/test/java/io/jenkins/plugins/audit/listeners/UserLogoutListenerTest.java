@@ -1,28 +1,29 @@
 package io.jenkins.plugins.audit.listeners;
 
-import java.util.List;
-import java.io.IOException;
-
-import org.junit.Rule;
-import org.junit.Test;
+import hudson.security.SecurityRealm;
+import jenkins.model.IdStrategy;
+import jenkins.model.Jenkins;
+import org.acegisecurity.Authentication;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.message.StructuredDataMessage;
+import org.apache.logging.log4j.test.appender.ListAppender;
+import org.jenkinsci.plugins.mocksecurityrealm.MockSecurityRealm;
 import org.junit.After;
 import org.junit.Before;
-import org.jvnet.hudson.test.Issue;
-import org.xml.sax.SAXException;
-import org.acegisecurity.Authentication;
-import org.jvnet.hudson.test.JenkinsRule;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.apache.logging.log4j.core.LogEvent;
+import org.jvnet.hudson.test.Issue;
+import org.jvnet.hudson.test.JenkinsRule;
 import org.jvnet.hudson.test.JenkinsRule.WebClient;
-import org.apache.logging.log4j.test.appender.ListAppender;
-import org.apache.logging.log4j.message.StructuredDataMessage;
-import org.jenkinsci.plugins.mocksecurityrealm.MockSecurityRealm;
+import org.xml.sax.SAXException;
 
-import static org.junit.Assert.*;
+import java.io.IOException;
+import java.util.List;
 
-import jenkins.model.Jenkins;
-import jenkins.model.IdStrategy;
-import hudson.security.SecurityRealm;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 public class UserLogoutListenerTest {
 
@@ -66,8 +67,7 @@ public class UserLogoutListenerTest {
     @Issue("JENKINS-54087")
     @Test
     public void testValidLogoutEventLogged() throws Exception {
-        List<LogEvent> events = app.getEvents();
-        assertEventCount(events, 0);
+        assertEventCount(app.getEvents(), 0);
 
         client.login("alice", "alice");
 
@@ -91,21 +91,20 @@ public class UserLogoutListenerTest {
         });
 
         // verify login - logout events
-        assertEventCount(events, 2);
+        assertEventCount(app.getEvents(), 2);
     }
 
     @Issue("JENKINS-54087")
     @Test
     public void testValidUsernameInMessageLogged() throws Exception {
-        List<LogEvent> events = app.getEvents();
-        assertEventCount(events, 0);
+        assertEventCount(app.getEvents(), 0);
 
         client.login("debbie", "debbie");
         logout(client);
 
-        StructuredDataMessage logMessage = (StructuredDataMessage) events.get(1).getMessage();
+        StructuredDataMessage logMessage = (StructuredDataMessage) app.getEvents().get(1).getMessage();
 
-        assertEventCount(events, 2);
+        assertEventCount(app.getEvents(), 2);
         assertTrue(logMessage.toString().contains("logout"));
         assertEquals("debbie", logMessage.get("userId"));
     }
