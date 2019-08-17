@@ -34,7 +34,7 @@
     <properties>
         <revision>1.0</revision>
         <changelist>-SNAPSHOT</changelist>
-        <jenkins.version>2.161</jenkins.version>
+        <jenkins.version>2.169-SNAPSHOT</jenkins.version>
         <java.level>8</java.level>
         <log4j.version>2.12.1</log4j.version>
         <log4j-audit.version>1.0.1</log4j-audit.version>
@@ -214,6 +214,10 @@
         <repository>
             <id>repo.jenkins-ci.org</id>
             <url>https://repo.jenkins-ci.org/public/</url>
+        </repository>
+        <repository>
+            <id>jenkins-2.169-snapshot</id>
+            <url>https://repo.jenkins-ci.org/snapshots/</url>
         </repository>
     </repositories>
     <pluginRepositories>
