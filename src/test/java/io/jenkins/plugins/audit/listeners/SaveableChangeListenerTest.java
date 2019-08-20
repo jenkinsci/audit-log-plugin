@@ -45,8 +45,6 @@ public class SaveableChangeListenerTest {
     @Issue("ISSUE-35")
     @Test
     public void testOnCredentialsUsage() throws Exception {
-        List<LogEvent> events = app.getEvents();
-
         UsernamePasswordCredentialsImpl credentials = new UsernamePasswordCredentialsImpl(CredentialsScope.GLOBAL, "secret-id", "test credentials", "bob","secret");
         CredentialsProvider.lookupStores(j.jenkins).iterator().next().addCredentials(Domain.global(), credentials);
         JenkinsRule.WebClient wc = j.createWebClient();
@@ -62,6 +60,7 @@ public class SaveableChangeListenerTest {
         job.getBuildersList().add(new CaptureEnvironmentBuilder());
         job.scheduleBuild2(0, new ParametersAction(new CredentialsParameterValue("SECRET", "secret-id", "The secret", true))).get();
 
+        List<LogEvent> events = app.getEvents();
         assertThat(events).hasSize(4);
         assertThat(events).extracting(event -> ((AuditMessage) event.getMessage()).getId().toString()).containsSequence("createItem", "buildStart", "useCredentials", "buildFinish");
     }
