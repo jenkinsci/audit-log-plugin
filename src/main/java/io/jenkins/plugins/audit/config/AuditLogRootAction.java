@@ -1,8 +1,11 @@
 package io.jenkins.plugins.audit.config;
 
 import hudson.Extension;
+import hudson.FilePath;
+import hudson.model.DirectoryBrowserSupport;
 import hudson.model.RootAction;
 import jenkins.model.Jenkins;
+
 
 @Extension
 public class AuditLogRootAction implements RootAction {
@@ -18,6 +21,12 @@ public class AuditLogRootAction implements RootAction {
 
     @Override
     public String getUrlName() {
-        return Jenkins.get().getRootUrl() + "userContent/audit-log-plugin" ;
+        return "auditLog" ;
+    }
+
+    public DirectoryBrowserSupport doView() {
+        Jenkins.get().checkPermission(Jenkins.ADMINISTER);
+        FilePath fp = Jenkins.get().getRootPath().child("logs").child("html");
+        return new DirectoryBrowserSupport(this, fp,"Audit Logs","notepad.png",true);
     }
 }
