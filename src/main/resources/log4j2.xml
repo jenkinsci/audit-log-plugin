@@ -20,6 +20,7 @@
         <Property name="DEFAULT_HOME">$${env:JENKINS_HOME:-$${sys:JENKINS_HOME:-.}}</Property>
         <Property name="FALLBACK_LOG_DESTINATION">${DEFAULT_HOME}/logs/audit.log</Property>
         <Property name="AUDIT_LOG_DESTINATION">$${sys:auditFileName:-${FALLBACK_LOG_DESTINATION}}</Property>
+        <Property name="AUDIT_LOG_DIRECTORY">$${DEFAULT_HOME}/logs/html</Property>
     </Properties>
     <Appenders>
         <RollingRandomAccessFile name="audit" fileName="${AUDIT_LOG_DESTINATION}" filePattern="${AUDIT_LOG_DESTINATION}.%d{yyyyMMdd_HHmmss}-%i.log">
@@ -28,10 +29,18 @@
                 <SizeBasedTriggeringPolicy size="20 MB"/>
             </Policies>
         </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="HTMLAppender" fileName="${AUDIT_LOG_DIRECTORY}/audit.html" filePattern="${AUDIT_LOG_DIRECTORY}/audit-%d{yyyy-MM-dd}.html">
+            <HTMLLayout charset="UTF-8" title="Audit Log" locationInfo="false" ></HTMLLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingRandomAccessFile>
     </Appenders>
     <Loggers>
         <Logger name="AuditLogger" level="trace" additivity="false">
-            <AppenderRef ref="audit"/>
+            <AppenderRef ref="audit" />
+            <AppenderRef ref="HTMLAppender" />
         </Logger>
     </Loggers>
 </Configuration>
