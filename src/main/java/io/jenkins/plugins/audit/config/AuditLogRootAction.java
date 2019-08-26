@@ -24,7 +24,7 @@ public class AuditLogRootAction implements RootAction {
         return "auditLog" ;
     }
 
-    public DirectoryBrowserSupport doView() {
+    public DirectoryBrowserSupport doDynamic() {
         Jenkins.get().checkPermission(Jenkins.ADMINISTER);
         FilePath fp = Jenkins.get().getRootPath().child("logs").child("html");
         return new DirectoryBrowserSupport(this, fp,"Audit Logs","notepad.png",true);
