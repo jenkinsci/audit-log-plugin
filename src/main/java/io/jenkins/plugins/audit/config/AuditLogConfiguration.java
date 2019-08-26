@@ -16,7 +16,8 @@ public class AuditLogConfiguration extends GlobalConfiguration {
     private String logDestination;
     private String appenderType;
     private String syslogHost;
-    private String syslogPort;
+    private int syslogPort;
+    private int enterpriseNumber;
 
     public AuditLogConfiguration() {
         load();
@@ -71,17 +72,31 @@ public class AuditLogConfiguration extends GlobalConfiguration {
         reloadLogger();
     }
 
-    public String getSyslogPort() {
+    public int getSyslogPort() {
         return syslogPort;
     }
 
     @DataBoundSetter
-    public void setSyslogPort(String syslogPort) {
-        if(this.syslogPort != null && !syslogPort.equals("")){
+    public void setSyslogPort(int syslogPort) {
+        if(this.syslogPort != 0){
             this.syslogPort = syslogPort;
         }
         save();
         reloadLogger();
+    }
+
+    public int getEnterpriseNumber() {
+        return enterpriseNumber;
+    }
+
+    @DataBoundSetter
+    public void setEnterpiseNumber(int enterpriseNumber) {
+        if(this.enterpriseNumber != 0){
+            this.enterpriseNumber = enterpriseNumber;
+        }
+        save();
+        reloadLogger();
+
     }
 
     private void reloadLogger() {
@@ -103,10 +118,16 @@ public class AuditLogConfiguration extends GlobalConfiguration {
             System.clearProperty("syslogHost");
         }
 
-        if(this.syslogPort != null && !this.syslogPort.equals("")){
-            System.setProperty("syslogPort", this.syslogPort);
+        if(this.syslogPort != 0){
+            System.setProperty("syslogPort", String.valueOf(this.syslogPort));
         } else {
             System.clearProperty("syslogPort");
+        }
+
+        if(this.enterpriseNumber != 0){
+            System.setProperty("enterpriseNumber", String.valueOf(this.enterpriseNumber));
+        } else {
+            System.clearProperty("enterpriseNumber");
         }
 
         LoggerContext.getContext(false).reconfigure();
