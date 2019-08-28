@@ -60,10 +60,18 @@
                 </Route>
             </Routes>
         </Routing>
+  
+        <RollingRandomAccessFile name="HTMLAppender" fileName="${AUDIT_LOG_DIRECTORY}/audit.html" filePattern="${AUDIT_LOG_DIRECTORY}/audit-%d{yyyy-MM-dd}.html">
+            <HTMLLayout charset="UTF-8" title="Audit Log" locationInfo="false" ></HTMLLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingRandomAccessFile>
     </Appenders>
     <Loggers>
-        <Root level="debug">
-            <AppenderRef ref="Routing"/>
-        </Root>
+        <Logger name="AuditLogger" level="trace" additivity="false">
+            <AppenderRef ref="Routing" />
+            <AppenderRef ref="HTMLAppender" />
+        </Logger>
     </Loggers>
 </Configuration>

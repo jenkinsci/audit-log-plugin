@@ -240,6 +240,25 @@
         "name" : "userId",
         "required" : false
       } ]
+  }, {
+    "id" : 15,
+    "name" : "useCredentials",
+    "displayName" : "Usage of Credentials",
+    "description" : "Usage of Credentials",
+    "aliases" : [ ],
+    "attributes" : [ {
+      "name" : "fileName",
+      "required" : true
+    }, {
+      "name" : "usage",
+      "required" : true
+    }, {
+      "name" : "name",
+      "required" : true
+    }, {
+      "name" : "timestamp",
+      "required" : true
+    } ]
   } ],
   "attributes" : [ {
     "id" : 1,
@@ -400,6 +419,48 @@
     "name" : "oldNodeName",
     "displayName" : "Old Node Name",
     "description" : "Name of the old node which is updated recently",
+    "dataType" : "STRING",
+    "indexed" : false,
+    "sortable" : true,
+    "required" : false,
+    "requestContext" : false,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 13,
+    "name" : "fileName",
+    "displayName" : "File name",
+    "description" : "File name",
+    "dataType" : "STRING",
+    "indexed" : false,
+    "sortable" : true,
+    "required" : false,
+    "requestContext" : false,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 14,
+    "name" : "usage",
+    "displayName" : "Usage",
+    "description" : "Usage of the entity",
+    "dataType" : "STRING",
+    "indexed" : false,
+    "sortable" : true,
+    "required" : false,
+    "requestContext" : false,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 15,
+    "name" : "name",
+    "displayName" : "Name",
+    "description" : "Name",
     "dataType" : "STRING",
     "indexed" : false,
     "sortable" : true,

@@ -1,34 +1,33 @@
 package io.jenkins.plugins.audit.listeners;
 
-import java.util.List;
-import java.io.IOException;
-
-import org.junit.Rule;
-import org.junit.Test;
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+import hudson.security.SecurityRealm;
+import jenkins.model.IdStrategy;
+import jenkins.model.Jenkins;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import org.acegisecurity.Authentication;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.message.StructuredDataMessage;
+import org.apache.logging.log4j.test.appender.ListAppender;
+import org.jenkinsci.plugins.mocksecurityrealm.MockSecurityRealm;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.jvnet.hudson.test.Issue;
-import org.xml.sax.SAXException;
-import org.acegisecurity.Authentication;
 import org.jvnet.hudson.test.JenkinsRule;
-import org.junit.rules.ExpectedException;
-import org.apache.logging.log4j.core.LogEvent;
 import org.jvnet.hudson.test.JenkinsRule.WebClient;
-import org.apache.logging.log4j.test.appender.ListAppender;
-import org.apache.logging.log4j.message.StructuredDataMessage;
-import org.jenkinsci.plugins.mocksecurityrealm.MockSecurityRealm;
+import org.xml.sax.SAXException;
 
-import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+import java.io.IOException;
+import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.containsString;
-
-import jenkins.model.Jenkins;
-import jenkins.model.IdStrategy;
-import junitparams.Parameters;
-import junitparams.JUnitParamsRunner;
-import hudson.security.SecurityRealm;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(JUnitParamsRunner.class)
 public class UserLoginListenerTest {
@@ -79,12 +78,11 @@ public class UserLoginListenerTest {
             "1, debbie, debbie, debbie"
     })
     public void testValidUserLoginEventsLogged(int expectedCount, String expected, String username, String password) throws Exception {
-        List<LogEvent> events = app.getEvents();
-        assertEventCount(events, 0);
+        assertEventCount(app.getEvents(), 0);
 
         client.login(username, password);
 
-        assertEventCount(events, expectedCount);
+        assertEventCount(app.getEvents(), expectedCount);
 
         client.executeOnServer(() -> {
             Authentication a = Jenkins.getAuthentication();
@@ -97,13 +95,12 @@ public class UserLoginListenerTest {
     @Issue("JENKINS-54087")
     @Test
     public void testValidUsernameInMessageLogged() throws Exception {
-        List<LogEvent> events = app.getEvents();
-        assertEventCount(events, 0);
+        assertEventCount(app.getEvents(), 0);
 
         client.login("debbie", "debbie");
-        StructuredDataMessage logMessage = (StructuredDataMessage) events.get(0).getMessage();
+        StructuredDataMessage logMessage = (StructuredDataMessage) app.getEvents().get(0).getMessage();
 
-        assertEventCount(events, 1);
+        assertEventCount(app.getEvents(), 1);
         assertTrue(logMessage.toString().contains("login"));
         assertEquals("debbie", logMessage.get("userId"));
     }
@@ -111,13 +108,12 @@ public class UserLoginListenerTest {
     @Issue("JENKINS-54087")
     @Test
     public void testInvalidUserLoginFailsWithError() throws Exception {
-        List<LogEvent> events = app.getEvents();
 
         expectedException.expect(FailingHttpStatusCodeException.class);
         expectedException.expectMessage(containsString("Unauthorized"));
         client.login("john", "john");
 
-        assertEventCount(events, 0);
+        assertEventCount(app.getEvents(), 0);
     }
 
 
