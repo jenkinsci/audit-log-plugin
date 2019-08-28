@@ -36,6 +36,10 @@ public class AuditLogConfiguration extends GlobalConfiguration {
     }
 
     public String getLogDestination() {
+        if(this.logDestination != null && !this.logDestination.equals("")){
+            return this.logDestination;
+        }
+
         String jenkinsHome = EnvVars.masterEnvVars.get("JENKINS_HOME");
 
         if(jenkinsHome == null){
@@ -52,7 +56,7 @@ public class AuditLogConfiguration extends GlobalConfiguration {
 
     @DataBoundSetter
     public void setLogDestination(String logDestination) {
-        if(this.logDestination != null && !logDestination.equals("")){
+        if(logDestination != null && !logDestination.equals("")){
             this.logDestination = logDestination;
         }
         save();
