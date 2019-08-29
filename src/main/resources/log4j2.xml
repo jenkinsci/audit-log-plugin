@@ -18,18 +18,51 @@
 <Configuration status="ERROR">
     <Properties>
         <Property name="DEFAULT_HOME">$${env:JENKINS_HOME:-$${sys:JENKINS_HOME:-.}}</Property>
-        <Property name="FALLBACK_LOG_DESTINATION">${DEFAULT_HOME}/logs/audit.log</Property>
-        <Property name="AUDIT_LOG_DESTINATION">$${sys:auditFileName:-${FALLBACK_LOG_DESTINATION}}</Property>
+        <Property name="APPENDER_LAYOUT_TYPE">$${sys:appenderType:-jsonLayout}</Property>
+        <Property name="AUDIT_LOG_DESTINATION">$${sys:auditFileName:-./logs/audit.log}</Property>
         <Property name="AUDIT_LOG_DIRECTORY">$${DEFAULT_HOME}/logs/html</Property>
+        <!-- Syslog appender properties-->
+        <Property name="IANA_ENTERPRISE_NUMBER">$${sys:enterpriseNumber:-18060}</Property>
+        <Property name="PORT">$${sys:syslogPort:-1854}</Property>
+        <Property name="HOST">$${sys:syslogHost:-localhost}</Property>
     </Properties>
-    <Appenders>
-        <RollingRandomAccessFile name="audit" fileName="${AUDIT_LOG_DESTINATION}" filePattern="${AUDIT_LOG_DESTINATION}.%d{yyyyMMdd_HHmmss}-%i.log">
-            <JsonLayout properties="true"/>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="20 MB"/>
-            </Policies>
-        </RollingRandomAccessFile>
 
+    <Appenders>
+        <Routing name="Routing">
+            <Routes pattern="${APPENDER_LAYOUT_TYPE}">
+                <Route key="syslogLayout">
+                    <!--This has to be configurable-->
+                    <Syslog name="Audit Sys Logger"
+                            format="RFC5424"
+                            host="${HOST}"
+                            port="${PORT}"
+                            protocol="TCP"
+                            appName="ALP"
+                            mdcId="mdc"
+                            includeMDC="true"
+                            facility="LOCAL0"
+                            enterpriseNumber="${IANA_ENTERPRISE_NUMBER}"
+                            newLine="true"
+                            messageId="Server"
+                            id="App"/>
+                </Route>
+                <Route key="jsonLayout">
+                    <RollingRandomAccessFile
+                            name="audit"
+                            fileName="${AUDIT_LOG_DESTINATION}"
+                            filePattern="${AUDIT_LOG_DESTINATION}.%d{yyyyMMdd_HHmmss}-%i.log">
+
+                        <JsonLayout properties="true"/>
+
+                        <Policies>
+                            <SizeBasedTriggeringPolicy size="20 MB"/>
+                        </Policies>
+
+                    </RollingRandomAccessFile>
+                </Route>
+            </Routes>
+        </Routing>
+  
         <RollingRandomAccessFile name="HTMLAppender" fileName="${AUDIT_LOG_DIRECTORY}/audit.html" filePattern="${AUDIT_LOG_DIRECTORY}/audit-%d{yyyy-MM-dd}.html">
             <HTMLLayout charset="UTF-8" title="Audit Log" locationInfo="false" ></HTMLLayout>
             <Policies>
@@ -39,7 +72,7 @@
     </Appenders>
     <Loggers>
         <Logger name="AuditLogger" level="trace" additivity="false">
-            <AppenderRef ref="audit" />
+            <AppenderRef ref="Routing" />
             <AppenderRef ref="HTMLAppender" />
         </Logger>
     </Loggers>

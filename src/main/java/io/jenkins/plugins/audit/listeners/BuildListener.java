@@ -66,7 +66,6 @@ public class BuildListener extends RunListener<Run> {
             Cause c = (Cause)cause;
             causes.add(c.getShortDescription());
         }
-
         buildFinish.setBuildNumber(run.getNumber());
         buildFinish.setCause(causes);
         buildFinish.setProjectName(run.getParent().getFullName());
