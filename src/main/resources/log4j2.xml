@@ -17,8 +17,10 @@
 -->
 <Configuration status="ERROR">
     <Properties>
+        <Property name="DEFAULT_HOME">$${env:JENKINS_HOME:-$${sys:JENKINS_HOME:-.}}</Property>
         <Property name="APPENDER_LAYOUT_TYPE">$${sys:appenderType:-jsonLayout}</Property>
         <Property name="AUDIT_LOG_DESTINATION">$${sys:auditFileName:-./logs/audit.log}</Property>
+        <Property name="AUDIT_LOG_DIRECTORY">$${DEFAULT_HOME}/logs/html</Property>
         <!-- Syslog appender properties-->
         <Property name="IANA_ENTERPRISE_NUMBER">$${sys:enterpriseNumber:-18060}</Property>
         <Property name="PORT">$${sys:syslogPort:-1854}</Property>
