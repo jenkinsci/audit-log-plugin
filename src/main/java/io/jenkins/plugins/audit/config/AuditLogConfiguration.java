@@ -69,7 +69,7 @@ public class AuditLogConfiguration extends GlobalConfiguration {
 
     @DataBoundSetter
     public void setSyslogHost(String syslogHost) {
-        if(this.syslogHost != null && !syslogHost.equals("")){
+        if(syslogHost != null && !syslogHost.equals("")){
             this.syslogHost = syslogHost;
         }
         save();
@@ -82,7 +82,7 @@ public class AuditLogConfiguration extends GlobalConfiguration {
 
     @DataBoundSetter
     public void setSyslogPort(int syslogPort) {
-        if(this.syslogPort != 0){
+        if(syslogPort != 0){
             this.syslogPort = syslogPort;
         }
         save();
@@ -95,7 +95,7 @@ public class AuditLogConfiguration extends GlobalConfiguration {
 
     @DataBoundSetter
     public void setEnterpiseNumber(int enterpriseNumber) {
-        if(this.enterpriseNumber != 0){
+        if(enterpriseNumber != 0){
             this.enterpriseNumber = enterpriseNumber;
         }
         save();
