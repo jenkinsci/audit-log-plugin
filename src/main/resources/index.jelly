@@ -1,4 +1,2 @@
 <?jelly escape-by-default='true'?>
-<div>
-    TODO
-</div>
+<div>Audit logging for Jenkins with predefined audit events</div>
