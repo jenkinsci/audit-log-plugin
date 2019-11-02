@@ -195,7 +195,7 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
         sbuf.append("</tr>").append(Strings.LINE_SEPARATOR);
 
         if (event.getContextStack() != null && !event.getContextStack().isEmpty()) {
-            sbuf.append("<tr><td bgcolor=\"#EEEEEE\" style=\"font-size : ").append(fontSize);
+            sbuf.append("<tr><td bgcolor=\"#fbfbfb\" style=\"font-size : ").append(fontSize);
             sbuf.append(";\" colspan=\"6\" ");
             sbuf.append("title=\"Nested Diagnostic Context\">");
             sbuf.append("NDC: ").append(Transform.escapeHtmlTags(event.getContextStack().toString()));
@@ -203,7 +203,7 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
         }
 
         if (event.getContextData() != null && !event.getContextData().isEmpty()) {
-            sbuf.append("<tr><td bgcolor=\"#EEEEEE\" style=\"font-size : ").append(fontSize);
+            sbuf.append("<tr><td bgcolor=\"#fbfbfb\" style=\"font-size : ").append(fontSize);
             sbuf.append(";\" colspan=\"6\" ");
             sbuf.append("title=\"Mapped Diagnostic Context\">");
             sbuf.append("MDC: ").append(Transform.escapeHtmlTags(event.getContextData().toMap().toString()));
@@ -290,8 +290,16 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
         appendLs(sbuf, "\"/>");
         append(sbuf, "<title>").append(title);
         appendLs(sbuf, "</title>");
-	appendLs(sbuf, "<link rel=\"stylesheet\" href=\"/jenkins/static/ce4bc61b/css/style.css\" type=\"text/css\" />");
-        appendLs(sbuf, "</head>");
+	appendLs(sbuf, "<style type=\"text/css\">");
+        appendLs(sbuf, "<!--");
+        append(sbuf, "body, table {font-family:").append(font).append("; font-size: ");
+        appendLs(sbuf, headerSize).append(";}");
+        appendLs(sbuf, "th {background: #f0f0f0; font-weight: bold; text-align: left;}");
+	appendLs(sbuf, "tr:nth-child(odd) {background-color: #fbfbfb;}");
+	appendLs(sbuf, "tr:hover {background-color: #e8e8e8 !important;}");
+        appendLs(sbuf, "-->");
+        appendLs(sbuf, "</style>");        
+	appendLs(sbuf, "</head>");
         appendLs(sbuf, "<body bgcolor=\"#FFFFFF\" topmargin=\"6\" leftmargin=\"6\">");
         appendLs(sbuf, "<hr size=\"1\" noshade=\"noshade\">");
         appendLs(sbuf, "Log session start time " + new java.util.Date() + "<br>");
@@ -353,7 +361,7 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
         private Charset charset = StandardCharsets.UTF_8;
 
         @PluginBuilderAttribute
-        private FontSize fontSize = FontSize.SMALL;
+        private FontSize fontSize = FontSize.XSMALL;
 
         @PluginBuilderAttribute
         private String fontName = DEFAULT_FONT_FAMILY;
