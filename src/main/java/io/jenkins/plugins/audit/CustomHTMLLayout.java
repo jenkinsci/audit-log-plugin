@@ -325,36 +325,9 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
     }
 
     /**
-     * Creates an HTML Layout.
-     * @param locationInfo If "true", location information will be included. The default is false.
-     * @param title The title to include in the file header. If none is specified the default title will be used.
-     * @param contentType The content type. Defaults to "text/html".
-     * @param charset The character set to use. If not specified, the default will be used.
-     * @param fontSize The font size of the text.
-     * @param font The font to use for the text.
-     * @return An HTML Layout.
-     */
-    @PluginFactory
-    public static CustomHTMLLayout createLayout(
-            @PluginAttribute(value = "locationInfo") final boolean locationInfo,
-            @PluginAttribute(value = "title", defaultString = DEFAULT_TITLE) final String title,
-            @PluginAttribute("contentType") String contentType,
-            @PluginAttribute(value = "charset", defaultString = "UTF-8") final Charset charset,
-            @PluginAttribute("fontSize") String fontSize,
-            @PluginAttribute(value = "fontName", defaultString = DEFAULT_FONT_FAMILY) final String font) {
-        final FontSize fs = FontSize.getFontSize(fontSize);
-        fontSize = fs.getFontSize();
-        final String headerSize = fs.larger().getFontSize();
-        if (contentType == null) {
-            contentType = DEFAULT_CONTENT_TYPE + "; charset=" + charset;
-        }
-        return new CustomHTMLLayout(locationInfo, title, contentType, charset, font, fontSize, headerSize);
-    }
-
-    /**
-     * Creates an HTML Layout using the default settings.
+     * Creates a HTML Layout using the default settings.
      *
-     * @return an HTML Layout.
+     * @return a HTML Layout.
      */
     public static CustomHTMLLayout createDefaultLayout() {
         return newBuilder().build();
