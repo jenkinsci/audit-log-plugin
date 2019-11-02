@@ -325,9 +325,9 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
     }
 
     /**
-     * Creates a HTML Layout using the default settings.
+     * Creates an HTML Layout using the default settings.
      *
-     * @return a HTML Layout.
+     * @return an HTML Layout.
      */
     public static CustomHTMLLayout createDefaultLayout() {
         return newBuilder().build();
