@@ -64,8 +64,6 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
     private static final String DEFAULT_TITLE = "Log4j Log Messages";
     private static final String DEFAULT_CONTENT_TYPE = "text/html";
 
-    private final long jvmStartTime = ManagementFactory.getRuntimeMXBean().getStartTime();
-
     // Print no location info by default
     private final boolean locationInfo;
     private final String title;
@@ -152,8 +150,8 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
 
         sbuf.append(Strings.LINE_SEPARATOR).append("<tr>").append(Strings.LINE_SEPARATOR);
 
-        sbuf.append("<td>");
-        sbuf.append(new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new java.util.Date(event.getTimeMillis())));
+        sbuf.append("<td>");   
+	sbuf.append(new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new java.util.Date(event.getTimeMillis())));
         sbuf.append("</td>").append(Strings.LINE_SEPARATOR);
 
         final String escapedThread = Transform.escapeHtmlTags(event.getThreadName());
@@ -161,15 +159,13 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
         sbuf.append(escapedThread);
         sbuf.append("</td>").append(Strings.LINE_SEPARATOR);
 
-        sbuf.append("<td title=\"Level\">");
+        sbuf.append("<td title=\"Level\"");
         if (event.getLevel().equals(Level.DEBUG)) {
-            sbuf.append("<font color=\"#339933\">");
+            sbuf.append(" class=\"debug\">");
             sbuf.append(Transform.escapeHtmlTags(String.valueOf(event.getLevel())));
-            sbuf.append("</font>");
         } else if (event.getLevel().isMoreSpecificThan(Level.WARN)) {
-            sbuf.append("<font color=\"#993300\"><strong>");
+            sbuf.append(" class=\"warn\">");
             sbuf.append(Transform.escapeHtmlTags(String.valueOf(event.getLevel())));
-            sbuf.append("</strong></font>");
         } else {
             sbuf.append(Transform.escapeHtmlTags(String.valueOf(event.getLevel())));
         }
@@ -198,16 +194,16 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
         sbuf.append("</tr>").append(Strings.LINE_SEPARATOR);
 
         if (event.getContextStack() != null && !event.getContextStack().isEmpty()) {
-            sbuf.append("<tr><td bgcolor=\"#fbfbfb\" style=\"font-size : ").append(fontSize);
-            sbuf.append(";\" colspan=\"6\" ");
+            sbuf.append("<tr><td class=\"context\" ");
+            sbuf.append("colspan=\"6\" ");
             sbuf.append("title=\"Nested Diagnostic Context\">");
             sbuf.append("NDC: ").append(Transform.escapeHtmlTags(event.getContextStack().toString()));
             sbuf.append("</td></tr>").append(Strings.LINE_SEPARATOR);
         }
 
         if (event.getContextData() != null && !event.getContextData().isEmpty()) {
-            sbuf.append("<tr><td bgcolor=\"#fbfbfb\" style=\"font-size : ").append(fontSize);
-            sbuf.append(";\" colspan=\"6\" ");
+            sbuf.append("<tr><td class=\"context\" ");
+            sbuf.append("colspan=\"6\" ");
             sbuf.append("title=\"Mapped Diagnostic Context\">");
             sbuf.append("MDC: ").append(Transform.escapeHtmlTags(event.getContextData().toMap().toString()));
             sbuf.append("</td></tr>").append(Strings.LINE_SEPARATOR);
@@ -215,8 +211,8 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
 
         final Throwable throwable = event.getThrown();
         if (throwable != null) {
-            sbuf.append("<tr><td bgcolor=\"#993300\" style=\"color:White; font-size : ").append(fontSize);
-            sbuf.append(";\" colspan=\"6\">");
+            sbuf.append("<tr><td class=\"throw\" ");
+            sbuf.append("colspan=\"6\">");
             appendThrowableAsHtml(throwable, sbuf);
             sbuf.append("</td></tr>").append(Strings.LINE_SEPARATOR);
         }
@@ -294,17 +290,24 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
         appendLs(sbuf, "</title>");
 	appendLs(sbuf, "<style type=\"text/css\">");
         appendLs(sbuf, "<!--");
-        append(sbuf, "body, table {font-family:").append(font).append("; font-size: ");
-        appendLs(sbuf, headerSize).append(";}");
+        append(sbuf, "body, table {font-family:").append(font).append("; font-size: ").append(headerSize);
+	appendLs(sbuf, ";}");
         appendLs(sbuf, "th {background: #f0f0f0; font-weight: bold; text-align: left;}");
 	appendLs(sbuf, "tr:nth-child(odd) {background-color: #fbfbfb;}");
 	appendLs(sbuf, "tr:hover {background-color: #e8e8e8 !important;}");
+	appendLs(sbuf, "td.warn {color: #993300; font-weight: bold;}");
+	appendLs(sbuf, "td.debug {color: #339933;}");
+	append(sbuf, "td.context {background-color: #fbfbfb; font-size: ").append(fontSize);
+	appendLs(sbuf, ";}");
+	append(sbuf, "td.throw {background-color: #993300; color: White; font-size: ").append(fontSize);
+	appendLs(sbuf, ";}");
         appendLs(sbuf, "-->");
         appendLs(sbuf, "</style>");        
 	appendLs(sbuf, "</head>");
         appendLs(sbuf, "<body bgcolor=\"#FFFFFF\" topmargin=\"6\" leftmargin=\"6\">");
         appendLs(sbuf, "<hr size=\"1\" noshade=\"noshade\">");
-        appendLs(sbuf, "Log session start time " + ZonedDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ISO_INSTANT) + "<br>");
+        appendLs(sbuf, "Log session start time " + 
+		 ZonedDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ISO_INSTANT) + "<br>");
         appendLs(sbuf, "<br>");
         appendLs(sbuf,
                 "<table cellspacing=\"0\" cellpadding=\"4\" border=\"1\" bordercolor=\"#224466\" width=\"100%\">");
