@@ -26,9 +26,6 @@ import java.lang.management.ManagementFactory;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.time.format.DateTimeFormatter;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.Layout;
@@ -43,6 +40,8 @@ import org.apache.logging.log4j.core.config.plugins.PluginBuilderFactory;
 import org.apache.logging.log4j.core.config.plugins.PluginFactory;
 import org.apache.logging.log4j.core.util.Transform;
 import org.apache.logging.log4j.util.Strings;
+
+import io.jenkins.plugins.audit.helpers.DateTimeHelper;
 
 /**
  * Outputs events as rows in an HTML table on an HTML page.
@@ -151,7 +150,7 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
         sbuf.append(Strings.LINE_SEPARATOR).append("<tr>").append(Strings.LINE_SEPARATOR);
 
         sbuf.append("<td>");   
-	sbuf.append(new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new java.util.Date(event.getTimeMillis())));
+	sbuf.append(DateTimeHelper.formatDateISO(event.getTimeMillis()));
         sbuf.append("</td>").append(Strings.LINE_SEPARATOR);
 
         final String escapedThread = Transform.escapeHtmlTags(event.getThreadName());
@@ -306,8 +305,7 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
 	appendLs(sbuf, "</head>");
         appendLs(sbuf, "<body bgcolor=\"#FFFFFF\" topmargin=\"6\" leftmargin=\"6\">");
         appendLs(sbuf, "<hr size=\"1\" noshade=\"noshade\">");
-        appendLs(sbuf, "Log session start time " + 
-		 ZonedDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ISO_INSTANT) + "<br>");
+        appendLs(sbuf, "Log session start time " + DateTimeHelper.formatDateISO(System.currentTimeMillis()) + "<br>");
         appendLs(sbuf, "<br>");
         appendLs(sbuf,
                 "<table cellspacing=\"0\" cellpadding=\"4\" border=\"1\" bordercolor=\"#224466\" width=\"100%\">");
