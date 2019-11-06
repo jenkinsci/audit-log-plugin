@@ -26,6 +26,9 @@ import java.lang.management.ManagementFactory;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.Layout;
@@ -150,7 +153,7 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
         sbuf.append(Strings.LINE_SEPARATOR).append("<tr>").append(Strings.LINE_SEPARATOR);
 
         sbuf.append("<td>");
-        sbuf.append(event.getTimeMillis() - jvmStartTime);
+        sbuf.append(new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new java.util.Date(event.getTimeMillis())));
         sbuf.append("</td>").append(Strings.LINE_SEPARATOR);
 
         final String escapedThread = Transform.escapeHtmlTags(event.getThreadName());
@@ -281,8 +284,7 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
     @Override
     public byte[] getHeader() {
         final StringBuilder sbuf = new StringBuilder();
-        append(sbuf, "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" ");
-        appendLs(sbuf, "\"http://www.w3.org/TR/html4/loose.dtd\">");
+        append(sbuf, "<!DOCTYPE html>");
         appendLs(sbuf, "<html>");
         appendLs(sbuf, "<head>");
         append(sbuf, "<meta charset=\"");
@@ -302,7 +304,7 @@ public final class CustomHTMLLayout extends AbstractStringLayout {
 	appendLs(sbuf, "</head>");
         appendLs(sbuf, "<body bgcolor=\"#FFFFFF\" topmargin=\"6\" leftmargin=\"6\">");
         appendLs(sbuf, "<hr size=\"1\" noshade=\"noshade\">");
-        appendLs(sbuf, "Log session start time " + new java.util.Date() + "<br>");
+        appendLs(sbuf, "Log session start time " + ZonedDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ISO_INSTANT) + "<br>");
         appendLs(sbuf, "<br>");
         appendLs(sbuf,
                 "<table cellspacing=\"0\" cellpadding=\"4\" border=\"1\" bordercolor=\"#224466\" width=\"100%\">");
