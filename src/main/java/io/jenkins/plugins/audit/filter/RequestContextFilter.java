@@ -6,14 +6,16 @@ import hudson.model.User;
 import hudson.util.PluginServletFilter;
 import io.jenkins.plugins.audit.RequestContext;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.IOException;
 
 @Extension
-public class RequestContextFilter extends PluginServletFilter {
+public class RequestContextFilter implements Filter {
 
     /**
      * Registering the filter
@@ -21,6 +23,16 @@ public class RequestContextFilter extends PluginServletFilter {
     @Initializer
     public static void init() throws ServletException {
         PluginServletFilter.addFilter(new RequestContextFilter());
+    }
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        // do nothing
+    }
+
+    @Override
+    public void destroy() {
+        // do nothing
     }
 
     /**
