@@ -38,7 +38,7 @@
         <java.level>8</java.level>
         <log4j.version>2.13.3</log4j.version>
         <log4j-audit.version>1.0.1</log4j-audit.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <junit.vintage.version>5.4.2</junit.vintage.version>
         <credentials.version>2.1.1</credentials.version>
     </properties>
