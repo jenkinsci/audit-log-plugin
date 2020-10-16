@@ -3,13 +3,15 @@ package io.jenkins.plugins.audit.listeners;
 import hudson.Extension;
 import hudson.ExtensionList;
 import hudson.model.Node;
+import hudson.model.User;
 import io.jenkins.plugins.audit.event.CreateNode;
-import io.jenkins.plugins.audit.event.UpdateNode;
 import io.jenkins.plugins.audit.event.DeleteNode;
+import io.jenkins.plugins.audit.event.UpdateNode;
 import org.apache.logging.log4j.audit.LogEventFactory;
 
 import javax.annotation.Nonnull;
-import java.util.Date;
+
+import static io.jenkins.plugins.audit.helpers.DateTimeHelper.currentDateTimeISO;
 
 /**
  * Listener notified when a node is created, updated or deleted.
@@ -26,7 +28,11 @@ public class NodeChangeListener extends jenkins.model.NodeListener {
         CreateNode nodeCreateEvent = LogEventFactory.getEvent(CreateNode.class);
 
         nodeCreateEvent.setNodeName(node.getNodeName());
-        nodeCreateEvent.setTimestamp(new Date().toString());
+        nodeCreateEvent.setTimestamp(currentDateTimeISO());
+        User user = User.current();
+        if (user != null) {
+            nodeCreateEvent.setUserId(user.getId());
+        }
 
         nodeCreateEvent.logEvent();
     }
@@ -43,10 +49,13 @@ public class NodeChangeListener extends jenkins.model.NodeListener {
 
         nodeUpdateEvent.setNodeName(newOne.getNodeName());
         nodeUpdateEvent.setOldNodeName(oldOne.getNodeName());
-        nodeUpdateEvent.setTimestamp(new Date().toString());
+        nodeUpdateEvent.setTimestamp(currentDateTimeISO());
+        User user = User.current();
+        if (user != null) {
+            nodeUpdateEvent.setUserId(user.getId());
+        }
 
         nodeUpdateEvent.logEvent();
-
     }
 
     /**
@@ -59,7 +68,11 @@ public class NodeChangeListener extends jenkins.model.NodeListener {
         DeleteNode nodeDeleteEvent = LogEventFactory.getEvent(DeleteNode.class);
 
         nodeDeleteEvent.setNodeName(node.getNodeName());
-        nodeDeleteEvent.setTimestamp(new Date().toString());
+        nodeDeleteEvent.setTimestamp(currentDateTimeISO());
+        User user = User.current();
+        if (user != null) {
+            nodeDeleteEvent.setUserId(user.getId());
+        }
 
         nodeDeleteEvent.logEvent();
     }

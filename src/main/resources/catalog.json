@@ -48,10 +48,10 @@
     "aliases" : [ ],
     "attributes" : [ {
       "name" : "timestamp",
-      "required" : false
+      "required" : true
     }, {
       "name" : "userId",
-      "required" : false
+      "required" : true
     } ]
   }, {
     "id" : 5,
@@ -61,10 +61,10 @@
     "aliases" : [ ],
     "attributes" : [ {
       "name" : "userId",
-      "required" : false
+      "required" : true
     }, {
       "name" : "timestamp",
-      "required" : false
+      "required" : true
     } ]
   }, {
     "id" : 6,
@@ -73,11 +73,8 @@
     "description" : "Start of the Build",
     "aliases" : [ ],
     "attributes" : [ {
-      "name" : "userId",
-      "required" : true
-    }, {
       "name" : "cause",
-      "required" : false
+      "required" : true
     }, {
       "name" : "projectName",
       "required" : true
@@ -86,7 +83,7 @@
       "required" : true
     }, {
       "name" : "timestamp",
-      "required" : false
+      "required" : true
     } ]
   }, {
     "id" : 7,
@@ -95,11 +92,8 @@
     "description" : "Finish of the Build",
     "aliases" : [ ],
     "attributes" : [ {
-      "name" : "userId",
-      "required" : true
-    }, {
       "name" : "cause",
-      "required" : false
+      "required" : true
     }, {
       "name" : "projectName",
       "required" : true
@@ -108,7 +102,7 @@
       "required" : true
     }, {
       "name" : "timestamp",
-      "required" : false
+      "required" : true
     } ]
   }, {
     "id" : 8,
@@ -269,7 +263,7 @@
     "indexed" : true,
     "sortable" : true,
     "required" : false,
-    "requestContext" : false,
+    "requestContext" : true,
     "examples" : null,
     "aliases" : [ ],
     "constraints" : [ ],
@@ -283,7 +277,7 @@
     "indexed" : true,
     "sortable" : false,
     "required" : false,
-    "requestContext" : false,
+    "requestContext" : true,
     "examples" : null,
     "aliases" : [ ],
     "constraints" : [ ],
@@ -297,7 +291,7 @@
     "indexed" : false,
     "sortable" : true,
     "required" : false,
-    "requestContext" : false,
+    "requestContext" : true,
     "examples" : null,
     "aliases" : [ ],
     "constraints" : [ ],
@@ -466,6 +460,20 @@
     "sortable" : true,
     "required" : false,
     "requestContext" : false,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 16,
+    "name" : "requestMethod",
+    "displayName" : "Request Method",
+    "description" : "Contains the HTTP method used in the request",
+    "dataType" : "STRING",
+    "indexed" : false,
+    "sortable" : true,
+    "required" : false,
+    "requestContext" : true,
     "examples" : null,
     "aliases" : [ ],
     "constraints" : [ ],

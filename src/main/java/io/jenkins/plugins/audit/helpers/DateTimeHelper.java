@@ -18,4 +18,8 @@ public class DateTimeHelper {
         return DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(
                 ZonedDateTime.ofInstant(Instant.ofEpochMilli(milliseconds), ZoneId.systemDefault()));
     }
+
+    public static String currentDateTimeISO() {
+        return formatDateISO(System.currentTimeMillis());
+    }
 }

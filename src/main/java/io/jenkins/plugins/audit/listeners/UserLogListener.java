@@ -22,14 +22,16 @@
 
 package io.jenkins.plugins.audit.listeners;
 
-import org.apache.logging.log4j.audit.LogEventFactory;
-
-import hudson.ExtensionList;
 import hudson.Extension;
+import hudson.ExtensionList;
 import io.jenkins.plugins.audit.event.Login;
 import io.jenkins.plugins.audit.event.Logout;
-import javax.annotation.Nonnull;
 import jenkins.security.SecurityListener;
+import org.apache.logging.log4j.audit.LogEventFactory;
+
+import javax.annotation.Nonnull;
+
+import static io.jenkins.plugins.audit.helpers.DateTimeHelper.currentDateTimeISO;
 
 /**
  * Listener notified of user login and logout events.
@@ -47,6 +49,7 @@ public class UserLogListener extends SecurityListener {
         Login login = LogEventFactory.getEvent(Login.class);
 
         login.setUserId(username);
+        login.setTimestamp(currentDateTimeISO());
         login.logEvent();
     }
 
@@ -60,15 +63,16 @@ public class UserLogListener extends SecurityListener {
         Logout logout = LogEventFactory.getEvent(Logout.class);
 
         logout.setUserId(username);
+        logout.setTimestamp(currentDateTimeISO());
         logout.logEvent();
     }
 
-     /**
-      * Returns a registered {@link UserLogListener} instance.
-      */
-      public static ExtensionList<UserLogListener> getInstance() {
-          return ExtensionList.lookup(UserLogListener.class);
-      }
+    /**
+     * Returns a registered {@link UserLogListener} instance.
+     */
+    public static ExtensionList<UserLogListener> getInstance() {
+        return ExtensionList.lookup(UserLogListener.class);
+    }
 
 
 }
