@@ -4,7 +4,7 @@ import hudson.Extension;
 import hudson.init.Initializer;
 import hudson.model.User;
 import hudson.util.PluginServletFilter;
-import io.jenkins.plugins.audit.RequestContext;
+import org.apache.logging.log4j.ThreadContext;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,6 +14,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.UUID;
 
 @Extension
 public class RequestContextFilter implements Filter {
@@ -41,16 +42,16 @@ public class RequestContextFilter implements Filter {
      */
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         User user = User.current();
-        if(user != null){
-            RequestContext.setUserId(user.getId());
+        if (user != null) {
+            ThreadContext.put("userId", user.getId());
         }
-        RequestContext.setIpAddress(request.getRemoteAddr());
-        RequestContext.setNodeName(request.getLocalName());
+        ThreadContext.putIfNull("requestId", UUID.randomUUID().toString());
         if (request instanceof HttpServletRequest) {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
-            RequestContext.setRequestUri(httpRequest.getRequestURI());
+            ThreadContext.put("requestMethod", httpRequest.getMethod());
+            ThreadContext.put("requestUri", httpRequest.getRequestURI());
         }
         chain.doFilter(request, response);
-        RequestContext.clear();
+        ThreadContext.clearMap();
     }
 }
