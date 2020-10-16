@@ -12,6 +12,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Extension
@@ -45,7 +46,10 @@ public class RequestContextFilter implements Filter {
         }
         RequestContext.setIpAddress(request.getRemoteAddr());
         RequestContext.setNodeName(request.getLocalName());
-        //RequestContext.setRequestUri(request.getRequestURI());
+        if (request instanceof HttpServletRequest) {
+            HttpServletRequest httpRequest = (HttpServletRequest) request;
+            RequestContext.setRequestUri(httpRequest.getRequestURI());
+        }
         chain.doFilter(request, response);
         RequestContext.clear();
     }
