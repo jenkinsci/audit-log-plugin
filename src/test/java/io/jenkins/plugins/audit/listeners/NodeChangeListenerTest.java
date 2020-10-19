@@ -4,7 +4,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import hudson.model.Slave;
 import hudson.slaves.DumbSlave;
-import junitparams.JUnitParamsRunner;
 import org.apache.logging.log4j.audit.AuditMessage;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.test.appender.ListAppender;
@@ -12,7 +11,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.jvnet.hudson.test.Issue;
 import org.jvnet.hudson.test.JenkinsRule;
 
@@ -20,7 +18,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(JUnitParamsRunner.class)
 public class NodeChangeListenerTest {
     private ListAppender app;
 
@@ -28,7 +25,7 @@ public class NodeChangeListenerTest {
     public JenkinsRule j = new JenkinsRule();
 
     @Before
-    public void setup() throws Exception{
+    public void setup() {
         app = ListAppender.getListAppender("AuditList").clear();
     }
 
@@ -40,7 +37,7 @@ public class NodeChangeListenerTest {
     @Issue("JENKINS-56646")
     @Test
     public void testOnCreated() throws Exception {
-        DumbSlave slave = j.createSlave("TestSlave", "", null);
+        j.createSlave();
 
         List<LogEvent> events = app.getEvents();
 
@@ -51,8 +48,8 @@ public class NodeChangeListenerTest {
     @Issue("JENKINS-56647")
     @Test
     public void testOnUpdated() throws Exception {
-        Slave slave = j.createOnlineSlave();
-        HtmlForm form = j.createWebClient().getPage(slave, "configure").getFormByName("config");
+        Slave agent = j.createOnlineSlave();
+        HtmlForm form = j.createWebClient().getPage(agent, "configure").getFormByName("config");
         HtmlInput element = form.getInputByName("_.name");
         element.setValueAttribute("newSlaveName");
         j.submit(form);
@@ -66,8 +63,8 @@ public class NodeChangeListenerTest {
     @Issue("JENKINS-56648")
     @Test
     public void testOnDeleted() throws Exception {
-        DumbSlave slave = j.createOnlineSlave();
-        j.jenkins.removeNode(slave);
+        DumbSlave agent = j.createOnlineSlave();
+        j.jenkins.removeNode(agent);
 
         List<LogEvent> events = app.getEvents();
 

@@ -1,18 +1,24 @@
 package io.jenkins.plugins.audit.config;
 
-import hudson.EnvVars;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
+import hudson.ExtensionList;
 import hudson.util.ListBoxModel;
 import jenkins.model.GlobalConfiguration;
+import jenkins.model.GlobalConfigurationCategory;
+import jenkins.model.Jenkins;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
-import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
-
-import java.nio.file.Paths;
-import java.util.Objects;
 
 @Extension
 public class AuditLogConfiguration extends GlobalConfiguration {
+
+    public static AuditLogConfiguration getInstance() {
+        return ExtensionList.lookupSingleton(AuditLogConfiguration.class);
+    }
+
     private String logDestination;
     private String appenderType;
     private String syslogHost;
@@ -21,11 +27,16 @@ public class AuditLogConfiguration extends GlobalConfiguration {
 
     public AuditLogConfiguration() {
         load();
-        reloadLogger();
+    }
+
+    @NonNull
+    @Override
+    public GlobalConfigurationCategory getCategory() {
+        return GlobalConfigurationCategory.get(GlobalConfigurationCategory.Security.class);
     }
 
     public String getAppenderType() {
-        return appenderType;
+        return StringUtils.defaultIfBlank(appenderType, "jsonLayout");
     }
 
     @DataBoundSetter
@@ -36,105 +47,55 @@ public class AuditLogConfiguration extends GlobalConfiguration {
     }
 
     public String getLogDestination() {
-        if(this.logDestination != null && !this.logDestination.equals("")){
-            return this.logDestination;
-        }
-
-        String jenkinsHome = EnvVars.masterEnvVars.get("JENKINS_HOME");
-
-        if(jenkinsHome == null){
-            jenkinsHome = System.getProperty("JENKINS_HOME");
-        }
-
-        if(jenkinsHome == null){
-            jenkinsHome = Paths.get(".").toAbsolutePath().normalize().toString();
-        }
-
-        this.logDestination = jenkinsHome + "/logs/audit.log";
-        return this.logDestination;
+        String defaultStr = Jenkins.get().getRootDir().toPath().resolve("logs").resolve("audit").resolve("audit.log").toString();
+        return StringUtils.defaultIfBlank(logDestination, defaultStr);
     }
 
     @DataBoundSetter
     public void setLogDestination(String logDestination) {
-        if(logDestination != null && !logDestination.equals("")){
-            this.logDestination = logDestination;
-        }
+        this.logDestination = logDestination;
         save();
         reloadLogger();
     }
 
     public String getSyslogHost() {
-        return syslogHost;
+        return StringUtils.defaultIfBlank(syslogHost, "localhost");
     }
 
     @DataBoundSetter
     public void setSyslogHost(String syslogHost) {
-        if(syslogHost != null && !syslogHost.equals("")){
-            this.syslogHost = syslogHost;
-        }
+        this.syslogHost = syslogHost;
         save();
         reloadLogger();
     }
 
     public int getSyslogPort() {
-        return syslogPort;
+        return syslogPort > 0 ? syslogPort : 1854;
     }
 
     @DataBoundSetter
     public void setSyslogPort(int syslogPort) {
-        if(syslogPort != 0){
-            this.syslogPort = syslogPort;
-        }
+        this.syslogPort = syslogPort;
         save();
         reloadLogger();
     }
 
     public int getEnterpriseNumber() {
-        return enterpriseNumber;
+        return enterpriseNumber > 0 ? enterpriseNumber : 18060;
     }
 
     @DataBoundSetter
-    public void setEnterpiseNumber(int enterpriseNumber) {
-        if(enterpriseNumber != 0){
-            this.enterpriseNumber = enterpriseNumber;
-        }
+    public void setEnterpriseNumber(int enterpriseNumber) {
+        this.enterpriseNumber = enterpriseNumber;
         save();
         reloadLogger();
-
     }
 
     private void reloadLogger() {
-        if(this.logDestination != null && !this.logDestination.equals("")){
-            System.setProperty("auditFileName", this.logDestination);
-        } else {
-            System.clearProperty("auditFileName");
+        org.apache.logging.log4j.spi.LoggerContext loggerContext = LogManager.getContext(false);
+        if (loggerContext instanceof LoggerContext) {
+            ((LoggerContext) loggerContext).reconfigure();
         }
-
-        if(this.appenderType != null){
-            System.setProperty("appenderType", this.appenderType);
-        } else {
-            System.clearProperty("appenderType");
-        }
-
-        if(this.syslogHost != null && !this.syslogHost.equals("")){
-            System.setProperty("syslogHost", this.syslogHost);
-        } else {
-            System.clearProperty("syslogHost");
-        }
-
-        if(this.syslogPort != 0){
-            System.setProperty("syslogPort", String.valueOf(this.syslogPort));
-        } else {
-            System.clearProperty("syslogPort");
-        }
-
-        if(this.enterpriseNumber != 0){
-            System.setProperty("enterpriseNumber", String.valueOf(this.enterpriseNumber));
-        } else {
-            System.clearProperty("enterpriseNumber");
-        }
-
-        LoggerContext.getContext(false).reconfigure();
     }
 
     public ListBoxModel doFillAppenderTypeItems() {

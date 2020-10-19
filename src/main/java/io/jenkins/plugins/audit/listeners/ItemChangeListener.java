@@ -1,20 +1,23 @@
 package io.jenkins.plugins.audit.listeners;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.ExtensionList;
 import hudson.model.Item;
-import io.jenkins.plugins.audit.event.*;
+import hudson.model.User;
+import io.jenkins.plugins.audit.event.CopyItem;
+import io.jenkins.plugins.audit.event.CreateItem;
+import io.jenkins.plugins.audit.event.DeleteItem;
+import io.jenkins.plugins.audit.event.UpdateItem;
 import org.apache.logging.log4j.audit.LogEventFactory;
-import static io.jenkins.plugins.audit.helpers.DateTimeHelper.formatDateISO;
 
-import javax.annotation.Nonnull;
-import java.time.Instant;
+import static io.jenkins.plugins.audit.helpers.DateTimeHelper.currentDateTimeISO;
 
 /**
  * Listener notified of any CRUD operations on items.
  */
 @Extension
-public class ItemChangeListener extends hudson.model.listeners.ItemListener{
+public class ItemChangeListener extends hudson.model.listeners.ItemListener {
 
     /**
      * Fired when a new job is created and added to Jenkins, before the initial configuration page is provided.
@@ -22,12 +25,16 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
      * @param item is a job that is created
      */
     @Override
-    public void onCreated(@Nonnull Item item) {
+    public void onCreated(@NonNull Item item) {
         CreateItem itemCreateEvent = LogEventFactory.getEvent(CreateItem.class);
 
         itemCreateEvent.setItemName(item.getName());
         itemCreateEvent.setItemUri(item.getUrl());
-        itemCreateEvent.setTimestamp(formatDateISO(System.currentTimeMillis()));
+        itemCreateEvent.setTimestamp(currentDateTimeISO());
+        User user = User.current();
+        if (user != null) {
+            itemCreateEvent.setUserId(user.getId());
+        }
 
         itemCreateEvent.logEvent();
 
@@ -36,7 +43,7 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
     /**
      * Fired when a new job is created by copying from an existing job
      *
-     * @param src is the source item that the new one was copied from.
+     * @param src  is the source item that the new one was copied from.
      * @param item is the newly created item.
      */
     @Override
@@ -46,7 +53,11 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
         itemCopyEvent.setItemName(item.getName());
         itemCopyEvent.setItemUri(item.getUrl());
         itemCopyEvent.setSourceItemUri(src.getUrl());
-        itemCopyEvent.setTimestamp(formatDateISO(System.currentTimeMillis()));
+        itemCopyEvent.setTimestamp(currentDateTimeISO());
+        User user = User.current();
+        if (user != null) {
+            itemCopyEvent.setUserId(user.getId());
+        }
 
         itemCopyEvent.logEvent();
 
@@ -63,7 +74,11 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
 
         itemDeleteEvent.setItemName(item.getName());
         itemDeleteEvent.setItemUri(item.getUrl());
-        itemDeleteEvent.setTimestamp(formatDateISO(System.currentTimeMillis()));
+        itemDeleteEvent.setTimestamp(currentDateTimeISO());
+        User user = User.current();
+        if (user != null) {
+            itemDeleteEvent.setUserId(user.getId());
+        }
 
         itemDeleteEvent.logEvent();
 
@@ -80,7 +95,11 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener{
 
         itemUpdateEvent.setItemName(item.getName());
         itemUpdateEvent.setItemUri(item.getUrl());
-        itemUpdateEvent.setTimestamp(formatDateISO(System.currentTimeMillis()));
+        itemUpdateEvent.setTimestamp(currentDateTimeISO());
+        User user = User.current();
+        if (user != null) {
+            itemUpdateEvent.setUserId(user.getId());
+        }
 
         itemUpdateEvent.logEvent();
     }

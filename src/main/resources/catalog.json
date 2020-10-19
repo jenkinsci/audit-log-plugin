@@ -9,10 +9,10 @@
     "aliases" : [ ],
     "attributes" : [ {
       "name" : "timestamp",
-      "required" : false
+      "required" : true
     }, {
       "name" : "userId",
-      "required" : false
+      "required" : true
     } ]
   }, {
     "id" : 2,
@@ -48,10 +48,10 @@
     "aliases" : [ ],
     "attributes" : [ {
       "name" : "timestamp",
-      "required" : false
+      "required" : true
     }, {
       "name" : "userId",
-      "required" : false
+      "required" : true
     } ]
   }, {
     "id" : 5,
@@ -61,10 +61,10 @@
     "aliases" : [ ],
     "attributes" : [ {
       "name" : "userId",
-      "required" : false
+      "required" : true
     }, {
       "name" : "timestamp",
-      "required" : false
+      "required" : true
     } ]
   }, {
     "id" : 6,
@@ -73,11 +73,8 @@
     "description" : "Start of the Build",
     "aliases" : [ ],
     "attributes" : [ {
-      "name" : "userId",
-      "required" : true
-    }, {
       "name" : "cause",
-      "required" : false
+      "required" : true
     }, {
       "name" : "projectName",
       "required" : true
@@ -86,7 +83,7 @@
       "required" : true
     }, {
       "name" : "timestamp",
-      "required" : false
+      "required" : true
     } ]
   }, {
     "id" : 7,
@@ -95,11 +92,8 @@
     "description" : "Finish of the Build",
     "aliases" : [ ],
     "attributes" : [ {
-      "name" : "userId",
-      "required" : true
-    }, {
       "name" : "cause",
-      "required" : false
+      "required" : true
     }, {
       "name" : "projectName",
       "required" : true
@@ -108,7 +102,7 @@
       "required" : true
     }, {
       "name" : "timestamp",
-      "required" : false
+      "required" : true
     } ]
   }, {
     "id" : 8,
@@ -118,7 +112,7 @@
     "aliases" : [ ],
     "attributes" : [ {
       "name" : "userId",
-      "required" : false
+      "required" : true
     }, {
       "name" : "timestamp",
       "required" : true
@@ -137,7 +131,7 @@
     "aliases" : [ ],
     "attributes" : [ {
       "name" : "userId",
-      "required" : false
+      "required" : true
     }, {
       "name" : "timestamp",
       "required" : true
@@ -159,7 +153,7 @@
     "aliases" : [ ],
     "attributes" : [ {
       "name" : "userId",
-      "required" : false
+      "required" : true
     }, {
       "name" : "timestamp",
       "required" : true
@@ -178,7 +172,7 @@
     "aliases" : [ ],
     "attributes" : [ {
       "name" : "userId",
-      "required" : false
+      "required" : true
     }, {
       "name" : "timestamp",
       "required" : true
@@ -283,7 +277,7 @@
     "indexed" : true,
     "sortable" : false,
     "required" : false,
-    "requestContext" : false,
+    "requestContext" : true,
     "examples" : null,
     "aliases" : [ ],
     "constraints" : [ ],
@@ -294,10 +288,10 @@
     "displayName" : "Request URI",
     "description" : "Contains the original request URI used for action",
     "dataType" : "STRING",
-    "indexed" : false,
+    "indexed" : true,
     "sortable" : true,
     "required" : false,
-    "requestContext" : false,
+    "requestContext" : true,
     "examples" : null,
     "aliases" : [ ],
     "constraints" : [ ],
@@ -308,7 +302,7 @@
     "displayName" : "Node Name",
     "description" : "Name of the node where action took place",
     "dataType" : "STRING",
-    "indexed" : false,
+    "indexed" : true,
     "sortable" : true,
     "required" : false,
     "requestContext" : false,
@@ -392,8 +386,8 @@
     "displayName" : "Item URI",
     "description" : "Contains the original item URI",
     "dataType" : "STRING",
-    "indexed" : false,
-    "sortable" : true,
+    "indexed" : true,
+    "sortable" : false,
     "required" : false,
     "requestContext" : false,
     "examples" : null,
@@ -406,8 +400,8 @@
     "displayName" : "Source Item URI",
     "description" : "Contains the source item URI of the copied item",
     "dataType" : "STRING",
-    "indexed" : false,
-    "sortable" : true,
+    "indexed" : true,
+    "sortable" : false,
     "required" : false,
     "requestContext" : false,
     "examples" : null,
@@ -420,7 +414,7 @@
     "displayName" : "Old Node Name",
     "description" : "Name of the old node which is updated recently",
     "dataType" : "STRING",
-    "indexed" : false,
+    "indexed" : true,
     "sortable" : true,
     "required" : false,
     "requestContext" : false,
@@ -434,7 +428,7 @@
     "displayName" : "File name",
     "description" : "File name",
     "dataType" : "STRING",
-    "indexed" : false,
+    "indexed" : true,
     "sortable" : true,
     "required" : false,
     "requestContext" : false,
@@ -448,7 +442,7 @@
     "displayName" : "Usage",
     "description" : "Usage of the entity",
     "dataType" : "STRING",
-    "indexed" : false,
+    "indexed" : true,
     "sortable" : true,
     "required" : false,
     "requestContext" : false,
@@ -462,10 +456,24 @@
     "displayName" : "Name",
     "description" : "Name",
     "dataType" : "STRING",
-    "indexed" : false,
+    "indexed" : true,
     "sortable" : true,
     "required" : false,
     "requestContext" : false,
+    "examples" : null,
+    "aliases" : [ ],
+    "constraints" : [ ],
+    "catalogId" : "DEFAULT"
+  }, {
+    "id" : 16,
+    "name" : "requestMethod",
+    "displayName" : "Request Method",
+    "description" : "Contains the HTTP method used in the request",
+    "dataType" : "STRING",
+    "indexed" : true,
+    "sortable" : false,
+    "required" : false,
+    "requestContext" : true,
     "examples" : null,
     "aliases" : [ ],
     "constraints" : [ ],
