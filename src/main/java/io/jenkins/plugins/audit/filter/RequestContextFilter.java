@@ -42,9 +42,7 @@ public class RequestContextFilter implements Filter {
      */
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         User user = User.current();
-        if (user != null) {
-            ThreadContext.put("userId", user.getId());
-        }
+        ThreadContext.put("userId", user != null ? user.getId() : "SYSTEM");
         ThreadContext.putIfNull("requestId", UUID.randomUUID().toString());
         if (request instanceof HttpServletRequest) {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
