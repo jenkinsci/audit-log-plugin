@@ -93,7 +93,6 @@ public class AuditLogConfiguration extends GlobalConfiguration {
 
     private void reloadLogger() {
         org.apache.logging.log4j.spi.LoggerContext loggerContext = LogManager.getContext(false);
-        //
         if (loggerContext instanceof LoggerContext) {
             ((LoggerContext) loggerContext).reconfigure();
         }
