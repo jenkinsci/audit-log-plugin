@@ -1,12 +1,11 @@
 package io.jenkins.plugins.audit.listeners;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.ExtensionList;
 import io.jenkins.plugins.audit.event.CreateUser;
 import jenkins.security.SecurityListener;
 import org.apache.logging.log4j.audit.LogEventFactory;
-
-import javax.annotation.Nonnull;
 
 import static io.jenkins.plugins.audit.helpers.DateTimeHelper.currentDateTimeISO;
 
@@ -22,7 +21,7 @@ public class UserCreationListener extends SecurityListener {
      * @param username the user
      */
     @Override
-    protected void userCreated(@Nonnull String username) {
+    protected void userCreated(@NonNull String username) {
         CreateUser user = LogEventFactory.getEvent(CreateUser.class);
 
         user.setUserId(username);

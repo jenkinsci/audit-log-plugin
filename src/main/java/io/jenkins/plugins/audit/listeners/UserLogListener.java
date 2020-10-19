@@ -22,14 +22,13 @@
 
 package io.jenkins.plugins.audit.listeners;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.ExtensionList;
 import io.jenkins.plugins.audit.event.Login;
 import io.jenkins.plugins.audit.event.Logout;
 import jenkins.security.SecurityListener;
 import org.apache.logging.log4j.audit.LogEventFactory;
-
-import javax.annotation.Nonnull;
 
 import static io.jenkins.plugins.audit.helpers.DateTimeHelper.currentDateTimeISO;
 
@@ -45,7 +44,7 @@ public class UserLogListener extends SecurityListener {
      * @param username name or ID of the user who logged in.
      */
     @Override
-    protected void loggedIn(@Nonnull String username) {
+    protected void loggedIn(@NonNull String username) {
         Login login = LogEventFactory.getEvent(Login.class);
 
         login.setUserId(username);
@@ -59,7 +58,7 @@ public class UserLogListener extends SecurityListener {
      * @param username name or ID of the user who logged out.
      */
     @Override
-    protected void loggedOut(@Nonnull String username) {
+    protected void loggedOut(@NonNull String username) {
         Logout logout = LogEventFactory.getEvent(Logout.class);
 
         logout.setUserId(username);

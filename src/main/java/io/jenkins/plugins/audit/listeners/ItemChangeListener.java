@@ -1,5 +1,6 @@
 package io.jenkins.plugins.audit.listeners;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.ExtensionList;
 import hudson.model.Item;
@@ -9,8 +10,6 @@ import io.jenkins.plugins.audit.event.CreateItem;
 import io.jenkins.plugins.audit.event.DeleteItem;
 import io.jenkins.plugins.audit.event.UpdateItem;
 import org.apache.logging.log4j.audit.LogEventFactory;
-
-import javax.annotation.Nonnull;
 
 import static io.jenkins.plugins.audit.helpers.DateTimeHelper.currentDateTimeISO;
 
@@ -26,7 +25,7 @@ public class ItemChangeListener extends hudson.model.listeners.ItemListener {
      * @param item is a job that is created
      */
     @Override
-    public void onCreated(@Nonnull Item item) {
+    public void onCreated(@NonNull Item item) {
         CreateItem itemCreateEvent = LogEventFactory.getEvent(CreateItem.class);
 
         itemCreateEvent.setItemName(item.getName());

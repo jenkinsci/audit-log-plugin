@@ -1,5 +1,6 @@
 package io.jenkins.plugins.audit.listeners;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.ExtensionList;
 import hudson.model.Node;
@@ -8,8 +9,6 @@ import io.jenkins.plugins.audit.event.CreateNode;
 import io.jenkins.plugins.audit.event.DeleteNode;
 import io.jenkins.plugins.audit.event.UpdateNode;
 import org.apache.logging.log4j.audit.LogEventFactory;
-
-import javax.annotation.Nonnull;
 
 import static io.jenkins.plugins.audit.helpers.DateTimeHelper.currentDateTimeISO;
 
@@ -24,7 +23,7 @@ public class NodeChangeListener extends jenkins.model.NodeListener {
      * @param node Node being created
      */
     @Override
-    protected void onCreated(@Nonnull Node node) {
+    protected void onCreated(@NonNull Node node) {
         CreateNode nodeCreateEvent = LogEventFactory.getEvent(CreateNode.class);
 
         nodeCreateEvent.setNodeName(node.getNodeName());
@@ -44,7 +43,7 @@ public class NodeChangeListener extends jenkins.model.NodeListener {
      * @param newOne The after after modification
      */
     @Override
-    protected void onUpdated(@Nonnull Node oldOne, @Nonnull Node newOne) {
+    protected void onUpdated(@NonNull Node oldOne, @NonNull Node newOne) {
         UpdateNode nodeUpdateEvent = LogEventFactory.getEvent(UpdateNode.class);
 
         nodeUpdateEvent.setNodeName(newOne.getNodeName());
@@ -64,7 +63,7 @@ public class NodeChangeListener extends jenkins.model.NodeListener {
      * @param node Node being deleted
      */
     @Override
-    protected void onDeleted(@Nonnull Node node) {
+    protected void onDeleted(@NonNull Node node) {
         DeleteNode nodeDeleteEvent = LogEventFactory.getEvent(DeleteNode.class);
 
         nodeDeleteEvent.setNodeName(node.getNodeName());

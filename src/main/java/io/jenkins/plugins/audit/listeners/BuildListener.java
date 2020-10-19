@@ -1,5 +1,6 @@
 package io.jenkins.plugins.audit.listeners;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.ExtensionList;
 import hudson.model.Cause;
@@ -42,7 +43,7 @@ public class BuildListener extends RunListener<Run<?, ?>> {
      * @param listener of type TaskListener that the onCompleted method expects
      */
     @Override
-    public void onCompleted(Run<?, ?> run, TaskListener listener) {
+    public void onCompleted(Run<?, ?> run, @NonNull TaskListener listener) {
         BuildFinish buildFinish = LogEventFactory.getEvent(BuildFinish.class);
 
         // Run.getStartTime() + Run.getDuration() might not be fully accurate
