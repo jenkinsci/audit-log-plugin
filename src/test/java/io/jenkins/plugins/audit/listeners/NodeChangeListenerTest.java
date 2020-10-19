@@ -37,7 +37,7 @@ public class NodeChangeListenerTest {
     @Issue("JENKINS-56646")
     @Test
     public void testOnCreated() throws Exception {
-        j.createSlave("TestSlave", "", null);
+        j.createSlave();
 
         List<LogEvent> events = app.getEvents();
 
@@ -48,8 +48,8 @@ public class NodeChangeListenerTest {
     @Issue("JENKINS-56647")
     @Test
     public void testOnUpdated() throws Exception {
-        Slave slave = j.createOnlineSlave();
-        HtmlForm form = j.createWebClient().getPage(slave, "configure").getFormByName("config");
+        Slave agent = j.createOnlineSlave();
+        HtmlForm form = j.createWebClient().getPage(agent, "configure").getFormByName("config");
         HtmlInput element = form.getInputByName("_.name");
         element.setValueAttribute("newSlaveName");
         j.submit(form);
@@ -63,8 +63,8 @@ public class NodeChangeListenerTest {
     @Issue("JENKINS-56648")
     @Test
     public void testOnDeleted() throws Exception {
-        DumbSlave slave = j.createOnlineSlave();
-        j.jenkins.removeNode(slave);
+        DumbSlave agent = j.createOnlineSlave();
+        j.jenkins.removeNode(agent);
 
         List<LogEvent> events = app.getEvents();
 
