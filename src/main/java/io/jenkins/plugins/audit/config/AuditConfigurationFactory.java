@@ -36,6 +36,7 @@ public class AuditConfigurationFactory extends ConfigurationFactory {
                         .addAttribute("charset", "UTF-8")
                         .addAttribute("locationInfo", false))
                 .addComponent(builder.newComponent("TimeBasedTriggeringPolicy"))
+                .addComponent(builder.newComponent("SizeBasedTriggeringPolicy").addAttribute("size", "50 MB"))
                 .addComponent(builder.newComponent("DefaultRolloverStrategy").addAttribute("max", 30)));
         // not trying to pollute any logs here
         builder.add(builder.newRootLogger(Level.OFF));
