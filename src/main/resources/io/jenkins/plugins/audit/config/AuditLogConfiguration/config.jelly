@@ -14,6 +14,9 @@
         <f:entry title="${%Syslog Port}" field="syslogPort">
             <f:textbox name="syslogPort" value="${it.syslogPort}"/>
         </f:entry>      
+        <f:entry title="${%Syslog Proto}" field="syslogProto">
+            <f:textbox name="syslogProto" value="${it.syslogProto}"/>
+        </f:entry>      
         <f:entry title="${%IANA Enterprise Number}" field="enterpriseNumber">
             <f:textbox name="enterpriseNumber" value="${it.enterpriseNumber}"/>
         </f:entry>      

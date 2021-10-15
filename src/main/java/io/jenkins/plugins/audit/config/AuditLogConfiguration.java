@@ -23,6 +23,7 @@ public class AuditLogConfiguration extends GlobalConfiguration {
     private String appenderType;
     private String syslogHost;
     private int syslogPort;
+    private String syslogProto;
     private int enterpriseNumber;
 
     public AuditLogConfiguration() {
@@ -76,6 +77,17 @@ public class AuditLogConfiguration extends GlobalConfiguration {
     @DataBoundSetter
     public void setSyslogPort(int syslogPort) {
         this.syslogPort = syslogPort;
+        save();
+        reloadLogger();
+    }
+
+    public String getSyslogProto() {
+        return StringUtils.defaultIfBlank(syslogProto, "TCP");
+    }
+
+    @DataBoundSetter
+    public void setSyslogProto(String syslogProto) {
+        this.syslogProto = syslogProto;
         save();
         reloadLogger();
     }
