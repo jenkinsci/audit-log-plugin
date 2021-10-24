@@ -58,7 +58,7 @@ public class AuditConfigurationFactory extends ConfigurationFactory {
                     .addAttribute("format", "RFC5424")
                     .addAttribute("host", auditLogConfiguration.getSyslogHost())
                     .addAttribute("port", auditLogConfiguration.getSyslogPort())
-                    .addAttribute("protocol", "TCP")
+                    .addAttribute("protocol", auditLogConfiguration.getSyslogProto())
                     .addAttribute("appName", "ALP")
                     .addAttribute("mdcId", "mdc")
                     .addAttribute("includeMDC", true)
