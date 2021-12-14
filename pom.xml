@@ -8,7 +8,7 @@
         <relativePath />
     </parent>
     <artifactId>audit-log</artifactId>
-    <version>${revision}${changelist}</version>
+    <version>1.3</version>
     <groupId>io.jenkins.plugins</groupId>
     <packaging>hpi</packaging>
 
@@ -17,7 +17,7 @@
         <connection>scm:git:git://github.com/jenkinsci/audit-log-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:jenkinsci/audit-log-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/audit-log-plugin</url>
-        <tag>${scmTag}</tag>
+        <tag>audit-log-1.3</tag>
     </scm>
 
     <!-- jenkins project information -->
