@@ -1,6 +1,6 @@
 package io.jenkins.plugins.audit.listeners;
 
-import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+import org.htmlunit.FailingHttpStatusCodeException;
 import hudson.security.SecurityRealm;
 import jenkins.model.IdStrategy;
 import jenkins.model.Jenkins;

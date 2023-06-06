@@ -1,6 +1,6 @@
 package io.jenkins.plugins.audit.listeners;
 
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.htmlunit.html.HtmlPage;
 import hudson.model.User;
 import hudson.security.HudsonPrivateSecurityRealm;
 import hudson.security.pages.SignupPage;
