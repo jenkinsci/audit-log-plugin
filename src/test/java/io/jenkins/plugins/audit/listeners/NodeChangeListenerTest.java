@@ -1,7 +1,7 @@
 package io.jenkins.plugins.audit.listeners;
 
-import com.gargoylesoftware.htmlunit.html.HtmlForm;
-import com.gargoylesoftware.htmlunit.html.HtmlInput;
+import org.htmlunit.html.HtmlForm;
+import org.htmlunit.html.HtmlInput;
 import hudson.model.Slave;
 import hudson.slaves.DumbSlave;
 import org.apache.logging.log4j.audit.AuditMessage;
@@ -51,7 +51,7 @@ public class NodeChangeListenerTest {
         Slave agent = j.createOnlineSlave();
         HtmlForm form = j.createWebClient().getPage(agent, "configure").getFormByName("config");
         HtmlInput element = form.getInputByName("_.name");
-        element.setValueAttribute("newSlaveName");
+        element.setValue("newSlaveName");
         j.submit(form);
 
         List<LogEvent> events = app.getEvents();
